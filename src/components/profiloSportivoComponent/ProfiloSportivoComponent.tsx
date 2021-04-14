@@ -1,10 +1,11 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { sportivoSelector } from '../../store/sportivoSlice';
+import { sportivoSelector } from '../../store/sportivoAutenticatoSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTableTennis } from '@fortawesome/free-solid-svg-icons/faTableTennis';
 import { faFutbol, faVolleyballBall } from '@fortawesome/free-solid-svg-icons';
-import "./profiloSportivo.css";
+import { useHistory } from 'react-router';
+//import './profiloSportivo.css'
 
 
 
@@ -16,6 +17,8 @@ export const ProfiloSportivo: React.FC = () => {
     };
 
     const sportvoAutenticato = useSelector(sportivoSelector);
+
+    const history = useHistory()
 
     return (
         <>
@@ -33,7 +36,7 @@ export const ProfiloSportivo: React.FC = () => {
                     <FontAwesomeIcon icon={faTableTennis} style={style} />
                     <i></i>LEZIONE
                 </button>
-                <button className="btn" id="prenotazioneImpianto">
+                <button className="btn" id="prenotazioneImpianto" onClick={() => history.push("/nuovaPrenotazioneImpianto")}>
                     <FontAwesomeIcon icon={faFutbol} style={style} />
                     <i></i>IMPIANTO
                 </button>

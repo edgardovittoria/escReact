@@ -1,11 +1,17 @@
+import { SportivoSlice } from './sportivoSlice';
+import { ImpiantoSlice } from './impiantoSlice';
+import { SportSlice } from './SportSlice';
 import { PrenotazioneSlice } from './prenotazioneSlice';
 import { Action, combineReducers, configureStore, ThunkAction } from '@reduxjs/toolkit';
-import { SportivoSlice } from './sportivoSlice';
+import { SportivoAutenticatoSlice } from './sportivoAutenticatoSlice';
 
 
 const rootReducer = combineReducers({
-  sportivo : SportivoSlice.reducer,
-  prenotazioni: PrenotazioneSlice.reducer
+  sportivo : SportivoAutenticatoSlice.reducer,
+  prenotazioni: PrenotazioneSlice.reducer,
+  sportPraticabili: SportSlice.reducer,
+  impiantiDisponibili: ImpiantoSlice.reducer,
+  sportiviInvitabili: SportivoSlice.reducer
 });
 
 const store = configureStore({

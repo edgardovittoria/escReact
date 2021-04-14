@@ -1,27 +1,29 @@
-import { Sportivo } from './../model/Sportivo';
+import { Sportivo } from '../model/Sportivo';
 
 import axios from 'axios';
 import { AppThunk } from './store';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export type SportivoState = {
-    sportivo: Sportivo
+    sportivi: Sportivo[]
     isLoading: boolean
     errors: string
 }
 
 
 export const SportivoSlice = createSlice({
-    name: 'sportivo',
+    name: 'sportivi',
     initialState: {
-        sportivo: {},
+        sportivi: [],
         isLoading: false,
         errors: ""
     } as SportivoState,
     reducers: {
-        setSportivo(state: SportivoState, action: PayloadAction<Sportivo>) {
-           state.isLoading = false 
-           state.sportivo = action.payload
+        addListaInvitabili(state: SportivoState, action: PayloadAction<Sportivo[]>) {
+            state.isLoading = false
+            action.payload.forEach((sportivo) => {
+                state.sportivi.push(sportivo)
+            })
         },
         setLoading(state: SportivoState, action: PayloadAction<boolean>){
             state.isLoading = action.payload
@@ -33,18 +35,18 @@ export const SportivoSlice = createSlice({
 });
 
 export const {
-    setSportivo,
+    addListaInvitabili,
     setLoading,
     setErrors
 } = SportivoSlice.actions
 
 export const sportivoSelector = (state: { sportivo: SportivoState }) => state.sportivo
 
-export const loginSportivo = (email: string): AppThunk => async dispatch => {
+export const fetchSportiviInvitabili = (): AppThunk => async dispatch => {
     try {
         dispatch(setLoading(true));
-        const res = await axios.get('http://localhost:8080/aggiornaOpzioni/sportivo', {params: {email: email}})
-        dispatch(setSportivo(res.data))
+        const res = await axios.get("http://localhost:8080/effettuaPrenotazione/sportiviPolisportiva")
+        dispatch(addListaInvitabili(res.data))
     } catch (error) {
         dispatch(setErrors("Internal Server Error"))
     }

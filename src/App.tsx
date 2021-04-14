@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import { ProfiloSportivo } from './components/profiloSportivoComponent/ProfiloSportivoComponent';
 import { Login } from './components/loginComponent/LoginComponent';
+import { NuovaPrenotazioneImpianto } from './components/nuovaPrenotazioneComponent/NuovaPrenotazioneImpiantoComponent';
 
 
 
@@ -16,6 +17,7 @@ export const App: React.FC = () => {
         <Switch>
           <Route path="/login"><Login /></Route>
           <Route path="/profiloSportivo"><ProfiloSportivo /></Route>
+          <Route path="/nuovaPrenotazioneImpianto"><NuovaPrenotazioneImpianto/></Route>
           <Redirect to="/login" />
         </Switch>
       </BrowserRouter>

@@ -2,7 +2,7 @@ import React from 'react'
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useHistory } from 'react-router';
-import { loginSportivo } from "../../store/sportivoSlice"; 
+import { loginSportivo } from "../../store/sportivoAutenticatoSlice"; 
 
 type Credenziali = {
     email: string,
