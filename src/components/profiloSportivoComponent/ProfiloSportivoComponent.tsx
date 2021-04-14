@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTableTennis } from '@fortawesome/free-solid-svg-icons/faTableTennis';
 import { faFutbol, faVolleyballBall } from '@fortawesome/free-solid-svg-icons';
 import { useHistory } from 'react-router';
-//import './profiloSportivo.css'
+import './profiloSportivo.css';
 
 
 
