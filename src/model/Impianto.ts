@@ -2,7 +2,7 @@ import { Appuntamento } from './Appuntamento';
 import { Sport } from './Sport';
 
 export type Impianto = {
-    IdImpianto : number
+    idImpianto : number
     indoor : boolean
     pavimentazione: string
     sportPraticabili: Sport[]

@@ -48,3 +48,5 @@ export const fetchSportPraticabili = (): AppThunk => async dispatch => {
     }
 
 }
+
+export const sportSelector = (state: { sportPraticabili: SportState }) => state.sportPraticabili

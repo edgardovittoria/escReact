@@ -3,6 +3,9 @@ import { AppThunk } from './store';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { Prenotazione } from './../model/Prenotazone';
+import { addListaImpiantiDisponibili } from './impiantoSlice';
+import { addListaSportPraticabili } from './SportSlice';
+import { addListaInvitabili } from './sportivoSlice';
 
 export type PrenotazioneState = {
     prenotazioni: Prenotazione[]
@@ -46,6 +49,20 @@ export const {
 } = PrenotazioneSlice.actions
 
 export const prenotazioneSelector = (state: { prenotazione: PrenotazioneState }) => state.prenotazione
+
+export const avviaNuovaPrenotazione = (emailSportivo: string, tipoPren: string): AppThunk => async dispatch => {
+    try {
+        dispatch(setLoading(true));
+        const res = await axios.get("http://localhost:8080/effettuaPrenotazione/avviaNuovaPrenotazione", {params: {email: emailSportivo, tipoPrenotazione: tipoPren}})
+        dispatch(addListaImpiantiDisponibili(res.data.impiantiDisponibili))
+        dispatch(addListaSportPraticabili(res.data.sportPraticabili))
+        dispatch(addListaInvitabili(res.data.sportiviPolisportiva))
+        //dispatch(addListaPrenotazioni(res.data))
+    } catch (error) {
+        dispatch(setErrors("Internal Server Error"))
+    }
+
+}
 
 export const aggiungiPrenotazione = (prenotazione: Prenotazione): AppThunk => async dispatch => {
     try {

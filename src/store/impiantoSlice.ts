@@ -48,3 +48,5 @@ export const fetchImpiantiDisponibili = (): AppThunk => async dispatch => {
     }
 
 }
+
+export const impiantoSelector = (state: { impiantiDisponibili: ImpiantoState }) => state.impiantiDisponibili

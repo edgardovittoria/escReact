@@ -40,7 +40,7 @@ export const {
     setErrors
 } = SportivoSlice.actions
 
-export const sportivoSelector = (state: { sportivo: SportivoState }) => state.sportivo
+export const sportivoSelector = (state: { sportiviInvitabili: SportivoState }) => state.sportiviInvitabili
 
 export const fetchSportiviInvitabili = (): AppThunk => async dispatch => {
     try {

@@ -38,7 +38,7 @@ export const {
     setErrors
 } = SportivoAutenticatoSlice.actions
 
-export const sportivoSelector = (state: { sportivo: SportivoAutenticatoState }) => state.sportivo
+export const sportivoAutenticatoSelector = (state: { sportivo: SportivoAutenticatoState }) => state.sportivo
 
 export const loginSportivo = (email: string): AppThunk => async dispatch => {
     try {

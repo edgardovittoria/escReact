@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { sportivoSelector } from '../../store/sportivoAutenticatoSlice';
+import { sportivoAutenticatoSelector } from '../../store/sportivoAutenticatoSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTableTennis } from '@fortawesome/free-solid-svg-icons/faTableTennis';
 import { faFutbol, faVolleyballBall } from '@fortawesome/free-solid-svg-icons';
@@ -16,7 +16,7 @@ export const ProfiloSportivo: React.FC = () => {
         margin: "auto"
     };
 
-    const sportvoAutenticato = useSelector(sportivoSelector);
+    const sportvoAutenticato = useSelector(sportivoAutenticatoSelector);
 
     const history = useHistory()
 
@@ -32,16 +32,16 @@ export const ProfiloSportivo: React.FC = () => {
             </div>
             <div className="btn-container">
                 <span></span>
-                <button className="btn" id="prenotazioneLezione">
+                <button className="btnProfilo" id="prenotazioneLezione">
                     <FontAwesomeIcon icon={faTableTennis} style={style} />
                     <i></i>LEZIONE
                 </button>
-                <button className="btn" id="prenotazioneImpianto" onClick={() => history.push("/nuovaPrenotazioneImpianto")}>
+                <button className="btnProfilo" id="prenotazioneImpianto" onClick={() => history.push("/nuovaPrenotazioneImpianto")}>
                     <FontAwesomeIcon icon={faFutbol} style={style} />
                     <i></i>IMPIANTO
                 </button>
 
-                <button className="btn" id="prenotazioneCorso">
+                <button className="btnProfilo" id="prenotazioneCorso">
                     <FontAwesomeIcon icon={faVolleyballBall} style={style} />
                     <i></i>CORSO
                 </button>
