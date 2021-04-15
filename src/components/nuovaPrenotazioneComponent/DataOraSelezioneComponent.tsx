@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useSelector } from 'react-redux';
-import { Button, Col, Form, FormGroup, Input, Label, Row } from 'reactstrap';
-import { RHFInput } from 'react-hook-form-input';
+import { useDispatch, useSelector } from 'react-redux';
+import { Button, Col, Form, FormGroup, Label, Row } from 'reactstrap';
 import TimePicker from 'rc-time-picker';
 import 'rc-time-picker/assets/index.css';
 import { sportSelector } from '../../store/SportSlice';
-import moment, { Moment } from 'moment';
+import moment from 'moment';
 import { impiantoSelector } from '../../store/impiantoSlice';
 import { sportivoSelector } from '../../store/sportivoSlice';
+import { confermaPrenotazione } from '../../store/prenotazioneSlice';
+import { useHistory } from 'react-router';
 
 
 export type FormPrenotaImpianto = {
@@ -34,10 +35,13 @@ export const DataOraSelezione: React.FC = () => {
     const sportiviInvitabili = useSelector(sportivoSelector);
     const [postiLiberi, setPostiliberi] = useState(0);
     const [postiLiberiAggiornato, setPostiliberiAggiornati] = useState(postiLiberi);
-    const [sportSelezionato, setSportSelezionato] = useState("");
+    //const [sportSelezionato, setSportSelezionato] = useState("");
+    const dispatch = useDispatch();
+    const history = useHistory();
 
-    const onSubmit = handleSubmit((data: FormPrenotaImpianto) => {
-        console.log(data)
+    const onSubmit = handleSubmit((form: FormPrenotaImpianto) => {
+        dispatch(confermaPrenotazione(form))
+        history.push("profiloSportivo")
     })
 
     return (
@@ -64,7 +68,8 @@ export const DataOraSelezione: React.FC = () => {
                                                         sportPraticabili.sports.filter(sport => sport.nome.match(target.currentTarget.value)).map(sportSelezionato => {
                                                             setPostiliberi(sportSelezionato.postiLiberi)
                                                             setPostiliberiAggiornati(sportSelezionato.postiLiberi)
-                                                            setSportSelezionato(target.currentTarget.value)
+                                                            //setSportSelezionato(target.currentTarget.value)
+                                                            setValue("postiLiberi", sportSelezionato.postiLiberi)
                                                         })
                                                     }} />
                                                 <div>{sport.nome}</div>

@@ -1,3 +1,4 @@
+import { FormPrenotaImpianto } from './../components/nuovaPrenotazioneComponent/DataOraSelezioneComponent';
 import axios from 'axios';
 import { AppThunk } from './store';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
@@ -58,6 +59,18 @@ export const avviaNuovaPrenotazione = (emailSportivo: string, tipoPren: string):
         dispatch(addListaSportPraticabili(res.data.sportPraticabili))
         dispatch(addListaInvitabili(res.data.sportiviPolisportiva))
         //dispatch(addListaPrenotazioni(res.data))
+    } catch (error) {
+        dispatch(setErrors("Internal Server Error"))
+    }
+
+}
+
+export const confermaPrenotazione = (prenotazione: FormPrenotaImpianto): AppThunk => async dispatch => {
+    try {
+        dispatch(setLoading(true));
+        const res = await axios.post("http://localhost:8080/effettuaPrenotazione/confermaPrenotazione", prenotazione)
+        //console.log(res.data)
+        dispatch(addPrenotazione(res.data))
     } catch (error) {
         dispatch(setErrors("Internal Server Error"))
     }

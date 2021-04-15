@@ -1,12 +1,8 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { sportivoAutenticatoSelector } from '../../store/sportivoAutenticatoSlice';
-import { useHistory } from 'react-router';
 import { DataOraSelezione } from './DataOraSelezioneComponent';
-import { fetchSportPraticabili } from '../../store/SportSlice';
-import { fetchImpiantiDisponibili } from '../../store/impiantoSlice';
-import { fetchSportiviInvitabili } from '../../store/sportivoSlice';
-import { Card, CardBody, CardImg, CardLink, CardText, CardTitle, ListGroup, ListGroupItem } from 'reactstrap';
+import { Card, CardBody, CardImg, CardText, CardTitle, ListGroup, ListGroupItem } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 import { avviaNuovaPrenotazione } from '../../store/prenotazioneSlice';
 
@@ -18,8 +14,6 @@ export const NuovaPrenotazioneImpianto: React.FC = () => {
 
 
     const sportivoAutenticato = useSelector(sportivoAutenticatoSelector);
-
-    const history = useHistory()
 
     const dispatch = useDispatch();
 
