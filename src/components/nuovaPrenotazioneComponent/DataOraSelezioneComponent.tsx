@@ -4,10 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, Col, Form, FormGroup, Label, Row } from 'reactstrap';
 import TimePicker from 'rc-time-picker';
 import 'rc-time-picker/assets/index.css';
-import { sportSelector } from '../../store/SportSlice';
+import { resetListaSportPraticabili, sportSelector } from '../../store/SportSlice';
 import moment from 'moment';
-import { impiantoSelector } from '../../store/impiantoSlice';
-import { sportivoSelector } from '../../store/sportivoSlice';
+import { impiantoSelector, resetListaImpiantiDisponibili } from '../../store/impiantoSlice';
+import { resetListaInvitabili, sportivoSelector } from '../../store/sportivoSlice';
 import { confermaPrenotazione } from '../../store/prenotazioneSlice';
 import { useHistory } from 'react-router';
 
@@ -41,6 +41,9 @@ export const DataOraSelezione: React.FC = () => {
 
     const onSubmit = handleSubmit((form: FormPrenotaImpianto) => {
         dispatch(confermaPrenotazione(form))
+        dispatch(resetListaImpiantiDisponibili())
+        dispatch(resetListaInvitabili())
+        dispatch(resetListaSportPraticabili())
         history.push("profiloSportivo")
     })
 

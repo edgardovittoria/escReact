@@ -23,6 +23,9 @@ export const ImpiantoSlice = createSlice({
                 state.impianti.push(impianto)
             })
         },
+        resetListaImpiantiDisponibili(state: ImpiantoState){
+            state.impianti = []
+        },
         setLoading(state: ImpiantoState, action: PayloadAction<boolean>){
             state.isLoading = action.payload
         },
@@ -34,6 +37,7 @@ export const ImpiantoSlice = createSlice({
 
 export const {
     addListaImpiantiDisponibili,
+    resetListaImpiantiDisponibili,
     setLoading,
     setErrors
 } = ImpiantoSlice.actions

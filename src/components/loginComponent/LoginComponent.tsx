@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useHistory } from 'react-router';
 import { loginSportivo } from "../../store/sportivoAutenticatoSlice"; 
+import store from '../../store/store';
 
 type Credenziali = {
     email: string,
@@ -14,9 +15,7 @@ export const Login: React.FC = () => {
     
 
     const { register, handleSubmit, formState: { errors } } = useForm<Credenziali>();
-
-
-
+    
     const dispatch = useDispatch()
     const history = useHistory()
 

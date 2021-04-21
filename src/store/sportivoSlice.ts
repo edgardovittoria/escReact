@@ -25,6 +25,9 @@ export const SportivoSlice = createSlice({
                 state.sportivi.push(sportivo)
             })
         },
+        resetListaInvitabili(state: SportivoState){
+            state.sportivi = []
+        },
         setLoading(state: SportivoState, action: PayloadAction<boolean>){
             state.isLoading = action.payload
         },
@@ -36,6 +39,7 @@ export const SportivoSlice = createSlice({
 
 export const {
     addListaInvitabili,
+    resetListaInvitabili,
     setLoading,
     setErrors
 } = SportivoSlice.actions

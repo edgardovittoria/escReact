@@ -5,6 +5,7 @@ import { DataOraSelezione } from './DataOraSelezioneComponent';
 import { Card, CardBody, CardImg, CardText, CardTitle, ListGroup, ListGroupItem } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 import { avviaNuovaPrenotazione } from '../../store/prenotazioneSlice';
+import store from '../../store/store';
 
 
 
@@ -12,7 +13,7 @@ import { avviaNuovaPrenotazione } from '../../store/prenotazioneSlice';
 
 export const NuovaPrenotazioneImpianto: React.FC = () => {
 
-
+   
     const sportivoAutenticato = useSelector(sportivoAutenticatoSelector);
 
     const dispatch = useDispatch();
