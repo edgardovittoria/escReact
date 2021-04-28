@@ -1,11 +1,14 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { sportivoAutenticatoSelector } from '../../store/sportivoAutenticatoSlice';
+import { setSportivo, sportivoAutenticatoSelector } from '../../store/sportivoAutenticatoSlice';
 import { DataOraSelezione } from './DataOraSelezioneComponent';
 import { Card, CardBody, CardImg, CardText, CardTitle, ListGroup, ListGroupItem } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 import { avviaNuovaPrenotazione } from '../../store/prenotazioneSlice';
-import store from '../../store/store';
+import { Sportivo } from '../../model/Sportivo';
+import { resetListaImpiantiDisponibili } from '../../store/impiantoSlice';
+import { resetListaInvitabili } from '../../store/sportivoSlice';
+import { resetListaSportPraticabili } from '../../store/SportSlice';
 
 
 
@@ -13,10 +16,15 @@ import store from '../../store/store';
 
 export const NuovaPrenotazioneImpianto: React.FC = () => {
 
-   
-    const sportivoAutenticato = useSelector(sportivoAutenticatoSelector);
+    const dispatch = useDispatch()
+    // var sportivoRecuperato: Sportivo = JSON.parse(localStorage.getItem("sportivoAutenticato")!);
 
-    const dispatch = useDispatch();
+    // dispatch(setSportivo(sportivoRecuperato))
+    dispatch(resetListaImpiantiDisponibili())
+    dispatch(resetListaInvitabili())
+    dispatch(resetListaSportPraticabili())
+
+    const sportivoAutenticato = useSelector(sportivoAutenticatoSelector);
 
     dispatch(avviaNuovaPrenotazione(sportivoAutenticato.sportivo.email, "IMPIANTO"))
 
@@ -26,13 +34,13 @@ export const NuovaPrenotazioneImpianto: React.FC = () => {
                 <div className="container">
                     <div className="row">
                         <Card className="col-4">
-                            <CardImg 
+                            <CardImg
                                 src="/assets/img/avatarProfilo.png"
-                                alt="Avatar Sportivo"/>
+                                alt="Avatar Sportivo" />
                             <CardBody>
                                 <CardTitle>
                                     {sportivoAutenticato.sportivo.nome} {sportivoAutenticato.sportivo.cognome}
-                                    </CardTitle>
+                                </CardTitle>
                                 <CardText>
                                     Eventuali info dello Sportivo...
                                     </CardText>
@@ -43,7 +51,7 @@ export const NuovaPrenotazioneImpianto: React.FC = () => {
                                 </ListGroupItem>
                             </ListGroup>
                             <CardBody>
-                               <NavLink to="/profiloSportivo">Profilo</NavLink>
+                                <NavLink to="/profiloSportivo">Profilo</NavLink>
                             </CardBody>
                         </Card>
                         <div className="col-8">

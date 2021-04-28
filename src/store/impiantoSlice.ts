@@ -48,7 +48,7 @@ export const fetchImpiantiDisponibili = (): AppThunk => async dispatch => {
         const res = await axios.get("http://localhost:8080/effettuaPrenotazione/impiantiDisponibili")
         dispatch(addListaImpiantiDisponibili(res.data))
     } catch (error) {
-        dispatch(setErrors("Internal Server Error"))
+        dispatch(setErrors(error))
     }
 
 }

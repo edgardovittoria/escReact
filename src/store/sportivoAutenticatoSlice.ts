@@ -1,7 +1,7 @@
 import { Sportivo } from '../model/Sportivo';
 
 import axios from 'axios';
-import { AppThunk } from './store';
+import { AppThunk, RootState } from './store';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export type SportivoAutenticatoState = {
@@ -28,6 +28,9 @@ export const SportivoAutenticatoSlice = createSlice({
         },
         setErrors(state: SportivoAutenticatoState, action: PayloadAction<string>){
             state.errors = action.payload
+        },
+        resetLocalStorsageState(){
+            localStorage.clear()
         }
     }
 });
@@ -35,7 +38,8 @@ export const SportivoAutenticatoSlice = createSlice({
 export const {
     setSportivo,
     setLoading,
-    setErrors
+    setErrors,
+    resetLocalStorsageState
 } = SportivoAutenticatoSlice.actions
 
 export const sportivoAutenticatoSelector = (state: { sportivo: SportivoAutenticatoState }) => state.sportivo
@@ -46,7 +50,7 @@ export const loginSportivo = (email: string): AppThunk => async dispatch => {
         const res = await axios.get('http://localhost:8080/aggiornaOpzioni/sportivo', {params: {email: email}})
         dispatch(setSportivo(res.data))
     } catch (error) {
-        dispatch(setErrors("Internal Server Error"))
+        dispatch(setErrors(error))
     }
 
 }

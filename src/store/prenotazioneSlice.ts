@@ -10,6 +10,7 @@ import { addListaInvitabili } from './sportivoSlice';
 
 export type PrenotazioneState = {
     prenotazioni: Prenotazione[]
+    prenotazioneDaConfermare: Prenotazione
     isLoading: boolean
     errors: string
 }
@@ -19,13 +20,36 @@ export const PrenotazioneSlice = createSlice({
     name: 'prenotazione',
     initialState: {
         prenotazioni: [],
+        prenotazioneDaConfermare: {
+            sportivoPrenotante: {
+                nome: "",
+                cognome: "",
+                email: ""
+            },
+            appuntamenti: []
+        },
         isLoading: false,
         errors: ""
     } as PrenotazioneState,
     reducers: {
+        addPrenotazioneDaConfermare(state: PrenotazioneState, action: PayloadAction<Prenotazione>){
+            state.isLoading = false
+            state.prenotazioneDaConfermare = action.payload
+        },
+        resetPrenotazioneDaConfermare(state: PrenotazioneState){
+            state.prenotazioneDaConfermare = {
+                sportivoPrenotante: {
+                    nome: "",
+                    cognome: "",
+                    email: ""
+                },
+                appuntamenti: []
+            }
+        },
         addPrenotazione(state: PrenotazioneState, action: PayloadAction<Prenotazione>){
             state.isLoading = false
             state.prenotazioni.push(action.payload)
+            alert("La prenotazione è avvenuta con successo!");
         },
         addListaPrenotazioni(state: PrenotazioneState, action: PayloadAction<Prenotazione[]>){
             state.isLoading = false
@@ -43,13 +67,15 @@ export const PrenotazioneSlice = createSlice({
 });
 
 export const {
+    addPrenotazioneDaConfermare,
+    resetPrenotazioneDaConfermare,
     addPrenotazione,
     addListaPrenotazioni,
     setLoading,
     setErrors
 } = PrenotazioneSlice.actions
 
-export const prenotazioneSelector = (state: { prenotazione: PrenotazioneState }) => state.prenotazione
+export const prenotazioneSelector = (state: { prenotazioni: PrenotazioneState }) => state.prenotazioni
 
 export const avviaNuovaPrenotazione = (emailSportivo: string, tipoPren: string): AppThunk => async dispatch => {
     try {
@@ -60,34 +86,44 @@ export const avviaNuovaPrenotazione = (emailSportivo: string, tipoPren: string):
         dispatch(addListaInvitabili(res.data.sportiviPolisportiva))
         //dispatch(addListaPrenotazioni(res.data))
     } catch (error) {
-        dispatch(setErrors("Internal Server Error"))
+        dispatch(setErrors(error))
     }
 
 }
 
-export const confermaPrenotazione = (prenotazione: FormPrenotaImpianto): AppThunk => async dispatch => {
+export const riepilogoPrenotazione = (prenotazione: FormPrenotaImpianto): AppThunk => async dispatch => {
     try {
         dispatch(setLoading(true));
-        const res = await axios.post("http://localhost:8080/effettuaPrenotazione/confermaPrenotazione", prenotazione)
-        //console.log(res.data)
+        const res = await axios.post("http://localhost:8080/effettuaPrenotazione/riepilogoPrenotazione", prenotazione)
+        dispatch(addPrenotazioneDaConfermare(res.data))
+    } catch (error) {
+        dispatch(setErrors(error))
+    }
+
+}
+
+export const confermaPrenotazione = (): AppThunk => async dispatch => {
+    try {
+        dispatch(setLoading(true));
+        const res = await axios.post("http://localhost:8080/effettuaPrenotazione/confermaPrenotazione")
         dispatch(addPrenotazione(res.data))
     } catch (error) {
-        dispatch(setErrors("Internal Server Error"))
+        dispatch(setErrors(error))
     }
 
 }
 
-export const aggiungiPrenotazione = (prenotazione: Prenotazione): AppThunk => async dispatch => {
-    try {
-        dispatch(setLoading(true));
-        const res = await axios.post("url", prenotazione)
-        console.log(res);
-        dispatch(addPrenotazione(prenotazione))
-    } catch (error) {
-        dispatch(setErrors("Internal Server Error"))
-    }
+// export const aggiungiPrenotazione = (prenotazione: Prenotazione): AppThunk => async dispatch => {
+//     try {
+//         dispatch(setLoading(true));
+//         const res = await axios.post("url", prenotazione)
+//         console.log(res);
+//         dispatch(addPrenotazioneDaConfermare(prenotazione))
+//     } catch (error) {
+//         dispatch(setErrors(error))
+//     }
 
-}
+// }
 
 export const fetchPrenotazioni = (emailSportivo: string): AppThunk => async dispatch => {
     try {
@@ -95,7 +131,7 @@ export const fetchPrenotazioni = (emailSportivo: string): AppThunk => async disp
         const res = await axios.get("url", {params: {email: emailSportivo}})
         dispatch(addListaPrenotazioni(res.data))
     } catch (error) {
-        dispatch(setErrors("Internal Server Error"))
+        dispatch(setErrors(error))
     }
 
 }

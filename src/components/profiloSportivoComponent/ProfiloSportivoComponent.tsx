@@ -1,17 +1,20 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { sportivoAutenticatoSelector } from '../../store/sportivoAutenticatoSlice';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSportivo, sportivoAutenticatoSelector } from '../../store/sportivoAutenticatoSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTableTennis } from '@fortawesome/free-solid-svg-icons/faTableTennis';
 import { faFutbol, faVolleyballBall } from '@fortawesome/free-solid-svg-icons';
 import { useHistory } from 'react-router';
 import './profiloSportivo.css';
-import store from '../../store/store';
+import { Sportivo } from '../../model/Sportivo';
+import { resetPrenotazioneDaConfermare } from '../../store/prenotazioneSlice';
 
 
 
 export const ProfiloSportivo: React.FC = () => {
 
+    const dispatch = useDispatch()    
+    dispatch(resetPrenotazioneDaConfermare())
 
     const style = {
         display: "block",
@@ -19,7 +22,6 @@ export const ProfiloSportivo: React.FC = () => {
     };
 
     const sportvoAutenticato = useSelector(sportivoAutenticatoSelector);
-
     const history = useHistory()
 
     return (

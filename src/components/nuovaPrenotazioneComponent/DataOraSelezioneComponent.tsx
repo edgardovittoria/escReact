@@ -8,7 +8,7 @@ import { resetListaSportPraticabili, sportSelector } from '../../store/SportSlic
 import moment from 'moment';
 import { impiantoSelector, resetListaImpiantiDisponibili } from '../../store/impiantoSlice';
 import { resetListaInvitabili, sportivoSelector } from '../../store/sportivoSlice';
-import { confermaPrenotazione } from '../../store/prenotazioneSlice';
+import { riepilogoPrenotazione } from '../../store/prenotazioneSlice';
 import { useHistory } from 'react-router';
 
 
@@ -40,11 +40,11 @@ export const DataOraSelezione: React.FC = () => {
     const history = useHistory();
 
     const onSubmit = handleSubmit((form: FormPrenotaImpianto) => {
-        dispatch(confermaPrenotazione(form))
+        dispatch(riepilogoPrenotazione(form))
         dispatch(resetListaImpiantiDisponibili())
         dispatch(resetListaInvitabili())
         dispatch(resetListaSportPraticabili())
-        history.push("profiloSportivo")
+        history.push("riepilogoPrenotazione")
     })
 
     return (
@@ -193,7 +193,7 @@ export const DataOraSelezione: React.FC = () => {
                         </Col>
                     </Row>
                 </FormGroup>
-                <Button type="submit" outline size="lg" color="success">Conferma Prenotazione</Button>
+                <Button type="submit" outline size="lg" block color="success">Procedi</Button>
             </Form>
         </>
     )

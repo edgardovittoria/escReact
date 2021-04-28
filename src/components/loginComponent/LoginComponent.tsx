@@ -2,8 +2,7 @@ import React from 'react'
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useHistory } from 'react-router';
-import { loginSportivo } from "../../store/sportivoAutenticatoSlice"; 
-import store from '../../store/store';
+import { loginSportivo, resetLocalStorsageState } from "../../store/sportivoAutenticatoSlice"; 
 
 type Credenziali = {
     email: string,
@@ -13,10 +12,10 @@ type Credenziali = {
 export const Login: React.FC = () => {
 
     
-
     const { register, handleSubmit, formState: { errors } } = useForm<Credenziali>();
     
     const dispatch = useDispatch()
+    dispatch(resetLocalStorsageState())
     const history = useHistory()
 
     const onSubmit = handleSubmit((data: Credenziali) => {

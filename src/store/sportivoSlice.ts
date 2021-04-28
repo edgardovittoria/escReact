@@ -52,7 +52,7 @@ export const fetchSportiviInvitabili = (): AppThunk => async dispatch => {
         const res = await axios.get("http://localhost:8080/effettuaPrenotazione/sportiviPolisportiva")
         dispatch(addListaInvitabili(res.data))
     } catch (error) {
-        dispatch(setErrors("Internal Server Error"))
+        dispatch(setErrors(error))
     }
 
 }
