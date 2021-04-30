@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSportivo, sportivoAutenticatoSelector } from '../../store/sportivoAutenticatoSlice';
-import { DataOraSelezione } from './DataOraSelezioneComponent';
+import { FormPrenotazioneImpianto } from './FormPrenotazioneImpiantoComponent';
 import { Card, CardBody, CardImg, CardText, CardTitle, ListGroup, ListGroupItem } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 import { avviaNuovaPrenotazione } from '../../store/prenotazioneSlice';
@@ -55,7 +55,7 @@ export const NuovaPrenotazioneImpianto: React.FC = () => {
                             </CardBody>
                         </Card>
                         <div className="col-8">
-                            <div><DataOraSelezione /></div>
+                            <div><FormPrenotazioneImpianto /></div>
                         </div>
                     </div>
                 </div>

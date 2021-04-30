@@ -1,10 +1,10 @@
-import { FormPrenotaImpianto } from './../components/nuovaPrenotazioneComponent/DataOraSelezioneComponent';
+import { FormPrenotaImpianto } from '../components/nuovaPrenotazioneComponent/FormPrenotazioneImpiantoComponent';
 import axios from 'axios';
 import { AppThunk } from './store';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { Prenotazione } from './../model/Prenotazone';
-import { addListaImpiantiDisponibili } from './impiantoSlice';
+import { addListaImpiantiDisponibili, resetListaImpiantiDisponibili } from './impiantoSlice';
 import { addListaSportPraticabili } from './SportSlice';
 import { addListaInvitabili } from './sportivoSlice';
 
@@ -48,11 +48,13 @@ export const PrenotazioneSlice = createSlice({
         },
         addPrenotazione(state: PrenotazioneState, action: PayloadAction<Prenotazione>){
             state.isLoading = false
+            state.errors = ""
             state.prenotazioni.push(action.payload)
             alert("La prenotazione è avvenuta con successo!");
         },
         addListaPrenotazioni(state: PrenotazioneState, action: PayloadAction<Prenotazione[]>){
             state.isLoading = false
+            state.errors = ""
             action.payload.forEach((prenotazione) => {
                 state.prenotazioni.push(prenotazione)
             })
@@ -86,6 +88,7 @@ export const avviaNuovaPrenotazione = (emailSportivo: string, tipoPren: string):
         dispatch(addListaInvitabili(res.data.sportiviPolisportiva))
         //dispatch(addListaPrenotazioni(res.data))
     } catch (error) {
+        dispatch(setLoading(false))
         dispatch(setErrors(error))
     }
 
@@ -113,23 +116,23 @@ export const confermaPrenotazione = (): AppThunk => async dispatch => {
 
 }
 
-// export const aggiungiPrenotazione = (prenotazione: Prenotazione): AppThunk => async dispatch => {
-//     try {
-//         dispatch(setLoading(true));
-//         const res = await axios.post("url", prenotazione)
-//         console.log(res);
-//         dispatch(addPrenotazioneDaConfermare(prenotazione))
-//     } catch (error) {
-//         dispatch(setErrors(error))
-//     }
-
-// }
 
 export const fetchPrenotazioni = (emailSportivo: string): AppThunk => async dispatch => {
     try {
         dispatch(setLoading(true));
         const res = await axios.get("url", {params: {email: emailSportivo}})
         dispatch(addListaPrenotazioni(res.data))
+    } catch (error) {
+        dispatch(setErrors(error))
+    }
+
+}
+
+export const aggiornaImpianti = (object: any): AppThunk => async dispatch => {
+    try {
+        const res = await axios.post("http://localhost:8080/effettuaPrenotazione/aggiornaImpianti", object)
+        dispatch(resetListaImpiantiDisponibili())
+        dispatch(addListaImpiantiDisponibili(res.data))
     } catch (error) {
         dispatch(setErrors(error))
     }

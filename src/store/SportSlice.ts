@@ -6,7 +6,8 @@ import { AppThunk } from './store';
 export type SportState = {
     sports: Sport[],
     isLoading: boolean,
-    errors: string
+    errors: string,
+    handleSelezioneSport: Function
 }
 
 export const SportSlice = createSlice({
@@ -14,7 +15,8 @@ export const SportSlice = createSlice({
     initialState: {
         sports: [],
         isLoading: false,
-        errors: ""
+        errors: "",
+        handleSelezioneSport: ()=>{}
     } as SportState,
     reducers: {
         addListaSportPraticabili(state: SportState, action: PayloadAction<Sport[]>) {
