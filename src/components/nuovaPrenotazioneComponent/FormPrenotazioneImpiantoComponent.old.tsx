@@ -15,9 +15,9 @@ import { ImpiantoSelezione } from '../formComponents/ImpiantoSelezioneComponet';
 
 export type FormPrenotaImpianto = {
     sportSelezionato: string,
-    dataPrenotazione: Date,
-    oraInizio: Date,
-    oraFine: Date,
+    dataPrenotazione: string,
+    oraInizio: string,
+    oraFine: string,
     impianto: number,
     sportiviInvitati: string[],
     postiLiberi: number,
@@ -54,9 +54,9 @@ export const FormPrenotazioneImpianto: React.FC = () => {
     }
 
     function onOrarioSelezione(orarioSelezionato: OrarioPrenotazione){
-        setValue("dataPrenotazione", orarioSelezionato.dataOraInizio)
-        setValue("oraInizio", orarioSelezionato.dataOraInizio)
-        setValue("oraFine", orarioSelezionato.dataOraFine)
+        setValue("dataPrenotazione", orarioSelezionato.dataOraInizio.toJSON())
+        setValue("oraInizio", orarioSelezionato.dataOraInizio.toJSON())
+        setValue("oraFine", orarioSelezionato.dataOraFine.toJSON())
         let object = {
             sport: getValues("sportSelezionato"),
             orario: orarioSelezionato
