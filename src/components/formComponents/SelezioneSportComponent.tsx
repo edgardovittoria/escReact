@@ -1,9 +1,14 @@
 import React from 'react';
 import { Label } from 'reactstrap';
+import { Sport } from '../../model/Sport';
 import { SportState } from '../../store/SportSlice';
 
+export type SelezioneSportProps = {
+    sports: Sport[],
+    handleSelezioneSport: Function
+}
 
-export const SelezioneSport : React.FC<SportState> = ({sports, isLoading, errors, handleSelezioneSport}) => {
+export const SelezioneSport : React.FC<SelezioneSportProps> = ({sports, handleSelezioneSport}) => {
 
     return (
         <>
@@ -13,18 +18,13 @@ export const SelezioneSport : React.FC<SportState> = ({sports, isLoading, errors
                         <>
                             <Label className="form-check-label" style={{ display: 'inline' }}>
                                 <input
-                                    // {...register("sportSelezionato")}
+                                    key={sport.nome}
                                     type="radio"
                                     className="form-check-input"
                                     name="sportSelezionato"
                                     value={sport.nome}
-                                    onInput={(target) => { handleSelezioneSport(target.currentTarget.value)
-                                        // sportPraticabili.sports.filter(sport => sport.nome.match(target.currentTarget.value)).map(sportSelezionato => {
-                                        //     setPostiliberi(sportSelezionato.postiLiberi)
-                                        //     setPostiliberiAggiornati(sportSelezionato.postiLiberi)
-                                        //     //setSportSelezionato(target.currentTarget.value)
-                                        //     setValue("postiLiberi", sportSelezionato.postiLiberi)
-                                        // })
+                                    onInput={(target) => { 
+                                        handleSelezioneSport(target.currentTarget.value)
                                     }} />
                                 <div>{sport.nome}</div>
                             </Label>

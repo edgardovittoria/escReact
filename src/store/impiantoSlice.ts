@@ -6,8 +6,7 @@ import { AppThunk } from './store';
 export type ImpiantoState = {
     impianti: Impianto[],
     isLoading: boolean,
-    errors: string,
-    handleSelezioneImpianto: Function
+    errors: string
 }
 
 export const ImpiantoSlice = createSlice({
@@ -15,8 +14,7 @@ export const ImpiantoSlice = createSlice({
     initialState: {
         impianti: [],
         isLoading: false,
-        errors: "",
-        handleSelezioneImpianto: () => {}
+        errors: ""
     } as ImpiantoState,
     reducers: {
         addListaImpiantiDisponibili(state: ImpiantoState, action: PayloadAction<Impianto[]>) {

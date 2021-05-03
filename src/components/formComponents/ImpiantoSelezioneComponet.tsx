@@ -1,7 +1,13 @@
 import React from 'react';
+import { Impianto } from '../../model/Impianto';
 import { ImpiantoState } from '../../store/impiantoSlice';
 
-export const ImpiantoSelezione: React.FC<ImpiantoState> = ({impianti, isLoading, errors, handleSelezioneImpianto}) => {
+export type ImpiantoSelezioneProps = {
+    impianti: Impianto[],
+    handleSelezioneImpianto: Function
+}
+
+export const ImpiantoSelezione: React.FC<ImpiantoSelezioneProps> = ({impianti, handleSelezioneImpianto}) => {
     return (
         <select
             className="form-control"
@@ -14,7 +20,7 @@ export const ImpiantoSelezione: React.FC<ImpiantoState> = ({impianti, isLoading,
             {impianti.map((impianto) => {
                 return (
                     <>
-                        <option value={impianto.idImpianto}>{impianto.idImpianto} {impianto.pavimentazione}</option>
+                        <option key={impianto.idImpianto} value={impianto.idImpianto}>{impianto.idImpianto} {impianto.pavimentazione}</option>
                     </>
                 )
             })}

@@ -11,6 +11,7 @@ import { useHistory } from 'react-router';
 import { SelezioneSport } from '../formComponents/SelezioneSportComponent';
 import { DataOraSelezione, OrarioPrenotazione } from '../formComponents/DataOraSelezioneComponent';
 import { ImpiantoSelezione } from '../formComponents/ImpiantoSelezioneComponet';
+import { SportiviInvitabiliSelezione } from '../formComponents/SportiviInvitabiliSelezioneComponent';
 
 
 export type FormPrenotaImpianto = {
@@ -51,7 +52,12 @@ export const FormPrenotazioneImpianto: React.FC = () => {
 
     function onSportSelezionato(sportSelezionato: string) {
         setValue("sportSelezionato", sportSelezionato)
+        setPostiliberiAggiornati(sportPraticabili.sports.filter((sport) => sport.nome === sportSelezionato)[0].postiLiberi)
+        setPostiliberi(sportPraticabili.sports.filter((sport) => sport.nome === sportSelezionato)[0].postiLiberi)
+
     }
+
+    
 
     function onOrarioSelezione(orarioSelezionato: OrarioPrenotazione){
         setValue("dataPrenotazione", orarioSelezionato.dataOraInizio)
@@ -68,6 +74,10 @@ export const FormPrenotazioneImpianto: React.FC = () => {
         //console.log(id)
     }
 
+    const onSportiviInvitabiliSelezione = (emailSportivi: string[]) => {
+        setValue("sportiviInvitati", emailSportivi)
+    }
+
     return (
         <>
             <Label>PRENOTAZIONE IMPIANTO</Label>
@@ -77,7 +87,8 @@ export const FormPrenotazioneImpianto: React.FC = () => {
                     <Label style={{ marginLeft: '5px' }}>Seleziona Sport</Label>
                     <Row style={{ marginLeft: '1px' }}>
                         <Col>
-                            <SelezioneSport sports={sportPraticabili.sports} isLoading={false} errors="" handleSelezioneSport={onSportSelezionato} />
+                            <SelezioneSport sports={sportPraticabili.sports} 
+                                handleSelezioneSport={onSportSelezionato} />
                         </Col>
                         <Col id="postiLiberiContenitore">Posti Liberi: <span {...register("postiLiberi")}>{postiLiberiAggiornato}</span></Col>
                     </Row>
@@ -89,9 +100,7 @@ export const FormPrenotazioneImpianto: React.FC = () => {
                     <Label style={{ marginLeft: '5px' }}>Seleziona Impianto</Label>
                     <Row style={{ marginLeft: '1px' }}>
                         <Col>
-                            <ImpiantoSelezione impianti={impiantiDisponibili.impianti} 
-                                isLoading={impiantiDisponibili.isLoading}
-                                errors={impiantiDisponibili.errors} 
+                            <ImpiantoSelezione impianti={impiantiDisponibili.impianti}
                                 handleSelezioneImpianto={onImpiantoSelezione}/>
                         </Col>
                     </Row>
@@ -100,18 +109,8 @@ export const FormPrenotazioneImpianto: React.FC = () => {
                     <Label>Invita sportivi alla prenotazione</Label>
                     <Row>
                         <Col>
-                            <select
-                                {...register("sportiviInvitati")}
-                                multiple
-                                className="form-control selectpicker"
-                                data-live-search="true"
-                                id="invitaSportivi"
-                                name="sportiviInvitati"
-                            >
-                                {sportiviInvitabili.sportivi.map((sportivo) => {
-                                    return (<option value={sportivo.email}>{sportivo.nome} {sportivo.cognome}</option>)
-                                })}
-                            </select>
+                            <SportiviInvitabiliSelezione sportivi={sportiviInvitabili.sportivi}
+                                handleSelezioneSportiviInvitabili={onSportiviInvitabiliSelezione} />
                         </Col>
                     </Row>
                 </FormGroup>
@@ -128,10 +127,9 @@ export const FormPrenotazioneImpianto: React.FC = () => {
                                     setValue("postiLiberi", postiLiberi - parseInt(value.currentTarget.value))
                                 }}
                             >
-
-                                <option value={1}>1</option>
-                                <option value={2}>2</option>
-                                <option value={3}>3</option>
+                                <option key={1} value={1}>1</option>
+                                <option key={2} value={2}>2</option>
+                                <option key={3} value={3}>3</option>
                             </select>
                         </Col>
                     </Row>
