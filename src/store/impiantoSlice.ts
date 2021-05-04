@@ -1,3 +1,4 @@
+import { ArrayLisetImpiantoItem } from './../components/formComponents/DataOraImpiantoRicorrenteComponent';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { Impianto } from './../model/Impianto';
@@ -5,14 +6,27 @@ import { AppThunk } from './store';
 
 export type ImpiantoState = {
     impianti: Impianto[],
+    arrayListeImpianti: ArrayLisetImpiantoItem[],
+    stringa: string,
     isLoading: boolean,
     errors: string
+}
+
+let listeImpiantiInit: ArrayLisetImpiantoItem[] = [];
+for(let i=1; i<6; i++){
+    let item: ArrayLisetImpiantoItem = {
+        id: i,
+        impiantiDisponibili: []
+    }
+    listeImpiantiInit.push(item);
 }
 
 export const ImpiantoSlice = createSlice({
     name: 'impianto',
     initialState: {
         impianti: [],
+        arrayListeImpianti: listeImpiantiInit,
+        stringa: "",
         isLoading: false,
         errors: ""
     } as ImpiantoState,
@@ -21,6 +35,16 @@ export const ImpiantoSlice = createSlice({
             state.isLoading = false;
             action.payload.forEach((impianto) => {
                 state.impianti.push(impianto)
+            })
+        },
+        addListaImpiantiDisponibiliAdArray(state: ImpiantoState, action: PayloadAction<ArrayLisetImpiantoItem>){
+            state.isLoading = false;
+            state.arrayListeImpianti.map((item) => {
+                if(item.id === action.payload.id){
+                    item.impiantiDisponibili = action.payload.impiantiDisponibili
+                }else{
+                    state.arrayListeImpianti.push(action.payload)
+                }
             })
         },
         resetListaImpiantiDisponibili(state: ImpiantoState){
@@ -37,6 +61,7 @@ export const ImpiantoSlice = createSlice({
 
 export const {
     addListaImpiantiDisponibili,
+    addListaImpiantiDisponibiliAdArray,
     resetListaImpiantiDisponibili,
     setLoading,
     setErrors

@@ -3,7 +3,6 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Col, Form, FormGroup, Label, Row } from 'reactstrap';
 import { resetListaSportPraticabili, sportSelector } from '../../store/SportSlice';
-import moment from 'moment';
 import { impiantoSelector, resetListaImpiantiDisponibili } from '../../store/impiantoSlice';
 import { resetListaInvitabili, sportivoSelector } from '../../store/sportivoSlice';
 import { aggiornaImpianti, riepilogoPrenotazione } from '../../store/prenotazioneSlice';
@@ -12,6 +11,8 @@ import { SelezioneSport } from '../formComponents/SelezioneSportComponent';
 import { DataOraSelezione, OrarioPrenotazione } from '../formComponents/DataOraSelezioneComponent';
 import { ImpiantoSelezione } from '../formComponents/ImpiantoSelezioneComponet';
 import { SportiviInvitabiliSelezione } from '../formComponents/SportiviInvitabiliSelezioneComponent';
+import { PostiLiberi } from '../formComponents/PostiLiberiComponent';
+import { GiocatoriNonIscritti } from '../formComponents/GiocatoriNonIscrittiSelezioneComponent';
 
 
 export type FormPrenotaImpianto = {
@@ -28,9 +29,9 @@ export type FormPrenotaImpianto = {
 
 export const FormPrenotazioneImpianto: React.FC = () => {
 
-    const { register, getValues, setValue, handleSubmit, formState: { errors } } = useForm<FormPrenotaImpianto>();
+    const { getValues, setValue, handleSubmit/*, formState: { errors }*/ } = useForm<FormPrenotaImpianto>();
 
-    
+
     const sportPraticabili = useSelector(sportSelector);
     const impiantiDisponibili = useSelector(impiantoSelector);
     const sportiviInvitabili = useSelector(sportivoSelector);
@@ -46,8 +47,7 @@ export const FormPrenotazioneImpianto: React.FC = () => {
         dispatch(resetListaInvitabili())
         dispatch(resetListaSportPraticabili())
         history.push("riepilogoPrenotazione")
-        //console.log(form)
-        
+
     })
 
     function onSportSelezionato(sportSelezionato: string) {
@@ -57,9 +57,9 @@ export const FormPrenotazioneImpianto: React.FC = () => {
 
     }
 
-    
 
-    function onOrarioSelezione(orarioSelezionato: OrarioPrenotazione){
+
+    function onOrarioSelezione(orarioSelezionato: OrarioPrenotazione) {
         setValue("dataPrenotazione", orarioSelezionato.dataOraInizio)
         setValue("oraInizio", orarioSelezionato.dataOraInizio)
         setValue("oraFine", orarioSelezionato.dataOraFine)
@@ -69,39 +69,49 @@ export const FormPrenotazioneImpianto: React.FC = () => {
         }
         dispatch(aggiornaImpianti(object))
     }
+
     const onImpiantoSelezione = (id: number) => {
         setValue("impianto", id)
-        //console.log(id)
     }
 
     const onSportiviInvitabiliSelezione = (emailSportivi: string[]) => {
         setValue("sportiviInvitati", emailSportivi)
     }
 
+    const onGiocatoriNonIscrittiSelezione = (giocatoriNonIscritti: number) => {
+        setPostiliberiAggiornati(postiLiberi - giocatoriNonIscritti)
+        setValue("postiLiberi", postiLiberi - giocatoriNonIscritti)
+        setValue("numeroGiocatoriNonIscritti", giocatoriNonIscritti)
+    }
+
+
     return (
         <>
             <Label>PRENOTAZIONE IMPIANTO</Label>
+
 
             <Form onSubmit={onSubmit}>
                 <FormGroup className="border border-dark rounded" style={{ textAlign: 'left' }}>
                     <Label style={{ marginLeft: '5px' }}>Seleziona Sport</Label>
                     <Row style={{ marginLeft: '1px' }}>
                         <Col>
-                            <SelezioneSport sports={sportPraticabili.sports} 
+                            <SelezioneSport sports={sportPraticabili.sports}
                                 handleSelezioneSport={onSportSelezionato} />
                         </Col>
-                        <Col id="postiLiberiContenitore">Posti Liberi: <span {...register("postiLiberi")}>{postiLiberiAggiornato}</span></Col>
+                        <Col id="postiLiberiContenitore">Posti Liberi: <PostiLiberi postiLiberiAggiornati={postiLiberiAggiornato} /></Col>
                     </Row>
                 </FormGroup>
                 <FormGroup className="border border-dark rounded" style={{ textAlign: 'left' }}>
-                    <DataOraSelezione handleSelezioneOrario={onOrarioSelezione} />
+                    <DataOraSelezione handleSelezioneOrario={onOrarioSelezione}
+                        chiave={1} />
                 </FormGroup>
                 <FormGroup>
                     <Label style={{ marginLeft: '5px' }}>Seleziona Impianto</Label>
                     <Row style={{ marginLeft: '1px' }}>
                         <Col>
                             <ImpiantoSelezione impianti={impiantiDisponibili.impianti}
-                                handleSelezioneImpianto={onImpiantoSelezione}/>
+                                handleSelezioneImpianto={onImpiantoSelezione}
+                                chiave={1} />
                         </Col>
                     </Row>
                 </FormGroup>
@@ -118,24 +128,14 @@ export const FormPrenotazioneImpianto: React.FC = () => {
                     <Label>Numero giocatori non iscritti da associare alla prenotazione</Label>
                     <Row>
                         <Col>
-                            <select className="form-control"
-                                {...register("numeroGiocatoriNonIscritti")}
-                                name="numeroGiocatoriNonIscritti"
-                                id="invitaSportiviNonIscritti"
-                                onChange={(value) => {
-                                    setPostiliberiAggiornati(postiLiberi - parseInt(value.currentTarget.value))
-                                    setValue("postiLiberi", postiLiberi - parseInt(value.currentTarget.value))
-                                }}
-                            >
-                                <option key={1} value={1}>1</option>
-                                <option key={2} value={2}>2</option>
-                                <option key={3} value={3}>3</option>
-                            </select>
+                            <GiocatoriNonIscritti postiLiberi={postiLiberi}
+                                handleGiocatoriNonIscrittiSelezione={onGiocatoriNonIscrittiSelezione} />
                         </Col>
                     </Row>
                 </FormGroup>
                 <Button type="submit" outline size="lg" block color="success">Procedi</Button>
             </Form>
+
         </>
     )
 }

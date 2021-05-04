@@ -13,7 +13,6 @@ import { RiepilogoPrenotazione } from './components/riepilogoPrenotazioneCompone
 
 
 export const App: React.FC = () => {
-
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>

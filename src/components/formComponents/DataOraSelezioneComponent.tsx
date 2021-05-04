@@ -5,33 +5,30 @@ import 'rc-time-picker/assets/index.css';
 import moment, { Moment } from 'moment';
 
 export type OrarioPrenotazione = {
+    id: number
     dataOraInizio: Date
     dataOraFine: Date
 
 }
 
 export type OrarioProps = {
-    handleSelezioneOrario: Function
+    handleSelezioneOrario: Function,
+    chiave: number
 }
 
-export const DataOraSelezione: React.FC<OrarioProps> = ({ handleSelezioneOrario }) => {
-
-    // let orarioPrenotazione: OrarioPrenotazione = {
-    //     data: new Date(),
-    //     oraInizio: new Date(),
-    //     oraFine: new Date()
-    // }
-
+export const DataOraSelezione: React.FC<OrarioProps> = ({ handleSelezioneOrario, chiave }) => {
 
     const [oraInizio, setOraInizio] = useState<Date>(new Date())
     const [oraFine, setOraFine] = useState<Date>(new Date())
 
     useEffect(() => {
         let orarioSelezionato: OrarioPrenotazione = {
+            id: chiave,
             dataOraInizio: oraInizio,
             dataOraFine: oraFine
         }
         handleSelezioneOrario(orarioSelezionato)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [oraFine])
 
     
@@ -39,8 +36,9 @@ export const DataOraSelezione: React.FC<OrarioProps> = ({ handleSelezioneOrario 
     const [rangeOrariFinePrenotazione, setOrari] = useState([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
     const [oraFineDefault, setOraFineDefault] = useState<Moment>(moment.utc().set({ date: oraInizio.getDate(), hour: oraInizio.getHours() + 1, minute: oraInizio.getMinutes() }))
 
+
     return (
-        <Row style={{ marginLeft: '1px' }}>
+        <Row style={{ marginLeft: '1px' }} key={chiave}>
             <Col>
                 <Label>Data Prenotazione : </Label>
                 <input

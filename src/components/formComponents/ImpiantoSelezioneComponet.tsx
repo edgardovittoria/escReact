@@ -1,27 +1,26 @@
 import React from 'react';
 import { Impianto } from '../../model/Impianto';
-import { ImpiantoState } from '../../store/impiantoSlice';
 
 export type ImpiantoSelezioneProps = {
+    chiave: number,
     impianti: Impianto[],
     handleSelezioneImpianto: Function
 }
 
-export const ImpiantoSelezione: React.FC<ImpiantoSelezioneProps> = ({impianti, handleSelezioneImpianto}) => {
+export const ImpiantoSelezione: React.FC<ImpiantoSelezioneProps> = ({ chiave, impianti, handleSelezioneImpianto }) => {
     return (
         <select
+            key={chiave}
             className="form-control"
             name="impianto"
             id="selezioneImpianto"
-            onChange={(value) => {
-                handleSelezioneImpianto(value.currentTarget.value)
+            onClick={(value) => {
+                handleSelezioneImpianto(value.currentTarget.value, chiave)
             }}
         >
-            {impianti.map((impianto) => {
+            {impianti.map((impianto, index) => {
                 return (
-                    <>
-                        <option key={impianto.idImpianto} value={impianto.idImpianto}>{impianto.idImpianto} {impianto.pavimentazione}</option>
-                    </>
+                    <option key={impianto.idImpianto} value={impianto.idImpianto}>{impianto.idImpianto} {impianto.pavimentazione}</option>
                 )
             })}
         </select>

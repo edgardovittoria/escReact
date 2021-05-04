@@ -1,10 +1,12 @@
+import { ArrayLisetImpiantoItem } from './../components/formComponents/DataOraImpiantoRicorrenteComponent';
+import { Impianto } from './../model/Impianto';
 import { FormPrenotaImpianto } from '../components/nuovaPrenotazioneComponent/FormPrenotazioneImpiantoComponent';
 import axios from 'axios';
 import { AppThunk } from './store';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { Prenotazione } from './../model/Prenotazone';
-import { addListaImpiantiDisponibili, resetListaImpiantiDisponibili } from './impiantoSlice';
+import { addListaImpiantiDisponibili, addListaImpiantiDisponibiliAdArray, resetListaImpiantiDisponibili } from './impiantoSlice';
 import { addListaSportPraticabili } from './SportSlice';
 import { addListaInvitabili } from './sportivoSlice';
 
@@ -83,7 +85,7 @@ export const avviaNuovaPrenotazione = (emailSportivo: string, tipoPren: string):
     try {
         dispatch(setLoading(true));
         const res = await axios.get("http://localhost:8080/effettuaPrenotazione/avviaNuovaPrenotazione", {params: {email: emailSportivo, tipoPrenotazione: tipoPren}})
-        dispatch(addListaImpiantiDisponibili(res.data.impiantiDisponibili))
+        //dispatch(addListaImpiantiDisponibili(res.data.impiantiDisponibili))
         dispatch(addListaSportPraticabili(res.data.sportPraticabili))
         dispatch(addListaInvitabili(res.data.sportiviPolisportiva))
         //dispatch(addListaPrenotazioni(res.data))
@@ -135,6 +137,20 @@ export const aggiornaImpianti = (object: any): AppThunk => async dispatch => {
         dispatch(addListaImpiantiDisponibili(res.data))
     } catch (error) {
         dispatch(setErrors(error))
+    }
+
+}
+
+export const aggiornaImpiantiRicorrente = (object: any, id: number): AppThunk => async dispatch => {
+    try {
+        const res = await axios.post("http://localhost:8080/effettuaPrenotazione/aggiornaImpianti", object)
+        let item: ArrayLisetImpiantoItem = {
+            id: id,
+            impiantiDisponibili: res.data
+        }
+        dispatch(addListaImpiantiDisponibiliAdArray(item))
+    } catch (error) {
+        dispatch(setErrors(error));
     }
 
 }

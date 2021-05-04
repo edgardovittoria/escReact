@@ -21,7 +21,7 @@ export const SportiviInvitabiliSelezione: React.FC<sportiviInvitabiliProps> = ({
             }}
         >
             {sportivi.map((sportivo) => {
-                return (<option value={sportivo.email}>{sportivo.nome} {sportivo.cognome}</option>)
+                return (<option key={sportivo.email} value={sportivo.email}>{sportivo.nome} {sportivo.cognome}</option>)
             })}
         </select>
     )
