@@ -6,13 +6,13 @@ import { NavLink as NavLinkRouter } from 'react-router-dom';
 import { avviaNuovaPrenotazione } from '../../store/prenotazioneSlice';
 import { resetListaInvitabili } from '../../store/sportivoSlice';
 import { resetListaSportPraticabili } from '../../store/SportSlice';
-import { FormPrenotazioneImpiantoRicorrente } from './FormPrenotazioneImpiantoRicorrenteComponent';
+import { FormPrenotazioneLezione } from './FormPrenotazioneLezioneComponent';
 
 
 
 
 
-export const NuovaPrenotazioneImpianto: React.FC = () => {
+export const NuovaPrenotazioneLezione: React.FC = () => {
 
     const dispatch = useDispatch()
     // var sportivoRecuperato: Sportivo = JSON.parse(localStorage.getItem("sportivoAutenticato")!);
@@ -24,8 +24,7 @@ export const NuovaPrenotazioneImpianto: React.FC = () => {
 
     const sportivoAutenticato = useSelector(sportivoAutenticatoSelector);
 
-    dispatch(avviaNuovaPrenotazione(sportivoAutenticato.sportivo.email, "IMPIANTO"))
-
+    dispatch(avviaNuovaPrenotazione(sportivoAutenticato.sportivo.email, "LEZIONE"))
 
     return (
         <>
@@ -54,7 +53,8 @@ export const NuovaPrenotazioneImpianto: React.FC = () => {
                             </CardBody>
                         </Card>
                         <div className="col-8">
-                            <FormPrenotazioneImpiantoRicorrente/>
+                            <FormPrenotazioneLezione />
+                            
                         </div>
                     </div>
                 </div>

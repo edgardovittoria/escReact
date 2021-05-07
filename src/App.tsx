@@ -9,23 +9,25 @@ import { ProfiloSportivo } from './components/profiloSportivoComponent/ProfiloSp
 import { Login } from './components/loginComponent/LoginComponent';
 import { NuovaPrenotazioneImpianto } from './components/nuovaPrenotazioneComponent/NuovaPrenotazioneImpiantoComponent';
 import { RiepilogoPrenotazione } from './components/riepilogoPrenotazioneComponent/RiepilogoPrenotazioneComponent';
+import { NuovaPrenotazioneLezione } from './components/nuovaPrenotazioneComponent/NuovaPrenotazioneLezioneComponent';
 
 
 
 export const App: React.FC = () => {
   return (
     <Provider store={store}>
-      <PersistGate persistor={persistor}>
+      {/* <PersistGate persistor={persistor}> */}
       <BrowserRouter>
         <Switch>
           <Route path="/login"><Login /></Route>
           <Route path="/profiloSportivo"><ProfiloSportivo /></Route>
           <Route path="/nuovaPrenotazioneImpianto"><NuovaPrenotazioneImpianto/></Route>
+          <Route path="/nuovaPrenotazioneLezione"><NuovaPrenotazioneLezione/></Route>
           <Route path="/riepilogoPrenotazione"><RiepilogoPrenotazione/></Route>
           <Redirect to="/login" />
         </Switch>
       </BrowserRouter>
-      </PersistGate>
+      {/* </PersistGate> */}
     </Provider>
   );
 }

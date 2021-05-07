@@ -1,4 +1,6 @@
+import { spawn } from 'node:child_process';
 import React from 'react';
+import { Label } from 'reactstrap';
 import { Impianto } from '../../model/Impianto';
 
 export type ImpiantoSelezioneProps = {
@@ -9,6 +11,8 @@ export type ImpiantoSelezioneProps = {
 
 export const ImpiantoSelezione: React.FC<ImpiantoSelezioneProps> = ({ chiave, impianti, handleSelezioneImpianto }) => {
     return (
+        <>
+        <Label>Seleziona Impianto</Label>
         <select
             key={chiave}
             className="form-control"
@@ -24,5 +28,6 @@ export const ImpiantoSelezione: React.FC<ImpiantoSelezioneProps> = ({ chiave, im
                 )
             })}
         </select>
+        </>
     )
 }

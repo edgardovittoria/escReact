@@ -21,9 +21,7 @@ export const SportivoSlice = createSlice({
     reducers: {
         addListaInvitabili(state: SportivoState, action: PayloadAction<Sportivo[]>) {
             state.isLoading = false
-            action.payload.forEach((sportivo) => {
-                state.sportivi.push(sportivo)
-            })
+            state.sportivi = action.payload
         },
         resetListaInvitabili(state: SportivoState){
             state.sportivi = []

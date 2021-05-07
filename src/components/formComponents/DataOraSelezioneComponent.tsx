@@ -6,8 +6,9 @@ import moment, { Moment } from 'moment';
 
 export type OrarioPrenotazione = {
     id: number
-    dataOraInizio: Date
-    dataOraFine: Date
+    dataPrenotazione: Date
+    oraInizio: Date
+    oraFine: Date
 
 }
 
@@ -24,8 +25,9 @@ export const DataOraSelezione: React.FC<OrarioProps> = ({ handleSelezioneOrario,
     useEffect(() => {
         let orarioSelezionato: OrarioPrenotazione = {
             id: chiave,
-            dataOraInizio: oraInizio,
-            dataOraFine: oraFine
+            dataPrenotazione: oraInizio,
+            oraInizio: oraInizio,
+            oraFine: oraFine
         }
         handleSelezioneOrario(orarioSelezionato)
     // eslint-disable-next-line react-hooks/exhaustive-deps

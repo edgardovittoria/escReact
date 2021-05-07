@@ -2,6 +2,7 @@ import React from 'react'
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useHistory } from 'react-router';
+import { fetchPrenotazioni } from '../../store/prenotazioneSlice';
 import { loginSportivo, resetLocalStorsageState } from "../../store/sportivoAutenticatoSlice"; 
 
 type Credenziali = {
@@ -20,6 +21,7 @@ export const Login: React.FC = () => {
 
     const onSubmit = handleSubmit((data: Credenziali) => {
         dispatch(loginSportivo(data.email))
+        dispatch(fetchPrenotazioni(data.email))
         history.push("/profiloSportivo")
     })
 

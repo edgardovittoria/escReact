@@ -4,9 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { Button, Col, Form, FormGroup, Label, Row } from 'reactstrap';
 import { impiantoSelector } from '../../store/impiantoSlice';
+import { fetchIstruttori, istruttoreSelector } from '../../store/IstruttoreSlice';
 import { aggiornaImpiantiRicorrente, riepilogoPrenotazione } from '../../store/prenotazioneSlice';
 import { sportivoSelector } from '../../store/sportivoSlice';
 import { sportSelector } from '../../store/SportSlice';
+import { DataOraImpiantoIstruttoreSelezione, IstruttoriSelezionatiItem } from '../formComponents/DataOraImpiantoIstruttoreSelezioneComponent';
 import { DataOraImpiantoRicorrente, ImpiantiSelezionatiItem } from '../formComponents/DataOraImpiantoRicorrenteComponent';
 import { OrarioPrenotazione } from '../formComponents/DataOraSelezioneComponent';
 import { GiocatoriNonIscritti } from '../formComponents/GiocatoriNonIscrittiSelezioneComponent';
@@ -14,38 +16,34 @@ import { PostiLiberi } from '../formComponents/PostiLiberiComponent';
 import { SelezioneSport } from '../formComponents/SelezioneSportComponent';
 import { SportiviInvitabiliSelezione } from '../formComponents/SportiviInvitabiliSelezioneComponent';
 
-export type FormPrenotaImpianto = {
+export type FormPrenotaLezione = {
     sportSelezionato: string,
     orariSelezionati: OrarioPrenotazione[]
     impianti: ImpiantiSelezionatiItem[],
-    sportiviInvitati: string[],
-    postiLiberi: number,
-    numeroGiocatoriNonIscritti: number
+    istruttori: IstruttoriSelezionatiItem[]
 }
 
 let orari: OrarioPrenotazione[] = [];
 let impiantiSelezionati: ImpiantiSelezionatiItem[] = [];
+let istruttoriSelezionati: IstruttoriSelezionatiItem[] = [];
 
-export const FormPrenotazioneImpiantoRicorrente: React.FC = () => {
+export const FormPrenotazioneLezione: React.FC = () => {
 
-    const { getValues, setValue, handleSubmit, /*formState: { errors }*/ } = useForm<FormPrenotaImpianto>();
+    const { getValues, setValue, handleSubmit, /*formState: { errors }*/ } = useForm<FormPrenotaLezione>();
 
     const dispatch = useDispatch();
     const history = useHistory();
     const [numeroDate, setNumeroDate] = useState(0);
-    const [postiLiberi, setPostiliberi] = useState(0);
-    const [postiLiberiAggiornato, setPostiliberiAggiornati] = useState(postiLiberi);
     const sportPraticabili = useSelector(sportSelector);
-    const sportiviInvitabili = useSelector(sportivoSelector);
     const impiantiDisponibili = useSelector(impiantoSelector);
+    const istruttoriDisponibili = useSelector(istruttoreSelector);
+
     function onSportSelezionato(sportSelezionato: string) {
         setValue("sportSelezionato", sportSelezionato)
-        setPostiliberiAggiornati(sportPraticabili.sports.filter((sport) => sport.nome === sportSelezionato)[0].postiLiberi)
-        setPostiliberi(sportPraticabili.sports.filter((sport) => sport.nome === sportSelezionato)[0].postiLiberi)
-
+        aggiornaListeIstruttori(sportSelezionato)
     }
 
-    const onSubmit = handleSubmit((form: FormPrenotaImpianto) => {
+    const onSubmit = handleSubmit((form: FormPrenotaLezione) => {
         dispatch(riepilogoPrenotazione(form))
         history.push("/riepilogoPrenotazione");
     })
@@ -59,6 +57,11 @@ export const FormPrenotazioneImpiantoRicorrente: React.FC = () => {
             dispatch(aggiornaImpiantiRicorrente(object, id));
         }
 
+    }
+    const aggiornaListeIstruttori = (sport: string) => {
+        if (sport !== undefined) {
+            dispatch(fetchIstruttori(sport));
+        }
     }
     const onOrarioSelezione = (orarioSelezionato: OrarioPrenotazione) => {
         if(orari.filter(orario => orario.id === orarioSelezionato.id).length === 0){
@@ -80,16 +83,15 @@ export const FormPrenotazioneImpiantoRicorrente: React.FC = () => {
         }
         setValue("impianti", impiantiSelezionati)
     }
-
-    const onSportiviInvitabiliSelezione = (emailSportivi: string[]) => {
-        setValue("sportiviInvitati", emailSportivi)
+    const onIstruttoreSelezioneRicorrente = (istruttoreItem: IstruttoriSelezionatiItem) => {
+        if (istruttoriSelezionati.filter(item => item.idSelezione === istruttoreItem.idSelezione).length === 0) {
+            istruttoriSelezionati.push(istruttoreItem)
+        } else {
+            istruttoriSelezionati.filter(item => item.idSelezione === istruttoreItem.idSelezione)[0].istruttore = istruttoreItem.istruttore
+        }
+        setValue("istruttori", istruttoriSelezionati)
     }
 
-    const onGiocatoriNonIscrittiSelezione = (giocatoriNonIscritti: number) => {
-        setPostiliberiAggiornati(postiLiberi - giocatoriNonIscritti)
-        setValue("postiLiberi", postiLiberi - giocatoriNonIscritti)
-        setValue("numeroGiocatoriNonIscritti", giocatoriNonIscritti)
-    }
 
 
     return (
@@ -117,32 +119,15 @@ export const FormPrenotazioneImpiantoRicorrente: React.FC = () => {
                         <SelezioneSport sports={sportPraticabili.sports}
                             handleSelezioneSport={onSportSelezionato} />
                     </Col>
-                    <Col id="postiLiberiContenitore">Posti Liberi: <PostiLiberi postiLiberiAggiornati={postiLiberiAggiornato} /></Col>
                 </Row>
             </FormGroup>
             <FormGroup className="border border-dark rounded" style={{ textAlign: 'left' }}>
-                <DataOraImpiantoRicorrente impianti={impiantiDisponibili.arrayListeImpianti}
+                <DataOraImpiantoIstruttoreSelezione impianti={impiantiDisponibili.arrayListeImpianti}
                     handleSelezioneDataOra={onOrarioSelezione}
                     handleSelezioneImpianto={onImpiantoSelezioneRicorrente}
-                    numeroDate={numeroDate} />
-            </FormGroup>
-            <FormGroup>
-                <Label>Invita sportivi alla prenotazione</Label>
-                <Row>
-                    <Col>
-                        <SportiviInvitabiliSelezione sportivi={sportiviInvitabili.sportivi}
-                            handleSelezioneSportiviInvitabili={onSportiviInvitabiliSelezione} />
-                    </Col>
-                </Row>
-            </FormGroup>
-            <FormGroup>
-                <Label>Numero giocatori non iscritti da associare alla prenotazione</Label>
-                <Row>
-                    <Col>
-                        <GiocatoriNonIscritti postiLiberi={postiLiberi}
-                            handleGiocatoriNonIscrittiSelezione={onGiocatoriNonIscrittiSelezione} />
-                    </Col>
-                </Row>
+                    numeroDate={numeroDate}
+                    istruttori={istruttoriDisponibili.arrayListeIstruttori}
+                    handleSelezioneIstruttore={onIstruttoreSelezioneRicorrente} />
             </FormGroup>
             <Button type="submit" 
             outline 

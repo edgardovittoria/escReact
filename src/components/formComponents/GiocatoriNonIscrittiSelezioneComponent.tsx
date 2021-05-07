@@ -1,5 +1,4 @@
 import React from 'react';
-import { PostiLiberi } from './PostiLiberiComponent';
 
 export type GiocatoriNonIscrittiProps = {
     postiLiberi: number,
@@ -10,7 +9,7 @@ let opzioni: JSX.Element[] = []
 
 const generaOpzioni = (postiLiberi: number) => {
     opzioni = [];
-    for(let i = 0; i<postiLiberi; i++){
+    for (let i = 0; i < postiLiberi; i++) {
         opzioni.push(
             <option key={i} value={i}>{i}</option>
         )
@@ -18,16 +17,16 @@ const generaOpzioni = (postiLiberi: number) => {
     return opzioni;
 }
 
-export const GiocatoriNonIscritti: React.FC<GiocatoriNonIscrittiProps> = ({postiLiberi, handleGiocatoriNonIscrittiSelezione}) => {
-    return(
+export const GiocatoriNonIscritti: React.FC<GiocatoriNonIscrittiProps> = ({ postiLiberi, handleGiocatoriNonIscrittiSelezione }) => {
+    return (
         <select className="form-control"
-                                name="numeroGiocatoriNonIscritti"
-                                id="invitaSportiviNonIscritti"
-                                onChange={(value) => {
-                                    handleGiocatoriNonIscrittiSelezione(value.currentTarget.value)
-                                }}
-                            >
-                                {generaOpzioni(postiLiberi)}
-                            </select>
+            name="numeroGiocatoriNonIscritti"
+            id="invitaSportiviNonIscritti"
+            onChange={(value) => {
+                handleGiocatoriNonIscrittiSelezione(value.currentTarget.value)
+            }}
+        >
+            {generaOpzioni(postiLiberi)}
+        </select>
     )
 }

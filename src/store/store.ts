@@ -1,3 +1,4 @@
+import { IstruttoreSlice } from './IstruttoreSlice';
 import { SportivoSlice } from './sportivoSlice';
 import { ImpiantoSlice } from './impiantoSlice';
 import { SportSlice } from './SportSlice';
@@ -18,12 +19,14 @@ const rootReducer = combineReducers({
   prenotazioni: PrenotazioneSlice.reducer,
   sportPraticabili: SportSlice.reducer,
   impiantiDisponibili: ImpiantoSlice.reducer,
+  istruttoriDisponibili: IstruttoreSlice.reducer,
   sportiviInvitabili: SportivoSlice.reducer
 });
 
 const persistConfig = {
   key: 'root',
-  storage
+  storage,
+  //whitelist: ['sportivo']
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

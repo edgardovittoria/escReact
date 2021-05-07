@@ -1,13 +1,13 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Card, CardBody, CardImg, CardText, CardTitle, Col, ListGroup, ListGroupItem, Row, Spinner } from 'reactstrap';
-import { NavLink, useHistory } from 'react-router-dom'; 
-import { confermaPrenotazione, prenotazioneSelector } from '../../store/prenotazioneSlice';
+import { NavLink, useHistory } from 'react-router-dom';
+import { confermaPrenotazione,  prenotazioneSelector } from '../../store/prenotazioneSlice';
 
 
 
 export const RiepilogoPrenotazione: React.FC = () => {
-  
+
     const prenotazioneDaConfermare = useSelector(prenotazioneSelector).prenotazioneDaConfermare
     const history = useHistory();
     const dispatch = useDispatch();
@@ -17,16 +17,17 @@ export const RiepilogoPrenotazione: React.FC = () => {
         history.push("profiloSportivo")
     }
 
-    if(prenotazioneDaConfermare.appuntamenti[0] !== undefined){
-    
-        const appuntamento = prenotazioneDaConfermare.appuntamenti[0]
+    if (prenotazioneDaConfermare.appuntamenti[0] !== undefined) {
+
+        const appuntamenti = prenotazioneDaConfermare.appuntamenti
         
+
         return (
             <>
                 <section>
                     <div className="container">
                         <div className="row justify-content-center">
-                            <Card className="col-4">
+                            <Card className="col-4" style={{height: "min-content"}}>
                                 <CardImg
                                     src="/assets/img/avatarProfilo.png"
                                     alt="Avatar Sportivo" />
@@ -48,73 +49,75 @@ export const RiepilogoPrenotazione: React.FC = () => {
                                 </CardBody>
                             </Card>
                             <Card className="col-6">
-    
+
                                 <CardTitle style={{ marginTop: "3%", marginBottom: "4%" }}>
                                     Riepilogo prenotazione
                                 </CardTitle>
-    
+                                <ListGroup>
+                                    <ListGroupItem key="sportPrenotato">
+                                        Sport Prenotato : {appuntamenti[0].specificaPrenotazione.sportAssociato.nome}
+                                    </ListGroupItem>
+                                </ListGroup>
+                                {appuntamenti.map((appuntamento) => {
+                                    return (
+                                        <>
+                                            <ListGroupItem>
+                                                Impianto Prenotato : {appuntamento.specificaPrenotazione.pavimentazioneImpianto}
+                                            </ListGroupItem>
+                                            <ListGroupItem>
+                                                Data Prenotata : {appuntamento.dataAppuntamento}
+                                            </ListGroupItem>
+                                            <ListGroupItem>
+                                                Ora Inizio : {appuntamento.oraInizioAppuntamento}
+                                            </ListGroupItem>
+                                            <ListGroupItem>
+                                                Ora Fine : {appuntamento.oraFineAppuntamento}
+                                            </ListGroupItem>
+                                            <ListGroupItem>
+                                                Costo Totale : {appuntamento.specificaPrenotazione.costo}€
+                                            </ListGroupItem>
+                                        </>
+                                    )
+                                })}
                                 <ListGroup>
                                     <ListGroupItem>
-                                        Sport Prenotato : {appuntamento.specificaPrenotazione.sportAssociato.nome}
-                                    </ListGroupItem>
-                                    <ListGroupItem>
-                                        Impianto Prenotato : {appuntamento.specificaPrenotazione.pavimentazioneImpianto}
-                                    </ListGroupItem>
-                                    <ListGroupItem>
-                                        Data Prenotata : {appuntamento.dataAppuntamento}
-                                    </ListGroupItem>
-                                    <ListGroupItem>
-                                        Ora Inizio : {appuntamento.oraInizioAppuntamento}
-                                    </ListGroupItem>
-                                    <ListGroupItem>
-                                        Ora Fine : {appuntamento.oraFineAppuntamento}
-                                    </ListGroupItem>
-                                    <ListGroupItem>
-                                        Sportivi Invitati : <ul>{appuntamento.specificaPrenotazione.invitati.map((invitato) => {
-                                            return(
-                                                <li>{invitato.nome} {invitato.cognome}</li>
-                                            )
-                                        })}
+                                        Sportivi Invitati : <ul>{appuntamenti[0].specificaPrenotazione.invitati.map((invitato) => {
+                                        return (
+                                            <li key={invitato.email}>{invitato.nome} {invitato.cognome}</li>
+                                        )
+                                    })}
                                         </ul>
                                     </ListGroupItem>
-                                    <ListGroupItem>
-                                        Costo Totale : {appuntamento.specificaPrenotazione.costo}€
-                                    </ListGroupItem>
+
                                 </ListGroup>
                                 <Row>
                                     <Col>
-                                        <Button 
-                                        type="submit" 
-                                        outline color="danger" 
-                                        style={{ marginTop: "20%", width: "100%" }} 
-                                        onClick={() => {
-                                            history.go(-2)
-                                        }} >Annulla</Button>
+                                        <Button
+                                            type="submit"
+                                            outline color="danger"
+                                            style={{ marginTop: "20%", width: "100%" }}
+                                            onClick={() => {
+                                                history.go(-2)
+                                            }} >Annulla</Button>
                                     </Col>
                                     <Col>
-                                        <Button 
-                                        outline color="success" 
-                                        style={{ marginTop: "20%", width: "100%" }}
-                                        onClick={onClick}>Conferma Prenotazione</Button>
+                                        <Button
+                                            outline color="success"
+                                            style={{ marginTop: "20%", width: "100%" }}
+                                            onClick={onClick}>Conferma Prenotazione</Button>
                                     </Col>
                                 </Row>
-                                
+
                             </Card>
                         </div>
                     </div>
                 </section>
-    
+
             </>
         )
-    }else{
+    } else {
         return <Spinner animation="grow" />
     }
-    //const appuntamento = prenotazioneDaConfermare.appuntamenti[0];
-    //console.log(appuntamento)
-
-    
-        
-    
 
 }
 

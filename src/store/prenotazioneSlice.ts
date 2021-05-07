@@ -1,6 +1,6 @@
+import { FormPrenotaLezione } from './../components/nuovaPrenotazioneComponent/FormPrenotazioneLezioneComponent';
+import { FormPrenotaImpianto } from './../components/nuovaPrenotazioneComponent/FormPrenotazioneImpiantoRicorrenteComponent';
 import { ArrayLisetImpiantoItem } from './../components/formComponents/DataOraImpiantoRicorrenteComponent';
-import { Impianto } from './../model/Impianto';
-import { FormPrenotaImpianto } from '../components/nuovaPrenotazioneComponent/FormPrenotazioneImpiantoComponent';
 import axios from 'axios';
 import { AppThunk } from './store';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
@@ -26,7 +26,8 @@ export const PrenotazioneSlice = createSlice({
             sportivoPrenotante: {
                 nome: "",
                 cognome: "",
-                email: ""
+                email: "",
+                sportPraticati: []
             },
             appuntamenti: []
         },
@@ -43,7 +44,8 @@ export const PrenotazioneSlice = createSlice({
                 sportivoPrenotante: {
                     nome: "",
                     cognome: "",
-                    email: ""
+                    email: "",
+                    sportPraticati: []
                 },
                 appuntamenti: []
             }
@@ -57,9 +59,7 @@ export const PrenotazioneSlice = createSlice({
         addListaPrenotazioni(state: PrenotazioneState, action: PayloadAction<Prenotazione[]>){
             state.isLoading = false
             state.errors = ""
-            action.payload.forEach((prenotazione) => {
-                state.prenotazioni.push(prenotazione)
-            })
+            state.prenotazioni = action.payload
         },
         setLoading(state: PrenotazioneState, action: PayloadAction<boolean>){
             state.isLoading = action.payload
@@ -80,15 +80,15 @@ export const {
 } = PrenotazioneSlice.actions
 
 export const prenotazioneSelector = (state: { prenotazioni: PrenotazioneState }) => state.prenotazioni
+export const prenotazioniSelector = (state: { prenotazioni: PrenotazioneState }) => state.prenotazioni.prenotazioni
+
 
 export const avviaNuovaPrenotazione = (emailSportivo: string, tipoPren: string): AppThunk => async dispatch => {
     try {
         dispatch(setLoading(true));
         const res = await axios.get("http://localhost:8080/effettuaPrenotazione/avviaNuovaPrenotazione", {params: {email: emailSportivo, tipoPrenotazione: tipoPren}})
-        //dispatch(addListaImpiantiDisponibili(res.data.impiantiDisponibili))
         dispatch(addListaSportPraticabili(res.data.sportPraticabili))
         dispatch(addListaInvitabili(res.data.sportiviPolisportiva))
-        //dispatch(addListaPrenotazioni(res.data))
     } catch (error) {
         dispatch(setLoading(false))
         dispatch(setErrors(error))
@@ -96,7 +96,8 @@ export const avviaNuovaPrenotazione = (emailSportivo: string, tipoPren: string):
 
 }
 
-export const riepilogoPrenotazione = (prenotazione: FormPrenotaImpianto): AppThunk => async dispatch => {
+
+export const riepilogoPrenotazione = (prenotazione: FormPrenotaImpianto | FormPrenotaLezione): AppThunk => async dispatch => {
     try {
         dispatch(setLoading(true));
         const res = await axios.post("http://localhost:8080/effettuaPrenotazione/riepilogoPrenotazione", prenotazione)
@@ -122,7 +123,7 @@ export const confermaPrenotazione = (): AppThunk => async dispatch => {
 export const fetchPrenotazioni = (emailSportivo: string): AppThunk => async dispatch => {
     try {
         dispatch(setLoading(true));
-        const res = await axios.get("url", {params: {email: emailSportivo}})
+        const res = await axios.get("http://localhost:8080/aggiornaOpzioni/prenotazioniSportivo/", {params: {email: emailSportivo}})
         dispatch(addListaPrenotazioni(res.data))
     } catch (error) {
         dispatch(setErrors(error))
