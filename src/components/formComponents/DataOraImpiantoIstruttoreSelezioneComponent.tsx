@@ -1,7 +1,6 @@
 import React from 'react';
 import { Impianto } from '../../model/Impianto';
 import { Istruttore } from '../../model/Istruttore';
-import { IstruttoreSlice } from '../../store/IstruttoreSlice';
 import { DataOraSelezione, OrarioPrenotazione } from './DataOraSelezioneComponent';
 import { ImpiantoSelezione } from './ImpiantoSelezioneComponet';
 import { IstruttoreSelezione } from './IstruttoreSelezioneComponent';

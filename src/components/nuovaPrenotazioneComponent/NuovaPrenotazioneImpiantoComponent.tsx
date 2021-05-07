@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { sportivoAutenticatoSelector } from '../../store/sportivoAutenticatoSlice';
-import { Card, CardBody, CardImg, CardText, CardTitle, ListGroup, ListGroupItem, Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap';
+import { Card, CardBody, CardImg, CardText, CardTitle, ListGroup, ListGroupItem } from 'reactstrap';
 import { NavLink as NavLinkRouter } from 'react-router-dom';
 import { avviaNuovaPrenotazione } from '../../store/prenotazioneSlice';
 import { resetListaInvitabili } from '../../store/sportivoSlice';

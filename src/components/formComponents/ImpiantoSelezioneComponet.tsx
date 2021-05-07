@@ -1,4 +1,3 @@
-import { spawn } from 'node:child_process';
 import React from 'react';
 import { Label } from 'reactstrap';
 import { Impianto } from '../../model/Impianto';

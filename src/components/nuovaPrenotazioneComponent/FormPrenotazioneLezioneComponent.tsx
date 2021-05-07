@@ -6,15 +6,11 @@ import { Button, Col, Form, FormGroup, Label, Row } from 'reactstrap';
 import { impiantoSelector } from '../../store/impiantoSlice';
 import { fetchIstruttori, istruttoreSelector } from '../../store/IstruttoreSlice';
 import { aggiornaImpiantiRicorrente, riepilogoPrenotazione } from '../../store/prenotazioneSlice';
-import { sportivoSelector } from '../../store/sportivoSlice';
 import { sportSelector } from '../../store/SportSlice';
 import { DataOraImpiantoIstruttoreSelezione, IstruttoriSelezionatiItem } from '../formComponents/DataOraImpiantoIstruttoreSelezioneComponent';
-import { DataOraImpiantoRicorrente, ImpiantiSelezionatiItem } from '../formComponents/DataOraImpiantoRicorrenteComponent';
+import { ImpiantiSelezionatiItem } from '../formComponents/DataOraImpiantoRicorrenteComponent';
 import { OrarioPrenotazione } from '../formComponents/DataOraSelezioneComponent';
-import { GiocatoriNonIscritti } from '../formComponents/GiocatoriNonIscrittiSelezioneComponent';
-import { PostiLiberi } from '../formComponents/PostiLiberiComponent';
 import { SelezioneSport } from '../formComponents/SelezioneSportComponent';
-import { SportiviInvitabiliSelezione } from '../formComponents/SportiviInvitabiliSelezioneComponent';
 
 export type FormPrenotaLezione = {
     sportSelezionato: string,
