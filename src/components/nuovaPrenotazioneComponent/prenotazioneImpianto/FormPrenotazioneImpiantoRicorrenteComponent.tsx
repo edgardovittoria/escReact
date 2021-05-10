@@ -42,6 +42,9 @@ export const FormPrenotazioneImpiantoRicorrente: React.FC = () => {
     function onSportSelezionato(sportSelezionato: string) {
         setValue("sportSelezionato", sportSelezionato)
         setValue("tipoPrenotazione", "IMPIANTO")
+        for(let i=1; i<numeroDate+1; i++){
+            aggiornaListeImpianti(i, sportSelezionato, getValues("orariSelezionati")[i])
+        }
         setPostiliberiAggiornati(sportPraticabili.sports.filter((sport) => sport.nome === sportSelezionato)[0].postiLiberi)
         setPostiliberi(sportPraticabili.sports.filter((sport) => sport.nome === sportSelezionato)[0].postiLiberi)
 
@@ -53,12 +56,22 @@ export const FormPrenotazioneImpiantoRicorrente: React.FC = () => {
     })
 
     const aggiornaListeImpianti = (id: number, sport: string, orarioSelezionato: OrarioPrenotazione) => {
-        if (sport !== undefined) {
+        if (sport !== undefined && orarioSelezionato !== undefined) {
             let object = {
                 sport: sport,
                 orario: orarioSelezionato
             }
             dispatch(aggiornaImpiantiRicorrente(object, id));
+        }else if (sport === undefined && orarioSelezionato !== undefined){
+            let object = {
+                orario : orarioSelezionato
+            }
+            dispatch(aggiornaImpiantiRicorrente(object, id));
+        }else if(sport !== undefined && orarioSelezionato === undefined){
+            let object = {
+                sport: sport
+            }
+            dispatch(aggiornaImpiantiRicorrente(object, id))
         }
 
     }

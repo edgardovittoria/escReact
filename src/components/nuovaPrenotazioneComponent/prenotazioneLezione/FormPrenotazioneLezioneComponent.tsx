@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { Button, Col, Form, FormGroup, Label, Row } from 'reactstrap';
 import { impiantoSelector } from '../../../store/impiantoSlice';
-import { fetchIstruttori, istruttoreSelector } from '../../../store/IstruttoreSlice';
-import { aggiornaImpiantiRicorrente, riepilogoPrenotazione } from '../../../store/prenotazioneSlice';
+import { istruttoreSelector } from '../../../store/IstruttoreSlice';
+import { aggiornaImpiantiRicorrente, aggiornaIstruttori, riepilogoPrenotazione } from '../../../store/prenotazioneSlice';
 import { sportSelector } from '../../../store/SportSlice';
 import { DataOraImpiantoIstruttoreSelezione, IstruttoriSelezionatiItem } from '../formComponents/DataOraImpiantoIstruttoreSelezioneComponent';
 import { ImpiantiSelezionatiItem } from '../formComponents/DataOraImpiantoRicorrenteComponent';
@@ -38,7 +38,10 @@ export const FormPrenotazioneLezione: React.FC = () => {
     function onSportSelezionato(sportSelezionato: string) {
         setValue("sportSelezionato", sportSelezionato)
         setValue("tipoPrenotazione", "LEZIONE");
-        aggiornaListeIstruttori(sportSelezionato)
+        for(let i=1; i<numeroDate+1; i++){
+            aggiornaListeImpianti(i, sportSelezionato, getValues("orariSelezionati")[i])
+            aggiornaListeIstruttori(i, sportSelezionato, getValues("orariSelezionati")[i])
+        }
     }
 
     const onSubmit = handleSubmit((form: FormPrenotaLezione) => {
@@ -47,18 +50,42 @@ export const FormPrenotazioneLezione: React.FC = () => {
     })
 
     const aggiornaListeImpianti = (id: number, sport: string, orarioSelezionato: OrarioPrenotazione) => {
-        if (sport !== undefined) {
+        if (sport !== undefined && orarioSelezionato !== undefined) {
             let object = {
                 sport: sport,
                 orario: orarioSelezionato
             }
             dispatch(aggiornaImpiantiRicorrente(object, id));
+        }else if (sport === undefined && orarioSelezionato !== undefined){
+            let object = {
+                orario : orarioSelezionato
+            }
+            dispatch(aggiornaImpiantiRicorrente(object, id));
+        }else if(sport !== undefined && orarioSelezionato === undefined){
+            let object = {
+                sport: sport
+            }
+            dispatch(aggiornaImpiantiRicorrente(object, id))
         }
 
     }
-    const aggiornaListeIstruttori = (sport: string) => {
-        if (sport !== undefined) {
-            dispatch(fetchIstruttori(sport));
+    const aggiornaListeIstruttori = (id: number, sport: string, orarioSelezionato: OrarioPrenotazione) => {
+        if (sport !== undefined && orarioSelezionato !== undefined) {
+            let object = {
+                sport: sport,
+                orario: orarioSelezionato
+            }
+            dispatch(aggiornaIstruttori(object, id));
+        }else if (sport === undefined && orarioSelezionato !== undefined){
+            let object = {
+                orario : orarioSelezionato
+            }
+            dispatch(aggiornaIstruttori(object, id));
+        }else if(sport !== undefined && orarioSelezionato === undefined){
+            let object = {
+                sport: sport
+            }
+            dispatch(aggiornaIstruttori(object, id))
         }
     }
     const onOrarioSelezione = (orarioSelezionato: OrarioPrenotazione) => {
@@ -71,6 +98,7 @@ export const FormPrenotazioneLezione: React.FC = () => {
         }
         setValue("orariSelezionati", orari);
         aggiornaListeImpianti(orarioSelezionato.id, getValues("sportSelezionato"), orarioSelezionato)
+        aggiornaListeIstruttori(orarioSelezionato.id, getValues("sportSelezionato"), orarioSelezionato)
     }
 
     const onImpiantoSelezioneRicorrente = (impiantoItem: ImpiantiSelezionatiItem) => {

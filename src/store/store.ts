@@ -26,7 +26,7 @@ const rootReducer = combineReducers({
 const persistConfig = {
   key: 'root',
   storage,
-  //whitelist: ['sportivo']
+  whitelist: ['sportivo']
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

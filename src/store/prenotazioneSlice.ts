@@ -9,6 +9,8 @@ import { Prenotazione } from './../model/Prenotazone';
 import { addListaImpiantiDisponibili, addListaImpiantiDisponibiliAdArray, resetListaImpiantiDisponibili } from './impiantoSlice';
 import { addListaSportPraticabili } from './SportSlice';
 import { addListaInvitabili } from './sportivoSlice';
+import { ArrayListeIstruttoreItem } from '../components/nuovaPrenotazioneComponent/formComponents/DataOraImpiantoIstruttoreSelezioneComponent';
+import { addListaIstruttori } from './IstruttoreSlice';
 
 export type PrenotazioneState = {
     prenotazioni: Prenotazione[]
@@ -144,12 +146,26 @@ export const aggiornaImpianti = (object: any): AppThunk => async dispatch => {
 
 export const aggiornaImpiantiRicorrente = (object: any, id: number): AppThunk => async dispatch => {
     try {
-        const res = await axios.post("http://localhost:8080/effettuaPrenotazione/aggiornaImpianti", object)
+        const res = await axios.post("http://localhost:8080/effettuaPrenotazione/aggiornaDatiOpzioni", object)
         let item: ArrayLisetImpiantoItem = {
             id: id,
-            impiantiDisponibili: res.data
+            impiantiDisponibili: res.data.impiantiDisponibili
         }
         dispatch(addListaImpiantiDisponibiliAdArray(item))
+    } catch (error) {
+        dispatch(setErrors(error));
+    }
+
+}
+
+export const aggiornaIstruttori = (object: any, id: number): AppThunk => async dispatch => {
+    try {
+        const res = await axios.post("http://localhost:8080/effettuaPrenotazione/aggiornaDatiOpzioni", object)
+        let item: ArrayListeIstruttoreItem = {
+            id: id,
+            istruttoriDisponibili: res.data.istruttoriDisponibili
+        }
+        dispatch(addListaIstruttori(item.istruttoriDisponibili))
     } catch (error) {
         dispatch(setErrors(error));
     }

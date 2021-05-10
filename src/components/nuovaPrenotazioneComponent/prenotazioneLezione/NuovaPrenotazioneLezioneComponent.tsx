@@ -6,6 +6,7 @@ import { resetListaInvitabili } from '../../../store/sportivoSlice';
 import { resetListaSportPraticabili } from '../../../store/SportSlice';
 import { RiepilogoUtente } from '../../profiloSportivoComponent/RiepilogoUtenteComponent';
 import { FormPrenotazioneLezione } from './FormPrenotazioneLezioneComponent';
+import { Label } from 'reactstrap';
 
 export const NuovaPrenotazioneLezione: React.FC = () => {
 
@@ -28,6 +29,7 @@ export const NuovaPrenotazioneLezione: React.FC = () => {
                             email={sportivoAutenticato.sportivo.email}
                             sportPraticati={sportivoAutenticato.sportivo.sportPraticati} />
                         <div className="col-8">
+                            <Label>PRENOTAZIONE LEZIONE</Label>
                             <FormPrenotazioneLezione />
                         </div>
                     </div>
