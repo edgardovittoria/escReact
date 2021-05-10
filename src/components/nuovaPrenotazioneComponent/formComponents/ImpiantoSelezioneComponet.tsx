@@ -1,6 +1,6 @@
 import React from 'react';
 import { Label } from 'reactstrap';
-import { Impianto } from '../../model/Impianto';
+import { Impianto } from '../../../model/Impianto';
 
 export type ImpiantoSelezioneProps = {
     chiave: number,

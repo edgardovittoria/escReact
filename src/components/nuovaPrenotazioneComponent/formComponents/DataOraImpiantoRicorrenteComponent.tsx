@@ -1,5 +1,5 @@
 import React from 'react';
-import { Impianto } from '../../model/Impianto';
+import { Impianto } from '../../../model/Impianto';
 import { DataOraSelezione, OrarioPrenotazione } from './DataOraSelezioneComponent';
 import { ImpiantoSelezione } from './ImpiantoSelezioneComponet';
 

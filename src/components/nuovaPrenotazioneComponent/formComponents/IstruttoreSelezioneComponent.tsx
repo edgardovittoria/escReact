@@ -1,6 +1,6 @@
 import React from 'react';
 import { Label } from 'reactstrap';
-import { Istruttore } from '../../model/Istruttore';
+import { Istruttore } from '../../../model/Istruttore';
 
 export type IstruttoreSelezioneProps = {
     istruttori: Istruttore[],

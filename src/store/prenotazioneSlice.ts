@@ -1,6 +1,6 @@
-import { FormPrenotaLezione } from './../components/nuovaPrenotazioneComponent/FormPrenotazioneLezioneComponent';
-import { FormPrenotaImpianto } from './../components/nuovaPrenotazioneComponent/FormPrenotazioneImpiantoRicorrenteComponent';
-import { ArrayLisetImpiantoItem } from './../components/formComponents/DataOraImpiantoRicorrenteComponent';
+import { FormPrenotaLezione } from '../components/nuovaPrenotazioneComponent/prenotazioneLezione/FormPrenotazioneLezioneComponent';
+import { FormPrenotaImpianto } from '../components/nuovaPrenotazioneComponent/prenotazioneImpianto/FormPrenotazioneImpiantoRicorrenteComponent';
+import { ArrayLisetImpiantoItem } from '../components/nuovaPrenotazioneComponent/formComponents/DataOraImpiantoRicorrenteComponent';
 import axios from 'axios';
 import { AppThunk } from './store';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';

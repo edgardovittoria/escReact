@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Card, CardBody, CardImg, CardText, CardTitle, Col, ListGroup, ListGroupItem, Row, Spinner } from 'reactstrap';
 import { NavLink, useHistory } from 'react-router-dom';
-import { confermaPrenotazione,  prenotazioneSelector } from '../../store/prenotazioneSlice';
+import { confermaPrenotazione,  prenotazioneSelector } from '../../../store/prenotazioneSlice';
 
 
 

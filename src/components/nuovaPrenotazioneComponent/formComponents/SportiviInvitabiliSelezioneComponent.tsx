@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sportivo } from '../../model/Sportivo';
+import { Sportivo } from '../../../model/Sportivo';
 
 export type sportiviInvitabiliProps = {
     sportivi: Sportivo[],

@@ -1,4 +1,4 @@
-import { ArrayLisetImpiantoItem } from './../components/formComponents/DataOraImpiantoRicorrenteComponent';
+import { ArrayLisetImpiantoItem } from '../components/nuovaPrenotazioneComponent/formComponents/DataOraImpiantoRicorrenteComponent';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { Impianto } from './../model/Impianto';

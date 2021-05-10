@@ -7,16 +7,16 @@ import { PersistGate } from 'redux-persist/integration/react'
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import { ProfiloSportivo } from './components/profiloSportivoComponent/ProfiloSportivoComponent';
 import { Login } from './components/loginComponent/LoginComponent';
-import { NuovaPrenotazioneImpianto } from './components/nuovaPrenotazioneComponent/NuovaPrenotazioneImpiantoComponent';
-import { RiepilogoPrenotazione } from './components/riepilogoPrenotazioneComponent/RiepilogoPrenotazioneComponent';
-import { NuovaPrenotazioneLezione } from './components/nuovaPrenotazioneComponent/NuovaPrenotazioneLezioneComponent';
+import { NuovaPrenotazioneImpianto } from './components/nuovaPrenotazioneComponent/prenotazioneImpianto/NuovaPrenotazioneImpiantoComponent';
+import { RiepilogoPrenotazione } from './components/nuovaPrenotazioneComponent/riepilogoPrenotazioneComponent/RiepilogoPrenotazioneComponent';
+import { NuovaPrenotazioneLezione } from './components/nuovaPrenotazioneComponent/prenotazioneLezione/NuovaPrenotazioneLezioneComponent';
 
 
 
 export const App: React.FC = () => {
   return (
     <Provider store={store}>
-      {/* <PersistGate persistor={persistor}> */}
+      <PersistGate persistor={persistor}>
       <BrowserRouter>
         <Switch>
           <Route path="/login"><Login /></Route>
@@ -27,7 +27,7 @@ export const App: React.FC = () => {
           <Redirect to="/login" />
         </Switch>
       </BrowserRouter>
-      {/* </PersistGate> */}
+      </PersistGate>
     </Provider>
   );
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Label } from 'reactstrap';
-import { Sport } from '../../model/Sport';
+import { Sport } from '../../../model/Sport';
 
 export type SelezioneSportProps = {
     sports: Sport[],

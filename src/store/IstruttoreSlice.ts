@@ -1,4 +1,4 @@
-import { ArrayListeIstruttoreItem } from './../components/formComponents/DataOraImpiantoIstruttoreSelezioneComponent';
+import { ArrayListeIstruttoreItem } from '../components/nuovaPrenotazioneComponent/formComponents/DataOraImpiantoIstruttoreSelezioneComponent';
 import { Istruttore } from '../model/Istruttore';
 
 import axios from 'axios';
