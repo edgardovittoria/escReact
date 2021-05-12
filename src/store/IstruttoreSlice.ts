@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import { ArrayListeIstruttoreItem } from '../components/nuovaPrenotazioneComponent/formComponents/DataOraImpiantoIstruttoreSelezioneComponent';
 import { Istruttore } from '../model/Istruttore';
 
@@ -68,7 +69,6 @@ export const fetchIstruttori = (sport: string): AppThunk => async dispatch => {
 }
 
 export const istruttoreSelector = (state: { istruttoriDisponibili: IstruttoreState }) => state.istruttoriDisponibili
-// export default IstruttoreSlice.reducer;
 
 
 

@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { sportivoAutenticatoSelector } from '../../store/sportivoAutenticatoSlice';
@@ -23,16 +24,16 @@ export const ProfiloSportivo: React.FC = () => {
         margin: "auto"
     };
 
-    const sportvoAutenticato = useSelector(sportivoAutenticatoSelector);
-    const prenotazioniEffettuate = useSelector(prenotazioniSelector);
     const history = useHistory()
+    const sportivoAutenticato = useSelector(sportivoAutenticatoSelector);
+    const prenotazioniEffettuate = useSelector(prenotazioniSelector);
 
     return (
         <>
             <div className="img-container">
                 <img src="/assets/img/avatarProfilo.png" alt="avatar profilo" />
-                <h2>{sportvoAutenticato.sportivo.nome} {sportvoAutenticato.sportivo.cognome}</h2>
-                <h3>{sportvoAutenticato.sportivo.email}</h3>
+                <h2>{sportivoAutenticato.sportivo.nome} {sportivoAutenticato.sportivo.cognome}</h2>
+                <h3>{sportivoAutenticato.sportivo.email}</h3>
             </div>
             <div className="container">
                 <p>Prenota un impianto una lezione o un corso</p>

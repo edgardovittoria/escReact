@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import { ArrayLisetImpiantoItem } from '../components/nuovaPrenotazioneComponent/formComponents/DataOraImpiantoRicorrenteComponent';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
@@ -33,12 +34,14 @@ export const ImpiantoSlice = createSlice({
     reducers: {
         addListaImpiantiDisponibili(state: ImpiantoState, action: PayloadAction<Impianto[]>) {
             state.isLoading = false;
+            state.errors = ""
             action.payload.forEach((impianto) => {
                 state.impianti.push(impianto)
             })
         },
         addListaImpiantiDisponibiliAdArray(state: ImpiantoState, action: PayloadAction<ArrayLisetImpiantoItem>){
             state.isLoading = false;
+            state.errors = ""
             state.arrayListeImpianti.map((item) => {
                 if(item.id === action.payload.id){
                     item.impiantiDisponibili = action.payload.impiantiDisponibili

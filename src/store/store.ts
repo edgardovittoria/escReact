@@ -8,7 +8,7 @@ import storage from 'redux-persist/lib/storage';
 import { SportivoAutenticatoSlice } from './sportivoAutenticatoSlice';
 import persistReducer from 'redux-persist/es/persistReducer';
 import persistStore from 'redux-persist/es/persistStore';
-import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE } from 'redux-persist';
+//import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE } from 'redux-persist';
 
 //viene salvato lo stato dell'applicazione nel localStorage
 
@@ -26,7 +26,7 @@ const rootReducer = combineReducers({
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['sportivo']
+  whitelist: ['sportivo'],
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
@@ -34,9 +34,7 @@ const persistedReducer = persistReducer(persistConfig, rootReducer)
 export const store = configureStore({
   reducer: persistedReducer,
   middleware: getDefaultMiddleware({
-    serializableCheck: {
-      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-    },
+    serializableCheck: false
   }),
 });
 

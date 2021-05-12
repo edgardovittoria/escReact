@@ -11,7 +11,7 @@ export type ImpiantoSelezioneProps = {
 export const ImpiantoSelezione: React.FC<ImpiantoSelezioneProps> = ({ chiave, impianti, handleSelezioneImpianto }) => {
     return (
         <>
-        <Label>Seleziona Impianto</Label>
+        <Label style={{marginLeft: "16px", marginTop: "10px"}}>Seleziona Impianto</Label>
         <select
             key={chiave}
             className="form-control"
@@ -20,6 +20,7 @@ export const ImpiantoSelezione: React.FC<ImpiantoSelezioneProps> = ({ chiave, im
             onClick={(value) => {
                 handleSelezioneImpianto(value.currentTarget.value, chiave)
             }}
+            style={{marginLeft: "16px", width: "92%", marginBottom: "10px"}}
         >
             {impianti.map((impianto, index) => {
                 return (

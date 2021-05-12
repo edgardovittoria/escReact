@@ -37,7 +37,7 @@ export type IstruttoriSelezionatiItem = {
 
 
 
-export const DataOraImpiantoIstruttoreSelezione: React.FC<DataOraImpiantoRicorrenteProps> = ({ numeroDate, handleSelezioneDataOra, istruttori, impianti, handleSelezioneImpianto }) => {
+export const DataOraImpiantoIstruttoreSelezione: React.FC<DataOraImpiantoRicorrenteProps> = ({ numeroDate, handleSelezioneDataOra, istruttori, impianti, handleSelezioneImpianto, handleSelezioneIstruttore }) => {
     const onOrarioSelezioneRicorrente = (orarioPrenotazione: OrarioPrenotazione) => {
         handleSelezioneDataOra(orarioPrenotazione)
     }
@@ -53,7 +53,7 @@ export const DataOraImpiantoIstruttoreSelezione: React.FC<DataOraImpiantoRicorre
             idSelezione: chiave,
             istruttore: istruttore
         } 
-        handleSelezioneImpianto(istruttoreItem);
+        handleSelezioneIstruttore(istruttoreItem)
     }
 
     let elementi: JSX.Element[] = []

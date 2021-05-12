@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import { Col, Label, Row } from 'reactstrap';
 import TimePicker from 'rc-time-picker';
@@ -17,10 +18,22 @@ export type OrarioProps = {
     chiave: number
 }
 
+const dataApprossimata = (): Date => {
+    let oraInizio = new Date()
+    if(oraInizio.getMinutes() < 30){
+        oraInizio.setMinutes(30)
+    }else{
+        oraInizio.setMinutes(0)
+        oraInizio.setHours(oraInizio.getHours() + 1)
+    }
+    return oraInizio;
+    
+}
+
 export const DataOraSelezione: React.FC<OrarioProps> = ({ handleSelezioneOrario, chiave }) => {
 
-    const [oraInizio, setOraInizio] = useState<Date>(new Date())
-    const [oraFine, setOraFine] = useState<Date>(new Date())
+    const [oraInizio, setOraInizio] = useState<Date>(dataApprossimata())
+    const [oraFine, setOraFine] = useState<Date>(dataApprossimata())
 
     useEffect(() => {
         let orarioSelezionato: OrarioPrenotazione = {
@@ -30,7 +43,6 @@ export const DataOraSelezione: React.FC<OrarioProps> = ({ handleSelezioneOrario,
             oraFine: oraFine
         }
         handleSelezioneOrario(orarioSelezionato)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [oraFine])
 
     
@@ -44,7 +56,6 @@ export const DataOraSelezione: React.FC<OrarioProps> = ({ handleSelezioneOrario,
             <Col>
                 <Label>Data Prenotazione : </Label>
                 <input
-                    // {...register("dataPrenotazione")}
                     type="date"
                     id="start"
                     name="dataPrenotazione"
@@ -69,7 +80,6 @@ export const DataOraSelezione: React.FC<OrarioProps> = ({ handleSelezioneOrario,
             <Col>
                 <Label>Orario Inizio Prenotazione : </Label>
                 <TimePicker
-                    // {...register("oraInizio")}
                     showSecond={false}
                     minuteStep={30}
                     defaultValue={moment.utc().set({ date: oraInizio.getDate(), hour: oraInizio.getHours(), minute: oraInizio.getMinutes() })}
@@ -95,7 +105,6 @@ export const DataOraSelezione: React.FC<OrarioProps> = ({ handleSelezioneOrario,
             <Col>
                 <Label>Orario Fine Prenotazione : </Label>
                 <TimePicker
-                    //{...register("oraFine")}
                     name="oraFine"
                     showSecond={false}
                     minuteStep={30}

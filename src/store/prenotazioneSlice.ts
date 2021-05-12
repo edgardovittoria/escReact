@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import { FormPrenotaLezione } from '../components/nuovaPrenotazioneComponent/prenotazioneLezione/FormPrenotazioneLezioneComponent';
 import { FormPrenotaImpianto } from '../components/nuovaPrenotazioneComponent/prenotazioneImpianto/FormPrenotazioneImpiantoRicorrenteComponent';
 import { ArrayLisetImpiantoItem } from '../components/nuovaPrenotazioneComponent/formComponents/DataOraImpiantoRicorrenteComponent';
@@ -173,6 +174,3 @@ export const aggiornaIstruttori = (object: any, id: number): AppThunk => async d
 }
 
 export default PrenotazioneSlice.reducer;
-
-
-

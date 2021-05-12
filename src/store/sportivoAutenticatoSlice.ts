@@ -1,14 +1,26 @@
+/* eslint-disable array-callback-return */
 import { Sportivo } from '../model/Sportivo';
 
 import axios from 'axios';
-import { AppThunk, RootState } from './store';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export type SportivoAutenticatoState = {
     sportivo: Sportivo
     isLoading: boolean
     errors: string
 }
+
+export const loginSportivo = createAsyncThunk("sportivo/login",
+    async (email: string, tunkAPI) =>  {
+        try {
+            const response = await axios.get('http://localhost:8080/aggiornaOpzioni/sportivo', {params: {email: email}})
+            return response.data
+        } catch (error) {
+            return tunkAPI.rejectWithValue(error.message)
+        }
+        
+    }
+)
 
 
 export const SportivoAutenticatoSlice = createSlice({
@@ -19,41 +31,39 @@ export const SportivoAutenticatoSlice = createSlice({
         errors: ""
     } as SportivoAutenticatoState,
     reducers: {
-        setSportivo(state: SportivoAutenticatoState, action: PayloadAction<Sportivo>) {
-           state.isLoading = false 
-           state.sportivo = action.payload
-        },
-        setLoading(state: SportivoAutenticatoState, action: PayloadAction<boolean>){
-            state.isLoading = action.payload
-        },
-        setErrors(state: SportivoAutenticatoState, action: PayloadAction<string>){
-            state.errors = action.payload
-        },
         resetLocalStorsageState(){
             localStorage.clear()
+        }
+    },
+    extraReducers: {
+        [loginSportivo.fulfilled.type]: (state: SportivoAutenticatoState, action: PayloadAction<Sportivo>) => {
+            state.sportivo = action.payload
+            state.isLoading = false
+            state.errors = ""
+        },
+        [loginSportivo.pending.type]: (state: SportivoAutenticatoState) => {
+            state.isLoading = true
+        },
+        [loginSportivo.rejected.type]: (state: SportivoAutenticatoState, action: PayloadAction<string>) => {
+            state.sportivo = {
+                nome: "",
+                cognome: "",
+                email: "",
+                sportPraticati: []
+            }
+            state.errors = action.payload
+            state.isLoading = false;
+            alert("Username o Password sbagliati. RIPROVA!!!")
+            window.location.href = "http://localhost:3000/";       
         }
     }
 });
 
 export const {
-    setSportivo,
-    setLoading,
-    setErrors,
     resetLocalStorsageState
 } = SportivoAutenticatoSlice.actions
 
 export const sportivoAutenticatoSelector = (state: { sportivo: SportivoAutenticatoState }) => state.sportivo
-
-export const loginSportivo = (email: string): AppThunk => async dispatch => {
-    try {
-        dispatch(setLoading(true));
-        const res = await axios.get('http://localhost:8080/aggiornaOpzioni/sportivo', {params: {email: email}})
-        dispatch(setSportivo(res.data))
-    } catch (error) {
-        dispatch(setErrors(error))
-    }
-
-}
 
 export default SportivoAutenticatoSlice.reducer;
 

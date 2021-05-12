@@ -1,3 +1,4 @@
+import { Istruttore } from './Istruttore';
 import { Sportivo } from './Sportivo';
 import { Sport } from './Sport';
 
@@ -9,4 +10,5 @@ export type PrenotazioneSpecs = {
     invitati: Sportivo[]
     idImpiantoPrenotato: number
     pavimentazioneImpianto: string
+    istruttore: Istruttore
 }

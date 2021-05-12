@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import { Sportivo } from '../model/Sportivo';
 
 import axios from 'axios';

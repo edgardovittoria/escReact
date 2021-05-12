@@ -1,4 +1,5 @@
 import { PrenotazioneSpecs } from './PrenotazioneSpecs';
+import { QuotaPartecipazione } from './QuotaPartecipazione';
 import { Sportivo } from './Sportivo';
 
 export type Appuntamento = {
@@ -7,4 +8,5 @@ export type Appuntamento = {
     oraFineAppuntamento: Date
     listaPartecipanti: Sportivo[]
     specificaPrenotazione: PrenotazioneSpecs
+    quotePartecipazione: QuotaPartecipazione[]
 }

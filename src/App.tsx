@@ -10,6 +10,7 @@ import { Login } from './components/loginComponent/LoginComponent';
 import { NuovaPrenotazioneImpianto } from './components/nuovaPrenotazioneComponent/prenotazioneImpianto/NuovaPrenotazioneImpiantoComponent';
 import { RiepilogoPrenotazione } from './components/nuovaPrenotazioneComponent/riepilogoPrenotazioneComponent/RiepilogoPrenotazioneComponent';
 import { NuovaPrenotazioneLezione } from './components/nuovaPrenotazioneComponent/prenotazioneLezione/NuovaPrenotazioneLezioneComponent';
+import { RiepilogoPrenotazioneLezione } from './components/nuovaPrenotazioneComponent/riepilogoPrenotazioneComponent/RiepilogoPrenotazioneLezioneComponent';
 
 
 
@@ -24,6 +25,7 @@ export const App: React.FC = () => {
           <Route path="/nuovaPrenotazioneImpianto"><NuovaPrenotazioneImpianto/></Route>
           <Route path="/nuovaPrenotazioneLezione"><NuovaPrenotazioneLezione/></Route>
           <Route path="/riepilogoPrenotazione"><RiepilogoPrenotazione/></Route>
+          <Route path="/riepilogoPrenotazioneLezione"><RiepilogoPrenotazioneLezione/></Route>
           <Redirect to="/login" />
         </Switch>
       </BrowserRouter>

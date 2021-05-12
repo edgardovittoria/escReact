@@ -46,7 +46,7 @@ export const FormPrenotazioneLezione: React.FC = () => {
 
     const onSubmit = handleSubmit((form: FormPrenotaLezione) => {
         dispatch(riepilogoPrenotazione(form))
-        history.push("/riepilogoPrenotazione");
+        history.push("/riepilogoPrenotazioneLezione");
     })
 
     const aggiornaListeImpianti = (id: number, sport: string, orarioSelezionato: OrarioPrenotazione) => {
