@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { Button, Col, Form, FormGroup, Label, Row } from 'reactstrap';
+import { formPrenotaImpiantoSelector } from '../../../store/formPrenotaImpiantoSlice';
 import { impiantoSelector } from '../../../store/impiantoSlice';
 import { istruttoreSelector } from '../../../store/IstruttoreSlice';
 import { aggiornaImpiantiRicorrente, aggiornaIstruttori, riepilogoPrenotazione } from '../../../store/prenotazioneSlice';
@@ -32,7 +33,8 @@ export const FormPrenotazioneLezione: React.FC = () => {
     const history = useHistory();
     const [numeroDate, setNumeroDate] = useState(0);
     const sportPraticabili = useSelector(sportSelector);
-    const impiantiDisponibili = useSelector(impiantoSelector);
+    //const impiantiDisponibili = useSelector(impiantoSelector);
+    const formPrenotaLezione = useSelector(formPrenotaImpiantoSelector);
     const istruttoriDisponibili = useSelector(istruttoreSelector);
 
     function onSportSelezionato(sportSelezionato: string) {
@@ -148,7 +150,7 @@ export const FormPrenotazioneLezione: React.FC = () => {
                 </Row>
             </FormGroup>
             <FormGroup className="border border-dark rounded" style={{ textAlign: 'left' }}>
-                <DataOraImpiantoIstruttoreSelezione impianti={impiantiDisponibili.arrayListeImpianti}
+                <DataOraImpiantoIstruttoreSelezione impianti={formPrenotaLezione.arrayListeImpianti}
                     handleSelezioneDataOra={onOrarioSelezione}
                     handleSelezioneImpianto={onImpiantoSelezioneRicorrente}
                     numeroDate={numeroDate}

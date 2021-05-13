@@ -1,5 +1,6 @@
 import React from 'react';
 import { Impianto } from '../../../model/Impianto';
+import { CheckBoxPending } from './CheckBoxPendingComponent';
 import { DataOraSelezione, OrarioPrenotazione } from './DataOraSelezioneComponent';
 import { ImpiantoSelezione } from './ImpiantoSelezioneComponet';
 
@@ -7,12 +8,18 @@ export type DataOraImpiantoRicorrenteProps = {
     numeroDate: number,
     handleSelezioneDataOra: Function,
     impianti: ArrayLisetImpiantoItem[],
-    handleSelezioneImpianto: Function
+    handleSelezioneImpianto: Function,
+    handleSelezioneCheckBoxPending: Function
 }
 
 export type ArrayLisetImpiantoItem = {
     id: number,
     impiantiDisponibili: Impianto[]
+}
+
+export type ArrayCheckBoxPendingItem = {
+    id: number,
+    checkboxPending: boolean
 }
 
 
@@ -21,9 +28,14 @@ export type ImpiantiSelezionatiItem = {
     idImpianto: string
 }
 
+export type CheckBoxPendingSelezionatoItem = {
+    idSelezione: number
+    pending: boolean
+}
 
 
-export const DataOraImpiantoRicorrente: React.FC<DataOraImpiantoRicorrenteProps> = ({ numeroDate, handleSelezioneDataOra, impianti, handleSelezioneImpianto }) => {
+
+export const DataOraImpiantoRicorrente: React.FC<DataOraImpiantoRicorrenteProps> = ({ numeroDate, handleSelezioneDataOra, impianti, handleSelezioneImpianto, handleSelezioneCheckBoxPending }) => {
     const onOrarioSelezioneRicorrente = (orarioPrenotazione: OrarioPrenotazione) => {
         handleSelezioneDataOra(orarioPrenotazione)
     }
@@ -35,6 +47,22 @@ export const DataOraImpiantoRicorrente: React.FC<DataOraImpiantoRicorrenteProps>
         handleSelezioneImpianto(impiantoItem);
     }
 
+    const onCheckBoxPendingSelezioneRicorrente = (pending: string, chiave: number) => {
+        let pendingBoolean: boolean = false;
+        if(pending === "true"){
+            pendingBoolean = true
+        }else{
+            pendingBoolean = false
+        }
+        let checkBoxPendingItem: CheckBoxPendingSelezionatoItem = {
+            idSelezione: chiave,
+            pending: pendingBoolean
+        } 
+        
+        handleSelezioneCheckBoxPending(checkBoxPendingItem);
+        
+    }
+
     let elementi: JSX.Element[] = []
     for (let i = 1; i < numeroDate+1; i++) {
         elementi.push(
@@ -43,6 +71,8 @@ export const DataOraImpiantoRicorrente: React.FC<DataOraImpiantoRicorrenteProps>
                     chiave={i} />
                 <ImpiantoSelezione impianti={impianti.filter(item => item.id === i)[0].impiantiDisponibili}
                     handleSelezioneImpianto={onImpiantoSelezioneRecorrente}
+                    chiave={i} />
+                <CheckBoxPending handleSelezioneCheckBox={onCheckBoxPendingSelezioneRicorrente}
                     chiave={i} />
             </div>
         )

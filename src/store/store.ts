@@ -1,3 +1,4 @@
+import { FormPrenotaImpiantoSlice } from './formPrenotaImpiantoSlice';
 import { IstruttoreSlice } from './IstruttoreSlice';
 import { SportivoSlice } from './sportivoSlice';
 import { ImpiantoSlice } from './impiantoSlice';
@@ -20,7 +21,8 @@ const rootReducer = combineReducers({
   sportPraticabili: SportSlice.reducer,
   impiantiDisponibili: ImpiantoSlice.reducer,
   istruttoriDisponibili: IstruttoreSlice.reducer,
-  sportiviInvitabili: SportivoSlice.reducer
+  sportiviInvitabili: SportivoSlice.reducer,
+  formPrenotazioneImpianto: FormPrenotaImpiantoSlice.reducer
 });
 
 const persistConfig = {

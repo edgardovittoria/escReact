@@ -3,11 +3,12 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { Button, Col, Form, FormGroup, Label, Row } from 'reactstrap';
+import { formPrenotaImpiantoSelector } from '../../../store/formPrenotaImpiantoSlice';
 import { impiantoSelector } from '../../../store/impiantoSlice';
 import { aggiornaImpiantiRicorrente, riepilogoPrenotazione } from '../../../store/prenotazioneSlice';
 import { sportivoSelector } from '../../../store/sportivoSlice';
 import { sportSelector } from '../../../store/SportSlice';
-import { DataOraImpiantoRicorrente, ImpiantiSelezionatiItem } from '../formComponents/DataOraImpiantoRicorrenteComponent';
+import { CheckBoxPendingSelezionatoItem, DataOraImpiantoRicorrente, ImpiantiSelezionatiItem } from '../formComponents/DataOraImpiantoRicorrenteComponent';
 import { OrarioPrenotazione } from '../formComponents/DataOraSelezioneComponent';
 import { GiocatoriNonIscritti } from '../formComponents/GiocatoriNonIscrittiSelezioneComponent';
 import { PostiLiberi } from '../formComponents/PostiLiberiComponent';
@@ -21,11 +22,13 @@ export type FormPrenotaImpianto = {
     sportiviInvitati: string[],
     postiLiberi: number,
     numeroGiocatoriNonIscritti: number,
-    tipoPrenotazione: string
+    tipoPrenotazione: string,
+    checkboxesPending: CheckBoxPendingSelezionatoItem[]
 }
 
 let orari: OrarioPrenotazione[] = [];
 let impiantiSelezionati: ImpiantiSelezionatiItem[] = [];
+let checkboxes: CheckBoxPendingSelezionatoItem[] = [];
 
 export const FormPrenotazioneImpiantoRicorrente: React.FC = () => {
 
@@ -38,7 +41,8 @@ export const FormPrenotazioneImpiantoRicorrente: React.FC = () => {
     const [postiLiberiAggiornato, setPostiliberiAggiornati] = useState(postiLiberi);
     const sportPraticabili = useSelector(sportSelector);
     const sportiviInvitabili = useSelector(sportivoSelector);
-    const impiantiDisponibili = useSelector(impiantoSelector);
+    // const impiantiDisponibili = useSelector(impiantoSelector);
+    const formPrenotaImpianto = useSelector(formPrenotaImpiantoSelector);
     function onSportSelezionato(sportSelezionato: string) {
         setValue("sportSelezionato", sportSelezionato)
         setValue("tipoPrenotazione", "IMPIANTO")
@@ -96,6 +100,15 @@ export const FormPrenotazioneImpiantoRicorrente: React.FC = () => {
         setValue("impianti", impiantiSelezionati)
     }
 
+    const onCheckBoxPendingSelezioneRicorrente = (checkBoxPendingItem: CheckBoxPendingSelezionatoItem) => {
+        if(checkboxes.filter(item => item.idSelezione === checkBoxPendingItem.idSelezione).length === 0){
+            checkboxes.push(checkBoxPendingItem)
+        }else{
+            checkboxes.filter(item => item.idSelezione === checkBoxPendingItem.idSelezione)[0].pending = checkBoxPendingItem.pending
+        }
+        setValue("checkboxesPending", checkboxes)
+    }
+
     const onSportiviInvitabiliSelezione = (emailSportivi: string[]) => {
         setValue("sportiviInvitati", emailSportivi)
     }
@@ -136,9 +149,10 @@ export const FormPrenotazioneImpiantoRicorrente: React.FC = () => {
                 </Row>
             </FormGroup>
             <FormGroup className="border border-dark rounded" style={{ textAlign: 'left' }}>
-                <DataOraImpiantoRicorrente impianti={impiantiDisponibili.arrayListeImpianti}
+                <DataOraImpiantoRicorrente impianti={formPrenotaImpianto.arrayListeImpianti}
                     handleSelezioneDataOra={onOrarioSelezione}
                     handleSelezioneImpianto={onImpiantoSelezioneRicorrente}
+                    handleSelezioneCheckBoxPending={onCheckBoxPendingSelezioneRicorrente}
                     numeroDate={numeroDate} />
             </FormGroup>
             <FormGroup>

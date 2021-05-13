@@ -7,7 +7,8 @@ import { AppThunk } from './store';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { Prenotazione } from './../model/Prenotazone';
-import { addListaImpiantiDisponibili, addListaImpiantiDisponibiliAdArray, resetListaImpiantiDisponibili } from './impiantoSlice';
+import { addListaImpiantiDisponibili, resetListaImpiantiDisponibili } from './impiantoSlice';
+import { addListaImpiantiDisponibiliAdArray } from './formPrenotaImpiantoSlice';
 import { addListaSportPraticabili } from './SportSlice';
 import { addListaInvitabili } from './sportivoSlice';
 import { ArrayListeIstruttoreItem } from '../components/nuovaPrenotazioneComponent/formComponents/DataOraImpiantoIstruttoreSelezioneComponent';
