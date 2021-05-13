@@ -1,5 +1,5 @@
 /* eslint-disable array-callback-return */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { sportivoAutenticatoSelector } from '../../store/sportivoAutenticatoSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,12 +9,31 @@ import { useHistory } from 'react-router';
 import './profiloSportivo.css';
 import { prenotazioniSelector, resetPrenotazioneDaConfermare } from '../../store/prenotazioneSlice';
 import { Prenotazione } from '../../model/Prenotazone';
+import { Sportivo } from '../../model/Sportivo';
+import SpringSocket from "react-spring-websocket";
 
 
+
+const socket = new SpringSocket(
+    "http://localhost:8080/notifiche",
+    ["/inviti"],
+    (notifica) => {
+        console.log(notifica)
+    }
+)
 
 
 export const ProfiloSportivo: React.FC = () => {
 
+    useEffect(() => {
+        if(socket.connected()){
+            socket.send("/app/creaNotifica", sportivoAutenticato.sportivo.email);
+            socket.onMessage()
+        }
+    },[])
+    
+
+    
     const dispatch = useDispatch()
     dispatch(resetPrenotazioneDaConfermare())
 
@@ -27,6 +46,9 @@ export const ProfiloSportivo: React.FC = () => {
     const history = useHistory()
     const sportivoAutenticato = useSelector(sportivoAutenticatoSelector);
     const prenotazioniEffettuate = useSelector(prenotazioniSelector);
+
+    
+    
 
     return (
         <>
@@ -55,7 +77,8 @@ export const ProfiloSportivo: React.FC = () => {
                 </button>
             </div>
             <h2 style={{ textAlign: "center", marginTop: "50px", marginBottom: "50px" }}>PRENOTAZIONI EFFETTUATE</h2>
-            <TablePrenotazioni prenotazioniEffettuate={prenotazioniEffettuate}/>
+            <TablePrenotazioni prenotazioniEffettuate={prenotazioniEffettuate}
+                sportivoAutenticato={sportivoAutenticato.sportivo}/>
 
 
         </>
@@ -64,10 +87,11 @@ export const ProfiloSportivo: React.FC = () => {
 }
 
 type TableProsp = {
-    prenotazioniEffettuate: Prenotazione[]
+    prenotazioniEffettuate: Prenotazione[],
+    sportivoAutenticato: Sportivo
 }
 
-const TablePrenotazioni: React.FC<TableProsp> = ({ prenotazioniEffettuate }) => {
+const TablePrenotazioni: React.FC<TableProsp> = ({ prenotazioniEffettuate, sportivoAutenticato }) => {
     if (prenotazioniEffettuate.length !== 0) {
         return (
             <table style={{ marginBottom: "50px" }}>
@@ -80,11 +104,13 @@ const TablePrenotazioni: React.FC<TableProsp> = ({ prenotazioniEffettuate }) => 
                         <th>Ora Fine</th>
                         <th>Numero partecipanti</th>
                         <th>Costo totale</th>
+                        <th>Quota Partecipazione</th>
                     </tr>
                 </thead>
                 <tbody>
 
-                    <TableRows prenotazioniEffettuate={prenotazioniEffettuate} />
+                    <TableRows prenotazioniEffettuate={prenotazioniEffettuate} 
+                        sportivoAutenticato={sportivoAutenticato}/>
 
                 </tbody>
             </table>
@@ -94,7 +120,7 @@ const TablePrenotazioni: React.FC<TableProsp> = ({ prenotazioniEffettuate }) => 
     }
 }
 
-const TableRows: React.FC<TableProsp> = ({ prenotazioniEffettuate }) => {
+const TableRows: React.FC<TableProsp> = ({ prenotazioniEffettuate, sportivoAutenticato }) => {
     let tableRow: JSX.Element[] = []
     let index = 0;
     if (prenotazioniEffettuate.length !== 0) {
@@ -109,6 +135,8 @@ const TableRows: React.FC<TableProsp> = ({ prenotazioniEffettuate }) => {
                         <th>{appuntamento.oraFineAppuntamento}</th>
                         <th>{appuntamento.listaPartecipanti.length}</th>
                         <th>{appuntamento.specificaPrenotazione.costo} €</th>
+                        <th>{appuntamento.quotePartecipazione.filter(quota => 
+                            quota.sportivo.email === sportivoAutenticato.email)[0].costo}€</th>
                     </tr>
                 )
                 index++

@@ -58,9 +58,9 @@ export const RiepilogoPrenotazione: React.FC = () => {
                                         Sport Prenotato : {appuntamenti[0].specificaPrenotazione.sportAssociato.nome}
                                     </ListGroupItem>
                                 </ListGroup>
-                                {appuntamenti.map((appuntamento) => {
+                                {appuntamenti.map((appuntamento, index) => {
                                     return (
-                                        <>
+                                        <div key={index}>
                                             <ListGroupItem>
                                                 Impianto Prenotato : {appuntamento.specificaPrenotazione.pavimentazioneImpianto}
                                             </ListGroupItem>
@@ -76,7 +76,7 @@ export const RiepilogoPrenotazione: React.FC = () => {
                                             <ListGroupItem>
                                                 Costo Totale : {appuntamento.specificaPrenotazione.costo}€
                                             </ListGroupItem>
-                                        </>
+                                        </div>
                                     )
                                 })}
                                 <ListGroup>
