@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { Button, Col, Form, FormGroup, Label, Row } from 'reactstrap';
 import { formPrenotaImpiantoSelector } from '../../../store/formPrenotaImpiantoSlice';
-import { impiantoSelector } from '../../../store/impiantoSlice';
 import { aggiornaImpiantiRicorrente, riepilogoPrenotazione } from '../../../store/prenotazioneSlice';
 import { sportivoSelector } from '../../../store/sportivoSlice';
 import { sportSelector } from '../../../store/SportSlice';
@@ -32,7 +31,7 @@ let checkboxes: CheckBoxPendingSelezionatoItem[] = [];
 
 export const FormPrenotazioneImpiantoRicorrente: React.FC = () => {
 
-    const { getValues, setValue, handleSubmit, /*formState: { errors }*/ } = useForm<FormPrenotaImpianto>();
+    const { register, getValues, setValue, handleSubmit, formState: { errors } } = useForm<FormPrenotaImpianto>();
 
     const dispatch = useDispatch();
     const history = useHistory();
@@ -42,7 +41,7 @@ export const FormPrenotazioneImpiantoRicorrente: React.FC = () => {
     const sportPraticabili = useSelector(sportSelector);
     const sportiviInvitabili = useSelector(sportivoSelector);
     // const impiantiDisponibili = useSelector(impiantoSelector);
-    const formPrenotaImpianto = useSelector(formPrenotaImpiantoSelector);
+    const opzioni = useSelector(formPrenotaImpiantoSelector);
     function onSportSelezionato(sportSelezionato: string) {
         setValue("sportSelezionato", sportSelezionato)
         setValue("tipoPrenotazione", "IMPIANTO")
@@ -107,6 +106,7 @@ export const FormPrenotazioneImpiantoRicorrente: React.FC = () => {
             checkboxes.filter(item => item.idSelezione === checkBoxPendingItem.idSelezione)[0].pending = checkBoxPendingItem.pending
         }
         setValue("checkboxesPending", checkboxes)
+        console.log(getValues("checkboxesPending"))
     }
 
     const onSportiviInvitabiliSelezione = (emailSportivi: string[]) => {
@@ -143,17 +143,21 @@ export const FormPrenotazioneImpiantoRicorrente: React.FC = () => {
                 <Row style={{ marginLeft: '1px' }}>
                     <Col>
                         <SelezioneSport sports={sportPraticabili.sports}
-                            handleSelezioneSport={onSportSelezionato} />
+                            handleSelezioneSport={onSportSelezionato}
+                            {...register("sportSelezionato", {required: true})} />
+                            {errors.sportSelezionato?.type === "required" && "Selezionare uno sport prima di procedere"}
                     </Col>
                     <Col id="postiLiberiContenitore">Posti Liberi: <PostiLiberi postiLiberiAggiornati={postiLiberiAggiornato} /></Col>
                 </Row>
             </FormGroup>
             <FormGroup className="border border-dark rounded" style={{ textAlign: 'left' }}>
-                <DataOraImpiantoRicorrente impianti={formPrenotaImpianto.arrayListeImpianti}
+                <DataOraImpiantoRicorrente impianti={opzioni.arrayListeImpianti}
                     handleSelezioneDataOra={onOrarioSelezione}
                     handleSelezioneImpianto={onImpiantoSelezioneRicorrente}
                     handleSelezioneCheckBoxPending={onCheckBoxPendingSelezioneRicorrente}
-                    numeroDate={numeroDate} />
+                    numeroDate={numeroDate}
+                    {...register("impianti",  {required: true})} 
+                    {...register("orariSelezionati", {required: true})}/>
             </FormGroup>
             <FormGroup>
                 <Label>Invita sportivi alla prenotazione</Label>

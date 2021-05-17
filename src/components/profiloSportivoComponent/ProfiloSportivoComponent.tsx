@@ -7,16 +7,16 @@ import { faTableTennis } from '@fortawesome/free-solid-svg-icons/faTableTennis';
 import { faFutbol, faVolleyballBall } from '@fortawesome/free-solid-svg-icons';
 import { useHistory } from 'react-router';
 import './profiloSportivo.css';
-import { prenotazioniSelector, resetPrenotazioneDaConfermare } from '../../store/prenotazioneSlice';
-import { Prenotazione } from '../../model/Prenotazone';
-import { Sportivo } from '../../model/Sportivo';
+import { partecipazioniSelector, prenotazioniSelector, resetPrenotazioneDaConfermare } from '../../store/prenotazioneSlice';
 import SpringSocket from "react-spring-websocket";
+import { TablePrenotazioni } from './TablePrenotazioniEffettuateComponent';
+import { TablePartecipazioni } from './TablePartecipazioniComponent';
 
 
 
 const socket = new SpringSocket(
     "http://localhost:8080/notifiche",
-    ["/inviti/pippofranco"],
+    ["/user/queue"],
     (notifica) => {
         console.log(notifica)
     }
@@ -26,14 +26,14 @@ const socket = new SpringSocket(
 export const ProfiloSportivo: React.FC = () => {
 
     useEffect(() => {
-        if(socket.connected()){
+        if (socket.connected()) {
             //socket.send("/app/creaNotifica", sportivoAutenticato.sportivo.email);
             socket.onMessage()
         }
-    },[])
-    
+    }, [])
 
-    
+
+
     const dispatch = useDispatch()
     dispatch(resetPrenotazioneDaConfermare())
 
@@ -46,9 +46,10 @@ export const ProfiloSportivo: React.FC = () => {
     const history = useHistory()
     const sportivoAutenticato = useSelector(sportivoAutenticatoSelector);
     const prenotazioniEffettuate = useSelector(prenotazioniSelector);
+    const partecipazioniEffettuate = useSelector(partecipazioniSelector);
+    
 
-    
-    
+
 
     return (
         <>
@@ -78,7 +79,11 @@ export const ProfiloSportivo: React.FC = () => {
             </div>
             <h2 style={{ textAlign: "center", marginTop: "50px", marginBottom: "50px" }}>PRENOTAZIONI EFFETTUATE</h2>
             <TablePrenotazioni prenotazioniEffettuate={prenotazioniEffettuate}
-                sportivoAutenticato={sportivoAutenticato.sportivo}/>
+                sportivoAutenticato={sportivoAutenticato.sportivo} />
+
+            <h2 style={{ textAlign: "center", marginTop: "50px", marginBottom: "50px" }}>PARTECIPAZIONI</h2>
+            <TablePartecipazioni partecipazioni={partecipazioniEffettuate}
+                sportivoAutenticato={sportivoAutenticato.sportivo} />
 
 
         </>
@@ -86,75 +91,3 @@ export const ProfiloSportivo: React.FC = () => {
 
 }
 
-type TableProsp = {
-    prenotazioniEffettuate: Prenotazione[],
-    sportivoAutenticato: Sportivo
-}
-
-const TablePrenotazioni: React.FC<TableProsp> = ({ prenotazioniEffettuate, sportivoAutenticato }) => {
-    if (prenotazioniEffettuate.length !== 0) {
-        return (
-            <table style={{ marginBottom: "50px" }}>
-                <thead>
-                    <tr id="label">
-                        <th>Sport Prenotato</th>
-                        <th>Impianto Prenotato</th>
-                        <th>Data</th>
-                        <th>Ora Inizio</th>
-                        <th>Ora Fine</th>
-                        <th>Numero partecipanti</th>
-                        <th>Costo totale</th>
-                        <th>Quota Partecipazione</th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                    <TableRows prenotazioniEffettuate={prenotazioniEffettuate} 
-                        sportivoAutenticato={sportivoAutenticato}/>
-
-                </tbody>
-            </table>
-        )
-    } else {
-        return <h3 style={{textAlign: "center"}}>Al momento non hai effettuato nessuna prenotazione!!!</h3>
-    }
-}
-
-const TableRows: React.FC<TableProsp> = ({ prenotazioniEffettuate, sportivoAutenticato }) => {
-    let tableRow: JSX.Element[] = []
-    let index = 0;
-    if (prenotazioniEffettuate.length !== 0) {
-        prenotazioniEffettuate.map((prenotazione) => {
-            prenotazione.appuntamenti.map((appuntamento) => {
-                tableRow.push(
-                    <tr key={index}>
-                        <th>{appuntamento.specificaPrenotazione.sportAssociato.nome}</th>
-                        <th>{appuntamento.specificaPrenotazione.pavimentazioneImpianto}</th>
-                        <th>{appuntamento.dataAppuntamento}</th>
-                        <th>{appuntamento.oraInizioAppuntamento}</th>
-                        <th>{appuntamento.oraFineAppuntamento}</th>
-                        <th>{appuntamento.listaPartecipanti.length}</th>
-                        <th>{appuntamento.specificaPrenotazione.costo} €</th>
-                        <th>{appuntamento.quotePartecipazione.filter(quota => 
-                            quota.sportivo.email === sportivoAutenticato.email)[0].costo}€</th>
-                    </tr>
-                )
-                index++
-            })
-        })
-        return (
-            <>
-                {tableRow}
-            </>
-        )
-
-
-
-
-
-
-
-    } else {
-        return <tr><th>Al momento non hai effettuato nessuna prenotazione!!!</th></tr>
-    }
-}

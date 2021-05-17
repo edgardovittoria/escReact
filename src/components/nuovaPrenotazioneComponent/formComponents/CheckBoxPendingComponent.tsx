@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Label } from 'reactstrap';
 
 export type CheckBoxPendingSelezioneProps = {
@@ -7,6 +7,9 @@ export type CheckBoxPendingSelezioneProps = {
 }
 
 export const CheckBoxPending: React.FC<CheckBoxPendingSelezioneProps> = ({ chiave, handleSelezioneCheckBox }) => {
+
+    const [checked, setChecked] = useState(true);
+
     return (
         <>
             <Label style={{ marginLeft: "16px", marginTop: "10px" }}>Permetti anche ad utenti non invitati di partecipare</Label>
@@ -15,12 +18,15 @@ export const CheckBoxPending: React.FC<CheckBoxPendingSelezioneProps> = ({ chiav
                 className="form-check-input"
                 name="si"
                 value="true"
-                onInput={(target) => {
-                    handleSelezioneCheckBox(target.currentTarget.value, chiave)
+                style={{ marginLeft: "10px", marginTop: "16px" }}
+                onClick={(target) => {
+                    setChecked(!checked)
+                    console.log(checked)
+
+                    handleSelezioneCheckBox(checked, chiave)
+
+
                 }} />
-            <label className="form-check-label">
-                Si
-            </label>
         </>
     )
 }

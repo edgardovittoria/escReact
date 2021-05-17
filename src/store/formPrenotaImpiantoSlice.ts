@@ -1,5 +1,5 @@
-import { ArrayCheckBoxPendingItem } from './../components/nuovaPrenotazioneComponent/formComponents/DataOraImpiantoRicorrenteComponent';
 /* eslint-disable array-callback-return */
+import { ArrayCheckBoxPendingItem } from './../components/nuovaPrenotazioneComponent/formComponents/DataOraImpiantoRicorrenteComponent';
 import { ArrayLisetImpiantoItem } from '../components/nuovaPrenotazioneComponent/formComponents/DataOraImpiantoRicorrenteComponent';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
@@ -61,4 +61,4 @@ export const {
 } = FormPrenotaImpiantoSlice.actions
 
 
-export const formPrenotaImpiantoSelector = (state: { opzioni: FormPrenotaImpiantoState }) => state.opzioni
+export const formPrenotaImpiantoSelector = (state: { formPrenotazioneImpianto: FormPrenotaImpiantoState }) => state.formPrenotazioneImpianto;

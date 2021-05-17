@@ -47,16 +47,16 @@ export const DataOraImpiantoRicorrente: React.FC<DataOraImpiantoRicorrenteProps>
         handleSelezioneImpianto(impiantoItem);
     }
 
-    const onCheckBoxPendingSelezioneRicorrente = (pending: string, chiave: number) => {
-        let pendingBoolean: boolean = false;
-        if(pending === "true"){
-            pendingBoolean = true
-        }else{
-            pendingBoolean = false
-        }
+    const onCheckBoxPendingSelezioneRicorrente = (pending: boolean, chiave: number) => {
+        // let pendingBoolean: boolean = false;
+        // if(pending === "true"){
+        //     pendingBoolean = true
+        // }else{
+        //     pendingBoolean = false
+        // }
         let checkBoxPendingItem: CheckBoxPendingSelezionatoItem = {
             idSelezione: chiave,
-            pending: pendingBoolean
+            pending: pending
         } 
         
         handleSelezioneCheckBoxPending(checkBoxPendingItem);

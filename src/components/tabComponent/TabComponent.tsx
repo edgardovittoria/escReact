@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap';
 import classnames from 'classnames';
-import { NuovaPrenotazioneImpianto } from '../nuovaPrenotazioneComponent/prenotazioneImpianto/NuovaPrenotazioneImpiantoComponent';
 import { FormPrenotazioneImpiantoRicorrente } from '../nuovaPrenotazioneComponent/prenotazioneImpianto/FormPrenotazioneImpiantoRicorrenteComponent';
+import { AppuntamentiSottoscrivibili } from '../nuovaPrenotazioneComponent/prenotazioneImpianto/AppuntamentiSottoscrivibiliComponent';
+import { useSelector } from 'react-redux';
+import { prenotazioneSelector } from '../../store/prenotazioneSlice';
 
 export const TabComponent: React.FC = () => {
     const [activeTab, setActiveTab] = useState('1');
+    const prenotazione = useSelector(prenotazioneSelector)
 
     const toggle = (tab: string) => {
         if (activeTab !== tab) setActiveTab(tab);
@@ -35,7 +38,7 @@ export const TabComponent: React.FC = () => {
                     <FormPrenotazioneImpiantoRicorrente />
                 </TabPane>
                 <TabPane tabId="2">
-                    <div>ciao</div>
+                    <AppuntamentiSottoscrivibili appuntamenti={prenotazione.appuntamentiSottoscrivibili} />
                 </TabPane>
             </TabContent>
         </>

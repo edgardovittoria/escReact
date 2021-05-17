@@ -4,7 +4,6 @@ import { sportivoAutenticatoSelector } from '../../../store/sportivoAutenticatoS
 import { avviaNuovaPrenotazione } from '../../../store/prenotazioneSlice';
 import { resetListaInvitabili } from '../../../store/sportivoSlice';
 import { resetListaSportPraticabili } from '../../../store/SportSlice';
-import { FormPrenotazioneImpiantoRicorrente } from './FormPrenotazioneImpiantoRicorrenteComponent';
 import { RiepilogoUtente } from '../../profiloSportivoComponent/RiepilogoUtenteComponent';
 import { Label } from 'reactstrap';
 import { TabComponent } from '../../tabComponent/TabComponent';
