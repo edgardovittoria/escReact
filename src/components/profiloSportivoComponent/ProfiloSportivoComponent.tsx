@@ -7,7 +7,7 @@ import { faTableTennis } from '@fortawesome/free-solid-svg-icons/faTableTennis';
 import { faFutbol, faVolleyballBall } from '@fortawesome/free-solid-svg-icons';
 import { useHistory } from 'react-router';
 import './profiloSportivo.css';
-import { partecipazioniSelector, prenotazioniSelector, resetPrenotazioneDaConfermare } from '../../store/prenotazioneSlice';
+import { fetchPrenotazioni, partecipazioniSelector, prenotazioniSelector, resetPrenotazioneDaConfermare } from '../../store/prenotazioneSlice';
 import SpringSocket from "react-spring-websocket";
 import { TablePrenotazioni } from './TablePrenotazioniEffettuateComponent';
 import { TablePartecipazioni } from './TablePartecipazioniComponent';
@@ -25,17 +25,17 @@ import { TablePartecipazioni } from './TablePartecipazioniComponent';
 
 export const ProfiloSportivo: React.FC = () => {
 
-    // useEffect(() => {
-    //     if (socket.connected()) {
-    //         //socket.send("/app/creaNotifica", sportivoAutenticato.sportivo.email);
-    //         socket.onMessage()
-    //     }
-    // }, [])
+    const sportivoAutenticato = useSelector(sportivoAutenticatoSelector);
+
+    useEffect(() => {
+        dispatch(fetchPrenotazioni(sportivoAutenticato.sportivo.email, sportivoAutenticato.jwt))
+    }, [sportivoAutenticato])
 
 
 
     const dispatch = useDispatch()
     dispatch(resetPrenotazioneDaConfermare())
+
 
 
     const style = {
@@ -44,7 +44,8 @@ export const ProfiloSportivo: React.FC = () => {
     };
 
     const history = useHistory()
-    const sportivoAutenticato = useSelector(sportivoAutenticatoSelector);
+    
+    
     const prenotazioniEffettuate = useSelector(prenotazioniSelector);
     const partecipazioniEffettuate = useSelector(partecipazioniSelector);
     

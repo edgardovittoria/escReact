@@ -5,6 +5,7 @@ import { useHistory } from 'react-router';
 import { Button, Col, Form, FormGroup, Label, Row } from 'reactstrap';
 import { formPrenotaImpiantoSelector } from '../../../store/formPrenotaImpiantoSlice';
 import { aggiornaImpiantiRicorrente, riepilogoPrenotazione } from '../../../store/prenotazioneSlice';
+import { sportivoAutenticatoSelector } from '../../../store/sportivoAutenticatoSlice';
 import { sportivoSelector } from '../../../store/sportivoSlice';
 import { sportSelector } from '../../../store/SportSlice';
 import { CheckBoxPendingSelezionatoItem, DataOraImpiantoRicorrente, ImpiantiSelezionatiItem } from '../formComponents/DataOraImpiantoRicorrenteComponent';
@@ -40,6 +41,7 @@ export const FormPrenotazioneImpiantoRicorrente: React.FC = () => {
     const [postiLiberiAggiornato, setPostiliberiAggiornati] = useState(postiLiberi);
     const sportPraticabili = useSelector(sportSelector);
     const sportiviInvitabili = useSelector(sportivoSelector);
+    const sportivoAutenticato = useSelector(sportivoAutenticatoSelector);
     // const impiantiDisponibili = useSelector(impiantoSelector);
     const opzioni = useSelector(formPrenotaImpiantoSelector);
     function onSportSelezionato(sportSelezionato: string) {
@@ -54,7 +56,7 @@ export const FormPrenotazioneImpiantoRicorrente: React.FC = () => {
     }
 
     const onSubmit = handleSubmit((form: FormPrenotaImpianto) => {
-        dispatch(riepilogoPrenotazione(form))
+        dispatch(riepilogoPrenotazione(form, sportivoAutenticato.jwt))
         history.push("/riepilogoPrenotazione");
     })
 
@@ -64,17 +66,17 @@ export const FormPrenotazioneImpiantoRicorrente: React.FC = () => {
                 sport: sport,
                 orario: orarioSelezionato
             }
-            dispatch(aggiornaImpiantiRicorrente(object, id));
+            dispatch(aggiornaImpiantiRicorrente(object, id, sportivoAutenticato.jwt));
         }else if (sport === undefined && orarioSelezionato !== undefined){
             let object = {
                 orario : orarioSelezionato
             }
-            dispatch(aggiornaImpiantiRicorrente(object, id));
+            dispatch(aggiornaImpiantiRicorrente(object, id, sportivoAutenticato.jwt));
         }else if(sport !== undefined && orarioSelezionato === undefined){
             let object = {
                 sport: sport
             }
-            dispatch(aggiornaImpiantiRicorrente(object, id))
+            dispatch(aggiornaImpiantiRicorrente(object, id, sportivoAutenticato.jwt))
         }
 
     }

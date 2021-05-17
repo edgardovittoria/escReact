@@ -15,6 +15,7 @@ import { RiepilogoPrenotazioneLezione } from './components/nuovaPrenotazioneComp
 
 
 export const App: React.FC = () => {
+  
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>

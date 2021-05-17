@@ -1,3 +1,5 @@
+import { useSelector } from 'react-redux';
+import { sportivoAutenticatoSelector } from './sportivoAutenticatoSlice';
 /* eslint-disable array-callback-return */
 import { FormPrenotaLezione } from '../components/nuovaPrenotazioneComponent/prenotazioneLezione/FormPrenotazioneLezioneComponent';
 import { FormPrenotaImpianto } from '../components/nuovaPrenotazioneComponent/prenotazioneImpianto/FormPrenotazioneImpiantoRicorrenteComponent';
@@ -22,7 +24,6 @@ export type PrenotazioneState = {
     isLoading: boolean
     errors: string
 }
-
 
 export const PrenotazioneSlice = createSlice({
     name: 'prenotazione',
@@ -103,10 +104,10 @@ export const prenotazioneSelector = (state: { prenotazioni: PrenotazioneState })
 export const prenotazioniSelector = (state: { prenotazioni: PrenotazioneState }) => state.prenotazioni.prenotazioni
 export const partecipazioniSelector = (state: {prenotazioni: PrenotazioneState}) => state.prenotazioni.partecipazioni
 
-export const avviaNuovaPrenotazione = (emailSportivo: string, tipoPren: string): AppThunk => async dispatch => {
+export const avviaNuovaPrenotazione = (emailSportivo: string, tipoPren: string, jwt: string): AppThunk => async dispatch => {
     try {
         dispatch(setLoading(true));
-        const res = await axios.get("http://localhost:8080/effettuaPrenotazione/avviaNuovaPrenotazione", {params: {email: emailSportivo, tipoPrenotazione: tipoPren}})
+        const res = await axios.get("http://localhost:8080/effettuaPrenotazione/avviaNuovaPrenotazione", {params: {email: emailSportivo, tipoPrenotazione: tipoPren}, headers:{"Authorization": "Bearer "+jwt}})
         dispatch(addListaSportPraticabili(res.data.sportPraticabili))
         dispatch(addListaInvitabili(res.data.sportiviPolisportiva))
         dispatch(addAppuntamentiSottoscrivibili(res.data.appuntamentiSottoscrivibili))
@@ -118,10 +119,10 @@ export const avviaNuovaPrenotazione = (emailSportivo: string, tipoPren: string):
 }
 
 
-export const riepilogoPrenotazione = (prenotazione: FormPrenotaImpianto | FormPrenotaLezione): AppThunk => async dispatch => {
+export const riepilogoPrenotazione = (prenotazione: FormPrenotaImpianto | FormPrenotaLezione, jwt: string): AppThunk => async dispatch => {
     try {
         dispatch(setLoading(true));
-        const res = await axios.post("http://localhost:8080/effettuaPrenotazione/riepilogoPrenotazione", prenotazione)
+        const res = await axios.post("http://localhost:8080/effettuaPrenotazione/riepilogoPrenotazione", prenotazione, {headers:{"Authorization": "Bearer "+jwt}})
         dispatch(addPrenotazioneDaConfermare(res.data))
     } catch (error) {
         dispatch(setErrors(error))
@@ -129,10 +130,10 @@ export const riepilogoPrenotazione = (prenotazione: FormPrenotaImpianto | FormPr
 
 }
 
-export const confermaPrenotazione = (): AppThunk => async dispatch => {
+export const confermaPrenotazione = (jwt: string): AppThunk => async dispatch => {
     try {
         dispatch(setLoading(true));
-        const res = await axios.post("http://localhost:8080/effettuaPrenotazione/confermaPrenotazione")
+        const res = await axios.post("http://localhost:8080/effettuaPrenotazione/confermaPrenotazione", null, {headers:{"Authorization": "Bearer "+jwt}})
         dispatch(addPrenotazione(res.data))
     } catch (error) {
         dispatch(setErrors(error))
@@ -141,10 +142,10 @@ export const confermaPrenotazione = (): AppThunk => async dispatch => {
 }
 
 
-export const fetchPrenotazioni = (emailSportivo: string): AppThunk => async dispatch => {
+export const fetchPrenotazioni = (emailSportivo: string, jwt: string): AppThunk => async dispatch => {
     try {
         dispatch(setLoading(true));
-        const res = await axios.get("http://localhost:8080/aggiornaOpzioni/prenotazioniEPartecipazioniSportivo/", {params: {email: emailSportivo}})
+        const res = await axios.get("http://localhost:8080/aggiornaOpzioni/prenotazioniEPartecipazioniSportivo/", {params: {email: emailSportivo}, headers:{"Authorization": "Bearer "+jwt}})
         dispatch(addListaPrenotazioni(res.data.prenotazioniEffettuate))
         dispatch(addListaPartecipazioni(res.data.partecipazioni))
     } catch (error) {
@@ -164,9 +165,9 @@ export const aggiornaImpianti = (object: any): AppThunk => async dispatch => {
 
 }
 
-export const aggiornaImpiantiRicorrente = (object: any, id: number): AppThunk => async dispatch => {
+export const aggiornaImpiantiRicorrente = (object: any, id: number, jwt: string): AppThunk => async dispatch => {
     try {
-        const res = await axios.post("http://localhost:8080/effettuaPrenotazione/aggiornaDatiOpzioni", object)
+        const res = await axios.post("http://localhost:8080/effettuaPrenotazione/aggiornaDatiOpzioni", object, {headers:{"Authorization": "Bearer "+jwt}})
         let item: ArrayLisetImpiantoItem = {
             id: id,
             impiantiDisponibili: res.data.impiantiDisponibili
@@ -178,9 +179,9 @@ export const aggiornaImpiantiRicorrente = (object: any, id: number): AppThunk =>
 
 }
 
-export const aggiornaIstruttori = (object: any, id: number): AppThunk => async dispatch => {
+export const aggiornaIstruttori = (object: any, id: number, jwt: string): AppThunk => async dispatch => {
     try {
-        const res = await axios.post("http://localhost:8080/effettuaPrenotazione/aggiornaDatiOpzioni", object)
+        const res = await axios.post("http://localhost:8080/effettuaPrenotazione/aggiornaDatiOpzioni", object, {headers:{"Authorization": "Bearer "+jwt}})
         let item: ArrayListeIstruttoreItem = {
             id: id,
             istruttoriDisponibili: res.data.istruttoriDisponibili
@@ -192,14 +193,14 @@ export const aggiornaIstruttori = (object: any, id: number): AppThunk => async d
 
 }
 
-export const partecipazioneEventoEsistente = (idEvento: number, emailPartecipante: string): AppThunk => async dispatch => {
+export const partecipazioneEventoEsistente = (idEvento: number, emailPartecipante: string, jwt: string): AppThunk => async dispatch => {
     try {
         dispatch(setLoading(true)); 
         let object = {
             idEvento: idEvento,
             emailPartecipante: emailPartecipante
         }
-        const res = await axios.patch("http://localhost:8080/effettuaPrenotazione/partecipazioneEventoEsistente", object)
+        const res = await axios.patch("http://localhost:8080/effettuaPrenotazione/partecipazioneEventoEsistente", object, {headers:{"Authorization": "Bearer "+jwt}})
         console.log(JSON.stringify(res.data))
         let partecipazione: Appuntamento[] = [];
         partecipazione.push(res.data)

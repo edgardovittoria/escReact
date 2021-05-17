@@ -3,17 +3,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, Card, CardBody, CardImg, CardText, CardTitle, Col, ListGroup, ListGroupItem, Row, Spinner } from 'reactstrap';
 import { NavLink, useHistory } from 'react-router-dom';
 import { confermaPrenotazione,  prenotazioneSelector } from '../../../store/prenotazioneSlice';
+import { sportivoAutenticatoSelector } from '../../../store/sportivoAutenticatoSlice';
 
 
 
 export const RiepilogoPrenotazione: React.FC = () => {
 
     const prenotazioneDaConfermare = useSelector(prenotazioneSelector).prenotazioneDaConfermare
+    const sportivoAutenticato = useSelector(sportivoAutenticatoSelector)
     const history = useHistory();
     const dispatch = useDispatch();
 
     const onClick = () => {
-        dispatch(confermaPrenotazione());
+        dispatch(confermaPrenotazione(sportivoAutenticato.jwt));
         history.push("profiloSportivo")
     }
 

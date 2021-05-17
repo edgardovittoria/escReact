@@ -7,6 +7,7 @@ import { formPrenotaImpiantoSelector } from '../../../store/formPrenotaImpiantoS
 import { impiantoSelector } from '../../../store/impiantoSlice';
 import { istruttoreSelector } from '../../../store/IstruttoreSlice';
 import { aggiornaImpiantiRicorrente, aggiornaIstruttori, riepilogoPrenotazione } from '../../../store/prenotazioneSlice';
+import { sportivoAutenticatoSelector } from '../../../store/sportivoAutenticatoSlice';
 import { sportSelector } from '../../../store/SportSlice';
 import { DataOraImpiantoIstruttoreSelezione, IstruttoriSelezionatiItem } from '../formComponents/DataOraImpiantoIstruttoreSelezioneComponent';
 import { ImpiantiSelezionatiItem } from '../formComponents/DataOraImpiantoRicorrenteComponent';
@@ -36,6 +37,7 @@ export const FormPrenotazioneLezione: React.FC = () => {
     //const impiantiDisponibili = useSelector(impiantoSelector);
     const formPrenotaLezione = useSelector(formPrenotaImpiantoSelector);
     const istruttoriDisponibili = useSelector(istruttoreSelector);
+    const sportivoAutenticato = useSelector(sportivoAutenticatoSelector);
 
     function onSportSelezionato(sportSelezionato: string) {
         setValue("sportSelezionato", sportSelezionato)
@@ -47,7 +49,7 @@ export const FormPrenotazioneLezione: React.FC = () => {
     }
 
     const onSubmit = handleSubmit((form: FormPrenotaLezione) => {
-        dispatch(riepilogoPrenotazione(form))
+        dispatch(riepilogoPrenotazione(form, sportivoAutenticato.jwt))
         history.push("/riepilogoPrenotazioneLezione");
     })
 
@@ -57,17 +59,17 @@ export const FormPrenotazioneLezione: React.FC = () => {
                 sport: sport,
                 orario: orarioSelezionato
             }
-            dispatch(aggiornaImpiantiRicorrente(object, id));
+            dispatch(aggiornaImpiantiRicorrente(object, id, sportivoAutenticato.jwt));
         }else if (sport === undefined && orarioSelezionato !== undefined){
             let object = {
                 orario : orarioSelezionato
             }
-            dispatch(aggiornaImpiantiRicorrente(object, id));
+            dispatch(aggiornaImpiantiRicorrente(object, id, sportivoAutenticato.jwt));
         }else if(sport !== undefined && orarioSelezionato === undefined){
             let object = {
                 sport: sport
             }
-            dispatch(aggiornaImpiantiRicorrente(object, id))
+            dispatch(aggiornaImpiantiRicorrente(object, id, sportivoAutenticato.jwt))
         }
 
     }
@@ -77,17 +79,17 @@ export const FormPrenotazioneLezione: React.FC = () => {
                 sport: sport,
                 orario: orarioSelezionato
             }
-            dispatch(aggiornaIstruttori(object, id));
+            dispatch(aggiornaIstruttori(object, id, sportivoAutenticato.jwt));
         }else if (sport === undefined && orarioSelezionato !== undefined){
             let object = {
                 orario : orarioSelezionato
             }
-            dispatch(aggiornaIstruttori(object, id));
+            dispatch(aggiornaIstruttori(object, id, sportivoAutenticato.jwt));
         }else if(sport !== undefined && orarioSelezionato === undefined){
             let object = {
                 sport: sport
             }
-            dispatch(aggiornaIstruttori(object, id))
+            dispatch(aggiornaIstruttori(object, id, sportivoAutenticato.jwt))
         }
     }
     const onOrarioSelezione = (orarioSelezionato: OrarioPrenotazione) => {

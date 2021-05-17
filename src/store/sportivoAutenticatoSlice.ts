@@ -7,14 +7,20 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export type SportivoAutenticatoState = {
     sportivo: Sportivo
+    jwt: string
     isLoading: boolean
     errors: string
+}
+
+type AutenticazioneResponse = {
+    sportivo: Sportivo,
+    jwt: string
 }
 
 export const loginSportivo = createAsyncThunk("sportivo/login",
     async (userDetails: UserDetails, tunkAPI) =>  {
         try {
-            const response = await axios.post('http://localhost:8080/login', userDetails)
+            const response = await axios.post('http://localhost:8080/autenticazione', userDetails)
             return response.data
         } catch (error) {
             return tunkAPI.rejectWithValue(error.message)
@@ -28,6 +34,7 @@ export const SportivoAutenticatoSlice = createSlice({
     name: 'sportivo',
     initialState: {
         sportivo: {},
+        jwt: "",
         isLoading: false,
         errors: ""
     } as SportivoAutenticatoState,
@@ -37,8 +44,9 @@ export const SportivoAutenticatoSlice = createSlice({
         }
     },
     extraReducers: {
-        [loginSportivo.fulfilled.type]: (state: SportivoAutenticatoState, action: PayloadAction<Sportivo>) => {
-            state.sportivo = action.payload
+        [loginSportivo.fulfilled.type]: (state: SportivoAutenticatoState, action: PayloadAction<AutenticazioneResponse>) => {
+            state.sportivo = action.payload.sportivo
+            state.jwt = action.payload.jwt
             state.isLoading = false
             state.errors = ""
         },

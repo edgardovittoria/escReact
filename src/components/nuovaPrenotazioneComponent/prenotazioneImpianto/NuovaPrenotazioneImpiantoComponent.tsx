@@ -17,7 +17,7 @@ export const NuovaPrenotazioneImpianto: React.FC = () => {
 
     const sportivoAutenticato = useSelector(sportivoAutenticatoSelector);
 
-    dispatch(avviaNuovaPrenotazione(sportivoAutenticato.sportivo.email, "IMPIANTO"))
+    dispatch(avviaNuovaPrenotazione(sportivoAutenticato.sportivo.email, "IMPIANTO", sportivoAutenticato.jwt))
 
 
     return (
