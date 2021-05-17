@@ -2,26 +2,22 @@ import React from 'react'
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useHistory } from 'react-router';
+import { UserDetails } from '../../model/UserDetails';
 import { fetchPrenotazioni } from '../../store/prenotazioneSlice';
 import { loginSportivo, resetLocalStorsageState } from "../../store/sportivoAutenticatoSlice"; 
-
-type Credenziali = {
-    email: string,
-    password: string
-}
 
 export const Login: React.FC = () => {
 
     
-    const { register, handleSubmit, formState: { errors } } = useForm<Credenziali>();
+    const { register, handleSubmit, formState: { errors } } = useForm<UserDetails>();
     
     const dispatch = useDispatch()
     dispatch(resetLocalStorsageState())
     const history = useHistory()
 
-    const onSubmit = handleSubmit((data: Credenziali) => {
-        dispatch(loginSportivo(data.email))
-        dispatch(fetchPrenotazioni(data.email))
+    const onSubmit = handleSubmit((userDetails: UserDetails) => {
+        dispatch(loginSportivo(userDetails))
+        dispatch(fetchPrenotazioni(userDetails.emailUtente))
         history.push("/profiloSportivo")
     })
 
@@ -35,9 +31,9 @@ export const Login: React.FC = () => {
                     <h1>LOGIN</h1>
                 </div>
                 <div style={{ textAlign: "center", marginTop: "10px" }}>
-                    <input {...register("email", { required: true, pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i })} id="email" name="email" type="email" placeholder="Email" />
+                    <input {...register("emailUtente", { required: true, pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i })} id="emailUtente" name="emailUtente" type="email" placeholder="Email" />
                     {
-                        errors.email && <div className="error">Email richiesta</div>
+                        errors.emailUtente && <div className="error">Email richiesta</div>
                     }
                 </div>
                 <div style={{ textAlign: "center", marginTop: "10px" }}>

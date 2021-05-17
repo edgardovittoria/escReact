@@ -1,3 +1,4 @@
+import { UserDetails } from './../model/UserDetails';
 /* eslint-disable array-callback-return */
 import { Sportivo } from '../model/Sportivo';
 
@@ -11,9 +12,9 @@ export type SportivoAutenticatoState = {
 }
 
 export const loginSportivo = createAsyncThunk("sportivo/login",
-    async (email: string, tunkAPI) =>  {
+    async (userDetails: UserDetails, tunkAPI) =>  {
         try {
-            const response = await axios.get('http://localhost:8080/aggiornaOpzioni/sportivo', {params: {email: email}})
+            const response = await axios.post('http://localhost:8080/login', userDetails)
             return response.data
         } catch (error) {
             return tunkAPI.rejectWithValue(error.message)

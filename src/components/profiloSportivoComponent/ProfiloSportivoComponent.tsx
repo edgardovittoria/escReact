@@ -14,23 +14,23 @@ import { TablePartecipazioni } from './TablePartecipazioniComponent';
 
 
 
-const socket = new SpringSocket(
-    "http://localhost:8080/notifiche",
-    ["/user/queue"],
-    (notifica) => {
-        console.log(notifica)
-    }
-)
+// const socket = new SpringSocket(
+//     "http://localhost:8080/notifiche",
+//     ["/user/queue"],
+//     (notifica) => {
+//         console.log(notifica)
+//     }
+// )
 
 
 export const ProfiloSportivo: React.FC = () => {
 
-    useEffect(() => {
-        if (socket.connected()) {
-            //socket.send("/app/creaNotifica", sportivoAutenticato.sportivo.email);
-            socket.onMessage()
-        }
-    }, [])
+    // useEffect(() => {
+    //     if (socket.connected()) {
+    //         //socket.send("/app/creaNotifica", sportivoAutenticato.sportivo.email);
+    //         socket.onMessage()
+    //     }
+    // }, [])
 
 
 
