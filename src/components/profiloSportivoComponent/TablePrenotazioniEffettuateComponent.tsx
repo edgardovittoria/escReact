@@ -49,7 +49,7 @@ const TableRows: React.FC<TableProsp> = ({ prenotazioniEffettuate, sportivoAuten
                         <th>{appuntamento.dataAppuntamento}</th>
                         <th>{appuntamento.oraInizioAppuntamento}</th>
                         <th>{appuntamento.oraFineAppuntamento}</th>
-                        <th>{appuntamento.listaPartecipanti.length}</th>
+                        <th>{appuntamento.partecipanti.length}</th>
                         <th>{appuntamento.specificaPrenotazione.costo} €</th>
                         <th>{appuntamento.quotePartecipazione.filter(quota => 
                             quota.sportivo.email === sportivoAutenticato.email)[0].costo}€</th>

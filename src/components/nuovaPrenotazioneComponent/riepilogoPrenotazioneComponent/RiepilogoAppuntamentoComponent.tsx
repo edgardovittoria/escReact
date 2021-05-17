@@ -56,7 +56,7 @@ export const RiepilogoAppuntamento: React.FC<RiepilogoAppuntamentoProps> = ({ ap
                             </ListGroup>
                             <ListGroup>
                                 <ListGroupItem>
-                                    Sportivi Partecipanti : <ul>{appuntamento.listaPartecipanti.map((partecipante) => {
+                                    Sportivi Partecipanti : <ul>{appuntamento.partecipanti.map((partecipante) => {
                                     return (
                                         <li key={partecipante.email}>{partecipante.nome} {partecipante.cognome}</li>
                                     )
