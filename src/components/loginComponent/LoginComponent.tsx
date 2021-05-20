@@ -1,26 +1,19 @@
 import React from 'react'
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from 'react-router';
+import { useDispatch } from "react-redux";
 import { UserDetails } from '../../model/UserDetails';
-import { fetchPrenotazioni } from '../../store/prenotazioneSlice';
-import { loginSportivo, resetLocalStorsageState, sportivoAutenticatoSelector } from "../../store/sportivoAutenticatoSlice"; 
+import { loginSportivo } from "../../store/sportivoAutenticatoSlice"; 
 
 export const Login: React.FC = () => {
 
-    
+       
     const { register, handleSubmit, formState: { errors } } = useForm<UserDetails>();
     
     const dispatch = useDispatch()
-    dispatch(resetLocalStorsageState())
-    const history = useHistory()
 
     const onSubmit = handleSubmit((userDetails: UserDetails) => {
         dispatch(loginSportivo(userDetails))
-        history.push("/profiloSportivo")
     })
-
-    //setSportivo(useSelector(sportivoSelector).sportivo)
 
 
     return (

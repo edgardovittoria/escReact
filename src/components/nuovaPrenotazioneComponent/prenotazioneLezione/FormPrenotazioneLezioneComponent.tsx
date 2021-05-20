@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { Button, Col, Form, FormGroup, Label, Row } from 'reactstrap';
 import { formPrenotaImpiantoSelector } from '../../../store/formPrenotaImpiantoSlice';
-import { impiantoSelector } from '../../../store/impiantoSlice';
 import { istruttoreSelector } from '../../../store/IstruttoreSlice';
 import { aggiornaImpiantiRicorrente, aggiornaIstruttori, riepilogoPrenotazione } from '../../../store/prenotazioneSlice';
 import { sportivoAutenticatoSelector } from '../../../store/sportivoAutenticatoSlice';

@@ -9,21 +9,15 @@ import { useHistory } from 'react-router';
 import './profiloSportivo.css';
 import { fetchPrenotazioni, partecipazioniSelector, prenotazioniSelector, resetPrenotazioneDaConfermare } from '../../store/prenotazioneSlice';
 import SpringSocket from "react-spring-websocket";
+import SockJS from "sockjs-client";
 import { TablePrenotazioni } from './TablePrenotazioniEffettuateComponent';
 import { TablePartecipazioni } from './TablePartecipazioniComponent';
-
-
-
-// const socket = new SpringSocket(
-//     "http://localhost:8080/notifiche",
-//     ["/user/queue"],
-//     (notifica) => {
-//         console.log(notifica)
-//     }
-// )
+import Stomp from "stompjs";
 
 
 export const ProfiloSportivo: React.FC = () => {
+
+    
 
     const sportivoAutenticato = useSelector(sportivoAutenticatoSelector);
 
@@ -36,19 +30,17 @@ export const ProfiloSportivo: React.FC = () => {
     const dispatch = useDispatch()
     dispatch(resetPrenotazioneDaConfermare())
 
-
-
     const style = {
         display: "block",
         margin: "auto"
     };
 
     const history = useHistory()
-    
-    
+
+
     const prenotazioniEffettuate = useSelector(prenotazioniSelector);
     const partecipazioniEffettuate = useSelector(partecipazioniSelector);
-    
+
 
 
 
@@ -73,7 +65,7 @@ export const ProfiloSportivo: React.FC = () => {
                     <i></i>IMPIANTO
                 </button>
 
-                <button className="btnProfilo" id="prenotazioneCorso">
+                <button className="btnProfilo" id="prenotazioneCorso" onClick={() => history.push("/creazioneCorso")}>
                     <FontAwesomeIcon icon={faVolleyballBall} style={style} />
                     <i></i>CORSO
                 </button>

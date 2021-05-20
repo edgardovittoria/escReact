@@ -38,17 +38,14 @@ export const SportivoAutenticatoSlice = createSlice({
         isLoading: false,
         errors: ""
     } as SportivoAutenticatoState,
-    reducers: {
-        resetLocalStorsageState(){
-            localStorage.clear()
-        }
-    },
+    reducers: {},
     extraReducers: {
         [loginSportivo.fulfilled.type]: (state: SportivoAutenticatoState, action: PayloadAction<AutenticazioneResponse>) => {
             state.sportivo = action.payload.sportivo
             state.jwt = action.payload.jwt
             state.isLoading = false
             state.errors = ""
+            window.location.href = "http://localhost:3000/profiloSportivo"
         },
         [loginSportivo.pending.type]: (state: SportivoAutenticatoState) => {
             state.isLoading = true
@@ -68,9 +65,9 @@ export const SportivoAutenticatoSlice = createSlice({
     }
 });
 
-export const {
-    resetLocalStorsageState
-} = SportivoAutenticatoSlice.actions
+// export const {
+
+// } = SportivoAutenticatoSlice.actions
 
 export const sportivoAutenticatoSelector = (state: { sportivo: SportivoAutenticatoState }) => state.sportivo
 

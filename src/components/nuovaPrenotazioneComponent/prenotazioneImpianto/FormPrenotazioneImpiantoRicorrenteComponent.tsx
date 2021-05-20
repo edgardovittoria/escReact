@@ -165,7 +165,7 @@ export const FormPrenotazioneImpiantoRicorrente: React.FC = () => {
                 <Label>Invita sportivi alla prenotazione</Label>
                 <Row>
                     <Col>
-                        <SportiviInvitabiliSelezione sportivi={sportiviInvitabili.sportivi}
+                        <SportiviInvitabiliSelezione sportiviInvitabili={sportiviInvitabili.sportivi}
                             handleSelezioneSportiviInvitabili={onSportiviInvitabiliSelezione} />
                     </Col>
                 </Row>

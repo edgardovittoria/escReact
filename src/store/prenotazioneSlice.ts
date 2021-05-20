@@ -1,5 +1,4 @@
-import { useSelector } from 'react-redux';
-import { sportivoAutenticatoSelector } from './sportivoAutenticatoSlice';
+import { FormCorso } from './../components/nuovaPrenotazioneComponent/prenotazioneCorso/FormCreazioneCorsoComponent';
 /* eslint-disable array-callback-return */
 import { FormPrenotaLezione } from '../components/nuovaPrenotazioneComponent/prenotazioneLezione/FormPrenotazioneLezioneComponent';
 import { FormPrenotaImpianto } from '../components/nuovaPrenotazioneComponent/prenotazioneImpianto/FormPrenotazioneImpiantoRicorrenteComponent';
@@ -38,7 +37,8 @@ export const PrenotazioneSlice = createSlice({
                 email: "",
                 sportPraticati: []
             },
-            appuntamenti: []
+            appuntamenti: [],
+            infoGeneraliEvento: new Map<string, object>()
         },
         isLoading: false,
         errors: ""
@@ -56,7 +56,8 @@ export const PrenotazioneSlice = createSlice({
                     email: "",
                     sportPraticati: []
                 },
-                appuntamenti: []
+                appuntamenti: [],
+                infoGeneraliEvento: new Map<string, object>()
             }
         },
         addPrenotazione(state: PrenotazioneState, action: PayloadAction<Prenotazione>){
@@ -109,7 +110,7 @@ export const avviaNuovaPrenotazione = (emailSportivo: string, tipoPren: string, 
         dispatch(setLoading(true));
         const res = await axios.get("http://localhost:8080/effettuaPrenotazione/avviaNuovaPrenotazione", {params: {email: emailSportivo, tipoPrenotazione: tipoPren}, headers:{"Authorization": "Bearer "+jwt}})
         dispatch(addListaSportPraticabili(res.data.sportPraticabili))
-        dispatch(addListaInvitabili(res.data.sportiviPolisportiva))
+        dispatch(addListaInvitabili(res.data.sportiviInvitabili))
         dispatch(addAppuntamentiSottoscrivibili(res.data.appuntamentiSottoscrivibili))
     } catch (error) {
         dispatch(setLoading(false))
@@ -118,12 +119,34 @@ export const avviaNuovaPrenotazione = (emailSportivo: string, tipoPren: string, 
 
 }
 
-
-export const riepilogoPrenotazione = (prenotazione: FormPrenotaImpianto | FormPrenotaLezione, jwt: string): AppThunk => async dispatch => {
+export const avviaNuovaPrenotazioneEventoDirettore = (emailSportivo: string, tipoPren: string, jwt: string): AppThunk => async dispatch => {
     try {
         dispatch(setLoading(true));
-        const res = await axios.post("http://localhost:8080/effettuaPrenotazione/riepilogoPrenotazione", prenotazione, {headers:{"Authorization": "Bearer "+jwt}})
-        dispatch(addPrenotazioneDaConfermare(res.data))
+        const res = await axios.get("http://localhost:8080/effettuaPrenotazione/avviaNuovaPrenotazioneEventoDirettore", {params: {email: emailSportivo, tipoPrenotazione: tipoPren}, headers:{"Authorization": "Bearer "+jwt}})
+        dispatch(addListaSportPraticabili(res.data.sportPraticabili))
+        dispatch(addListaInvitabili(res.data.sportiviInvitabili))
+    } catch (error) {
+        dispatch(setLoading(false))
+        dispatch(setErrors(error))
+    }
+
+}
+
+
+export const riepilogoPrenotazione = (prenotazione: FormPrenotaImpianto | FormPrenotaLezione | FormCorso, jwt: string): AppThunk => async dispatch => {
+    try {
+        dispatch(setLoading(true));
+        const res = await axios.post("http://localhost:8080/effettuaPrenotazione/riepilogoPrenotazione", prenotazione, {headers:{"Authorization": "Bearer "+jwt}}) 
+        let mappaInfoGenerali = new Map<string, object>(
+            Object.keys(res.data.infoGeneraliEvento).map(k => [k, res.data.infoGeneraliEvento[k]])
+        );
+        let prenotazioneDaConfermare: Prenotazione = {
+            sportivoPrenotante: res.data.sportivoPrenotante,
+            appuntamenti: res.data.appuntamenti,
+            infoGeneraliEvento: mappaInfoGenerali
+        }
+        console.log(mappaInfoGenerali)
+        dispatch(addPrenotazioneDaConfermare(prenotazioneDaConfermare))
     } catch (error) {
         dispatch(setErrors(error))
     }
