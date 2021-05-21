@@ -108,7 +108,6 @@ export const FormPrenotazioneImpiantoRicorrente: React.FC = () => {
             checkboxes.filter(item => item.idSelezione === checkBoxPendingItem.idSelezione)[0].pending = checkBoxPendingItem.pending
         }
         setValue("checkboxesPending", checkboxes)
-        console.log(getValues("checkboxesPending"))
     }
 
     const onSportiviInvitabiliSelezione = (emailSportivi: string[]) => {

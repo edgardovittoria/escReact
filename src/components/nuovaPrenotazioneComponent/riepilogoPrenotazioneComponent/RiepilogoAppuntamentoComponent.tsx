@@ -22,7 +22,6 @@ export const RiepilogoAppuntamento: React.FC<RiepilogoAppuntamentoProps> = ({ ap
         history.go(-1)
     }
 
-    console.log(appuntamento)
 
 
     return (

@@ -13,6 +13,7 @@ import { NuovaPrenotazioneLezione } from './components/nuovaPrenotazioneComponen
 import { RiepilogoPrenotazioneLezione } from './components/nuovaPrenotazioneComponent/riepilogoPrenotazioneComponent/RiepilogoPrenotazioneLezioneComponent';
 import { CreazioneCorso } from './components/nuovaPrenotazioneComponent/prenotazioneCorso/CreazioneCorsoComponent';
 import { RiepilogoCreazioneCorso } from './components/nuovaPrenotazioneComponent/prenotazioneCorso/RiepilogoCreazioneCorso';
+import { PrenotazioneCorso } from './components/nuovaPrenotazioneComponent/prenotazioneCorso/prenotazioneCorsoComponent';
 
 
 
@@ -27,6 +28,7 @@ export const App: React.FC = () => {
           <Route path="/profiloSportivo"><ProfiloSportivo /></Route>
           <Route path="/nuovaPrenotazioneImpianto"><NuovaPrenotazioneImpianto/></Route>
           <Route path="/nuovaPrenotazioneLezione"><NuovaPrenotazioneLezione/></Route>
+          <Route path="/PrenotazioneCorso"><PrenotazioneCorso/></Route>
           <Route path="/creazioneCorso"><CreazioneCorso/></Route>
           <Route path="/riepilogoPrenotazione"><RiepilogoPrenotazione/></Route>
           <Route path="/riepilogoPrenotazioneLezione"><RiepilogoPrenotazioneLezione/></Route>

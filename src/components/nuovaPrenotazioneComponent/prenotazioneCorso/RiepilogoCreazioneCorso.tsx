@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Card, CardBody, CardImg, CardText, CardTitle, Col, ListGroup, ListGroupItem, Row, Spinner } from 'reactstrap';
 import { NavLink, useHistory } from 'react-router-dom';
-import { confermaPrenotazione, prenotazioneSelector } from '../../../store/prenotazioneSlice';
+import { creaCorso, prenotazioneSelector } from '../../../store/prenotazioneSlice';
 import { sportivoAutenticatoSelector } from '../../../store/sportivoAutenticatoSlice';
 import { Sportivo } from '../../../model/Sportivo';
 
@@ -16,7 +16,7 @@ export const RiepilogoCreazioneCorso: React.FC = () => {
     const dispatch = useDispatch();
 
     const onClick = () => {
-        dispatch(confermaPrenotazione(sportivoAutenticato.jwt));
+        dispatch(creaCorso(sportivoAutenticato.jwt));
         history.push("profiloSportivo")
     }
 
@@ -93,7 +93,7 @@ export const RiepilogoCreazioneCorso: React.FC = () => {
                                                 Impianto Prenotato : {appuntamento.specificaPrenotazione.pavimentazioneImpianto}
                                             </ListGroupItem>
                                             <ListGroupItem>
-                                                Istruttore Scelto : {appuntamento.specificaPrenotazione.istruttore.nome} {appuntamento.specificaPrenotazione.istruttore.cognome}
+                                                Istruttore Scelto : {appuntamento.specificaPrenotazione.istruttore} {appuntamento.specificaPrenotazione.istruttore.cognome}
                                             </ListGroupItem>
                                             <ListGroupItem>
                                                 Data Prenotata : {appuntamento.dataAppuntamento}

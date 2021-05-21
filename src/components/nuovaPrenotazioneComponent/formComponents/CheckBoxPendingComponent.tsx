@@ -21,8 +21,6 @@ export const CheckBoxPending: React.FC<CheckBoxPendingSelezioneProps> = ({ chiav
                 style={{ marginLeft: "10px", marginTop: "16px" }}
                 onClick={(target) => {
                     setChecked(!checked)
-                    console.log(checked)
-
                     handleSelezioneCheckBox(checked, chiave)
 
 

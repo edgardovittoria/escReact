@@ -1,30 +1,24 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { sportivoAutenticatoSelector } from '../../../store/sportivoAutenticatoSlice';
-import { avviaNuovaPrenotazione } from '../../../store/prenotazioneSlice';
-import { resetListaInvitabili } from '../../../store/sportivoSlice';
-import { resetListaSportPraticabili } from '../../../store/SportSlice';
+import { avviaNuovaPrenotazione, corsiDisponibiliSelector } from '../../../store/prenotazioneSlice';
 import { RiepilogoUtente } from '../../profiloSportivoComponent/RiepilogoUtenteComponent';
 import { Label } from 'reactstrap';
-import { TabComponent } from '../../tabComponent/TabComponent';
+import { CorsiDisponibili } from './CorsiDisponibiliComponent';
 
-export const NuovaPrenotazioneImpianto: React.FC = () => {
+export const PrenotazioneCorso: React.FC = () => {
 
     const dispatch = useDispatch()
     
-    
 
     const sportivoAutenticato = useSelector(sportivoAutenticatoSelector);
-
+    
     useEffect(() => {
-        dispatch(resetListaInvitabili())
-        dispatch(resetListaSportPraticabili())
-        dispatch(avviaNuovaPrenotazione(sportivoAutenticato.sportivo.email, "IMPIANTO", sportivoAutenticato.jwt))
+        dispatch(avviaNuovaPrenotazione(sportivoAutenticato.sportivo.email, "CORSO", sportivoAutenticato.jwt))
     }, [])
 
-    
 
-
+    const corsiDisponibili = useSelector(corsiDisponibiliSelector);
     return (
         <>
             <section>
@@ -35,8 +29,8 @@ export const NuovaPrenotazioneImpianto: React.FC = () => {
                             email={sportivoAutenticato.sportivo.email}
                             sportPraticati={sportivoAutenticato.sportivo.sportPraticati}/>
                         <div className="col-8">
-                            <Label>PRENOTAZIONE IMPIANTO</Label>
-                            <TabComponent/>
+                            <Label>PRENOTAZIONE CORSO</Label>
+                            <CorsiDisponibili corsiDisponibili={corsiDisponibili}/>
                         </div>
                     </div>
                 </div>

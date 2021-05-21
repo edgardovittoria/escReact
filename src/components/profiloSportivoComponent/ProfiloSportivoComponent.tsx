@@ -8,11 +8,8 @@ import { faFutbol, faVolleyballBall } from '@fortawesome/free-solid-svg-icons';
 import { useHistory } from 'react-router';
 import './profiloSportivo.css';
 import { fetchPrenotazioni, partecipazioniSelector, prenotazioniSelector, resetPrenotazioneDaConfermare } from '../../store/prenotazioneSlice';
-import SpringSocket from "react-spring-websocket";
-import SockJS from "sockjs-client";
 import { TablePrenotazioni } from './TablePrenotazioniEffettuateComponent';
 import { TablePartecipazioni } from './TablePartecipazioniComponent';
-import Stomp from "stompjs";
 
 
 export const ProfiloSportivo: React.FC = () => {
@@ -65,7 +62,7 @@ export const ProfiloSportivo: React.FC = () => {
                     <i></i>IMPIANTO
                 </button>
 
-                <button className="btnProfilo" id="prenotazioneCorso" onClick={() => history.push("/creazioneCorso")}>
+                <button className="btnProfilo" id="prenotazioneCorso" onClick={() => history.push("/prenotazioneCorso")}>
                     <FontAwesomeIcon icon={faVolleyballBall} style={style} />
                     <i></i>CORSO
                 </button>
