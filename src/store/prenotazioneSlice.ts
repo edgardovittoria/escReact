@@ -33,6 +33,7 @@ export const PrenotazioneSlice = createSlice({
         corsiDisponibili: [],
         appuntamentiSottoscrivibili: [],
         prenotazioneDaConfermare: {
+            idPrenotazione: null,
             sportivoPrenotante: {
                 nome: "",
                 cognome: "",
@@ -52,6 +53,7 @@ export const PrenotazioneSlice = createSlice({
         },
         resetPrenotazioneDaConfermare(state: PrenotazioneState){
             state.prenotazioneDaConfermare = {
+                idPrenotazione: null,
                 sportivoPrenotante: {
                     nome: "",
                     cognome: "",
@@ -166,6 +168,7 @@ export const riepilogoPrenotazione = (prenotazione: FormPrenotaImpianto | FormPr
             Object.keys(res.data.infoGeneraliEvento).map(k => [k, res.data.infoGeneraliEvento[k]])
         );
         let prenotazioneDaConfermare: Prenotazione = {
+            idPrenotazione: res.data.idPrenotazione,
             sportivoPrenotante: res.data.sportivoPrenotante,
             appuntamenti: res.data.appuntamenti,
             infoGeneraliEvento: mappaInfoGenerali
@@ -251,7 +254,7 @@ export const aggiornaIstruttori = (object: any, id: number, jwt: string): AppThu
 
 }
 
-export const partecipazioneEventoEsistente = (idEvento: number, emailPartecipante: string, jwt: string): AppThunk => async dispatch => {
+export const partecipazioneEventoEsistente = (idEvento: number | null, emailPartecipante: string, jwt: string): AppThunk => async dispatch => {
     try {
         dispatch(setLoading(true)); 
         let object = {
