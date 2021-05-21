@@ -10,6 +10,7 @@ import './profiloSportivo.css';
 import { fetchPrenotazioni, partecipazioniSelector, prenotazioniSelector, resetPrenotazioneDaConfermare } from '../../store/prenotazioneSlice';
 import { TablePrenotazioni } from './TablePrenotazioniEffettuateComponent';
 import { TablePartecipazioni } from './TablePartecipazioniComponent';
+import { TabRiepilogoPrenotazioni } from '../tabComponent/TabRiepilogoPrenotazioniProfiloComponent';
 
 
 export const ProfiloSportivo: React.FC = () => {
@@ -51,7 +52,7 @@ export const ProfiloSportivo: React.FC = () => {
             <div className="container">
                 <p>Prenota un impianto una lezione o un corso</p>
             </div>
-            <div className="btn-container">
+            <div className="btn-container" style={{marginBottom:"80px"}}>
                 <span></span>
                 <button className="btnProfilo" id="prenotazioneLezione" onClick={() => history.push("/nuovaPrenotazioneLezione")}>
                     <FontAwesomeIcon icon={faTableTennis} style={style} />
@@ -67,14 +68,13 @@ export const ProfiloSportivo: React.FC = () => {
                     <i></i>CORSO
                 </button>
             </div>
-            <h2 style={{ textAlign: "center", marginTop: "50px", marginBottom: "50px" }}>PRENOTAZIONI EFFETTUATE</h2>
-            <TablePrenotazioni prenotazioniEffettuate={prenotazioniEffettuate}
-                sportivoAutenticato={sportivoAutenticato.sportivo} />
-
-            <h2 style={{ textAlign: "center", marginTop: "50px", marginBottom: "50px" }}>PARTECIPAZIONI</h2>
-            <TablePartecipazioni partecipazioni={partecipazioniEffettuate}
-                sportivoAutenticato={sportivoAutenticato.sportivo} />
-
+            <div id="riepilogoPrenotazioni" style={{margin:"auto", width:"60%"}}>
+            <TabRiepilogoPrenotazioni prenotazioniEffettuate={prenotazioniEffettuate}
+                partecipazioni={partecipazioniEffettuate}
+                corsiPrenotati={prenotazioniEffettuate/*vanno inseriti i corsi prenotati */}
+                sportivoAutenticato={sportivoAutenticato.sportivo} 
+                />
+            </div>
 
         </>
     )

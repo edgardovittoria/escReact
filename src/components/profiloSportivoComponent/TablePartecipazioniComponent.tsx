@@ -10,7 +10,7 @@ type TablePartecipazioniProsp = {
 export const TablePartecipazioni: React.FC<TablePartecipazioniProsp> = ({ partecipazioni, sportivoAutenticato }) => {
     if (partecipazioni.length !== 0) {
         return (
-            <table style={{ marginBottom: "50px" }}>
+            <table style={{ marginBottom: "50px", marginTop:"80px" }}>
                 <thead>
                     <tr id="label">
                         <th>Sport Prenotato</th>
@@ -32,7 +32,7 @@ export const TablePartecipazioni: React.FC<TablePartecipazioniProsp> = ({ partec
             </table>
         )
     } else {
-        return <h3 style={{ textAlign: "center" }}>Al momento non hai effettuato nessuna prenotazione!!!</h3>
+        return <h3 style={{ textAlign: "center", marginTop:"80px"}}>Al momento non hai effettuato nessuna prenotazione!!!</h3>
     }
 }
 

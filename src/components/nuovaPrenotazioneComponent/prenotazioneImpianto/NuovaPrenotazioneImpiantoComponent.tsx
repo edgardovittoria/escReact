@@ -6,7 +6,7 @@ import { resetListaInvitabili } from '../../../store/sportivoSlice';
 import { resetListaSportPraticabili } from '../../../store/SportSlice';
 import { RiepilogoUtente } from '../../profiloSportivoComponent/RiepilogoUtenteComponent';
 import { Label } from 'reactstrap';
-import { TabComponent } from '../../tabComponent/TabComponent';
+import { TabNuovaPrenotazioneComponent } from '../../tabComponent/TabNuovaPrenotazioneComponent';
 
 export const NuovaPrenotazioneImpianto: React.FC = () => {
 
@@ -36,7 +36,7 @@ export const NuovaPrenotazioneImpianto: React.FC = () => {
                             sportPraticati={sportivoAutenticato.sportivo.sportPraticati}/>
                         <div className="col-8">
                             <Label>PRENOTAZIONE IMPIANTO</Label>
-                            <TabComponent/>
+                            <TabNuovaPrenotazioneComponent/>
                         </div>
                     </div>
                 </div>

@@ -6,7 +6,7 @@ import { AppuntamentiSottoscrivibili } from '../nuovaPrenotazioneComponent/preno
 import { useSelector } from 'react-redux';
 import { prenotazioneSelector } from '../../store/prenotazioneSlice';
 
-export const TabComponent: React.FC = () => {
+export const TabNuovaPrenotazioneComponent: React.FC = () => {
     const [activeTab, setActiveTab] = useState('1');
     const prenotazione = useSelector(prenotazioneSelector)
 
