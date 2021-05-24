@@ -7,11 +7,12 @@ import { sportivoAutenticatoSelector } from '../../../store/sportivoAutenticatoS
 import { Prenotazione } from '../../../model/Prenotazone';
 
 export type DettagliCorsoProps = {
-    corso: Prenotazione
+    corso: Prenotazione,
+    giaPrenotato: string
 }
 
 
-export const DettagliCorso: React.FC<DettagliCorsoProps> = ({ corso }) => {
+export const DettagliCorso: React.FC<DettagliCorsoProps> = ({ corso, giaPrenotato}) => {
 
     const sportivoAutenticato = useSelector(sportivoAutenticatoSelector)
     const history = useHistory();
@@ -64,7 +65,7 @@ export const DettagliCorso: React.FC<DettagliCorsoProps> = ({ corso }) => {
                                     <Col>
                                         <Button
                                             outline color="success"
-                                            style={{ marginTop: "2%", marginBottom: "3%", width: "100%" }}
+                                            style={{ marginTop: "2%", marginBottom: "3%", width: "100%", display: giaPrenotato}}
                                             onClick={onClick}>Iscriviti</Button>
                                     </Col>
                                 </Row>

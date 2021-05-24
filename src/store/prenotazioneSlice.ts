@@ -85,7 +85,15 @@ export const PrenotazioneSlice = createSlice({
         addListaPrenotazioniCorso(state: PrenotazioneState, action: PayloadAction<Prenotazione[]>){
             state.isLoading = false;
             state.errors = "";
-            state.prenotazioniCorso = action.payload
+            let infoGenerali: any = action.payload[0].infoGeneraliEvento
+            let mappaInfoGenerali = new Map<string, object>(
+                Object.keys(infoGenerali).map(k => [k, infoGenerali[k]])
+            );
+            state.prenotazioniCorso = [];
+            action.payload.map((prenotazione) => {
+                prenotazione.infoGeneraliEvento = mappaInfoGenerali
+                state.prenotazioniCorso.push(prenotazione)
+            })
         },
         addListaCorsiDiponibili(state: PrenotazioneState, action: PayloadAction<Prenotazione[]>){
             state.isLoading = false;
@@ -131,6 +139,7 @@ export const prenotazioneSelector = (state: { prenotazioni: PrenotazioneState })
 export const prenotazioniSelector = (state: { prenotazioni: PrenotazioneState }) => state.prenotazioni.prenotazioni
 export const corsiDisponibiliSelector = (state: {prenotazioni: PrenotazioneState}) => state.prenotazioni.corsiDisponibili
 export const partecipazioniSelector = (state: {prenotazioni: PrenotazioneState}) => state.prenotazioni.partecipazioni
+export const corsiPrenotatiSelector = (state: {prenotazioni: PrenotazioneState}) => state.prenotazioni.prenotazioniCorso
 
 export const avviaNuovaPrenotazione = (emailSportivo: string, tipoPren: string, jwt: string): AppThunk => async dispatch => {
     try {

@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
 import { Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap';
 import classnames from 'classnames';
-import { FormPrenotazioneImpiantoRicorrente } from '../nuovaPrenotazioneComponent/prenotazioneImpianto/FormPrenotazioneImpiantoRicorrenteComponent';
-import { AppuntamentiSottoscrivibili } from '../nuovaPrenotazioneComponent/prenotazioneImpianto/AppuntamentiSottoscrivibiliComponent';
-import { useSelector } from 'react-redux';
-import { prenotazioneSelector } from '../../store/prenotazioneSlice';
 import { TablePrenotazioni } from '../profiloSportivoComponent/TablePrenotazioniEffettuateComponent';
 import { Prenotazione } from '../../model/Prenotazone';
 import { Sportivo } from '../../model/Sportivo';
 import { Appuntamento } from '../../model/Appuntamento';
 import { TablePartecipazioni } from '../profiloSportivoComponent/TablePartecipazioniComponent';
+import { TabIscrizioneCorsi } from '../profiloSportivoComponent/TabIscrizioneCorsiComponent';
 
 export type TabRiepilogoPrenotazioniProps = {
     prenotazioniEffettuate: Prenotazione[]
@@ -62,7 +59,8 @@ export const TabRiepilogoPrenotazioni: React.FC<TabRiepilogoPrenotazioniProps> =
                         sportivoAutenticato={sportivoAutenticato} />
                 </TabPane>
                 <TabPane tabId="3">
-                    <div>corsi prenotati</div>
+                    <TabIscrizioneCorsi corsiPrenotati={corsiPrenotati}
+                        sportivoAutenticato={sportivoAutenticato}/>
                 </TabPane>
             </TabContent>
         </>
