@@ -38,9 +38,8 @@ export const TablePartecipazioni: React.FC<TablePartecipazioniProsp> = ({ partec
 
 const TableRows: React.FC<TablePartecipazioniProsp> = ({ partecipazioni, sportivoAutenticato }) => {
     let tableRow: JSX.Element[] = []
-    let index = 0;
     if (partecipazioni.length !== 0) {
-        partecipazioni.map((partecipazione) => {
+        partecipazioni.map((partecipazione, index) => {
             tableRow.push(
                 <tr key={index}>
                     <th>{partecipazione.specificaPrenotazione.sportAssociato.nome}</th>
@@ -50,11 +49,10 @@ const TableRows: React.FC<TablePartecipazioniProsp> = ({ partecipazioni, sportiv
                     <th>{partecipazione.oraFineAppuntamento}</th>
                     <th>{partecipazione.partecipanti.length}</th>
                     <th>{partecipazione.specificaPrenotazione.costo} €</th>
-                    <th>{partecipazione.quotePartecipazione.filter(quota =>
-                        quota.sportivo.email === sportivoAutenticato.email)[0].costo}€</th>
+                    <th>{(partecipazione.quotePartecipazione.length !== 0)?partecipazione.quotePartecipazione.filter(quota =>
+                        quota.sportivo.email === sportivoAutenticato.email)[0].costo : "in attesa di conferma"}</th>
                 </tr>
             )
-            index++
         })
         return (
             <>

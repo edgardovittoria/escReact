@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Card, Col, ListGroup, ListGroupItem, Row, Spinner } from 'reactstrap';
 import { useHistory } from 'react-router-dom';
-import { partecipazioneEventoEsistente } from '../../../store/prenotazioneSlice';
+import { partecipazioneCorso } from '../../../store/prenotazioneSlice';
 import { sportivoAutenticatoSelector } from '../../../store/sportivoAutenticatoSlice';
 import { Prenotazione } from '../../../model/Prenotazone';
 
@@ -18,7 +18,7 @@ export const DettagliCorso: React.FC<DettagliCorsoProps> = ({ corso }) => {
     const dispatch = useDispatch();
 
     const onClick = () => {
-        dispatch(partecipazioneEventoEsistente(corso.idPrenotazione,
+        dispatch(partecipazioneCorso(corso.idPrenotazione,
             sportivoAutenticato.sportivo.email,
             sportivoAutenticato.jwt));
         history.push("profiloSportivo")
