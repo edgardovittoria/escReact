@@ -14,6 +14,7 @@ import { RiepilogoPrenotazioneLezione } from './components/nuovaPrenotazioneComp
 import { CreazioneCorso } from './components/nuovaPrenotazioneComponent/prenotazioneCorso/CreazioneCorsoComponent';
 import { RiepilogoCreazioneCorso } from './components/nuovaPrenotazioneComponent/prenotazioneCorso/RiepilogoCreazioneCorso';
 import { PrenotazioneCorso } from './components/nuovaPrenotazioneComponent/prenotazioneCorso/prenotazioneCorsoComponent';
+import { NavBar } from './components/navBarComponent/NavBarComponent';
 
 
 
@@ -22,6 +23,7 @@ export const App: React.FC = () => {
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
+        <NavBar/>
       <BrowserRouter>
         <Switch>
           <Route path="/login"><Login /></Route>

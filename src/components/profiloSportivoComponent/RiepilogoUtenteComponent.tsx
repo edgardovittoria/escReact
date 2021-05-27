@@ -1,10 +1,10 @@
 import React from 'react';
 import { Card, CardBody, CardImg, CardText, CardTitle, ListGroup, ListGroupItem } from 'reactstrap';
 import { NavLink as NavLinkRouter } from 'react-router-dom';
-import { Sportivo } from '../../model/Sportivo';
+import { UtentePolisportiva } from '../../model/UtentePolisportiva';
 
 
-export const RiepilogoUtente: React.FC<Sportivo> = ({ nome, cognome, email, sportPraticati }) => {
+export const RiepilogoUtente: React.FC<UtentePolisportiva> = ({ nome, cognome, email, ruoli, attributiExtra }) => {
     return (
         <Card className="col-4" style={{ height: "min-content" }}>
             <CardImg

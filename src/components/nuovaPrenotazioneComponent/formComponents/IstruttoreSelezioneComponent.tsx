@@ -1,9 +1,9 @@
 import React from 'react';
 import { Label } from 'reactstrap';
-import { Istruttore } from '../../../model/Istruttore';
+import { UtentePolisportiva } from '../../../model/UtentePolisportiva';
 
 export type IstruttoreSelezioneProps = {
-    istruttori: Istruttore[],
+    istruttori: UtentePolisportiva[],
     handleSelezioneIstruttore: Function,
     chiave: number
 }

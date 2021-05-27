@@ -1,5 +1,4 @@
-import { Istruttore } from './Istruttore';
-import { Sportivo } from './Sportivo';
+import { UtentePolisportiva } from './UtentePolisportiva';
 import { Sport } from './Sport';
 
 export type PrenotazioneSpecs = {
@@ -8,8 +7,9 @@ export type PrenotazioneSpecs = {
     costo: Number
     sportAssociato: Sport
     tipoSpecifica: string
-    invitati: Sportivo[]
+    invitati: UtentePolisportiva[]
     idImpiantoPrenotato: number
     pavimentazioneImpianto: string
-    istruttore: Istruttore
+    istruttore: UtentePolisportiva
+
 }

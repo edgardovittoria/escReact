@@ -1,7 +1,8 @@
-import { Sportivo } from "./Sportivo";
+import { UtentePolisportiva } from './UtentePolisportiva';
+
 
 export type QuotaPartecipazione = {
     costo: number
     pagata: boolean
-    sportivo: Sportivo
+    sportivo: UtentePolisportiva
 }

@@ -4,7 +4,7 @@ import { Button, Card, CardBody, CardImg, CardText, CardTitle, Col, ListGroup, L
 import { NavLink, useHistory } from 'react-router-dom';
 import { creaCorso, prenotazioneSelector } from '../../../store/prenotazioneSlice';
 import { sportivoAutenticatoSelector } from '../../../store/sportivoAutenticatoSlice';
-import { Sportivo } from '../../../model/Sportivo';
+import { UtentePolisportiva } from '../../../model/UtentePolisportiva';
 
 
 
@@ -77,7 +77,7 @@ export const RiepilogoCreazioneCorso: React.FC = () => {
                                 </ListGroup>
                                 <ListGroup>
                                     <ListGroupItem>
-                                        Sportivi Invitati : <ul>{(prenotazioneDaConfermare.infoGeneraliEvento.get("invitatiCorso") as Sportivo[]).map((invitato) => {
+                                        Sportivi Invitati : <ul>{(prenotazioneDaConfermare.infoGeneraliEvento.get("invitatiCorso") as UtentePolisportiva[]).map((invitato) => {
                                         return (
                                             <li key={invitato.email}>{invitato.nome} {invitato.cognome}</li>
                                         )

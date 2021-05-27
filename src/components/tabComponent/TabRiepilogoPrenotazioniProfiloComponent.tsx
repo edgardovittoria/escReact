@@ -3,16 +3,16 @@ import { Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap';
 import classnames from 'classnames';
 import { TablePrenotazioni } from '../profiloSportivoComponent/TablePrenotazioniEffettuateComponent';
 import { Prenotazione } from '../../model/Prenotazone';
-import { Sportivo } from '../../model/Sportivo';
 import { Appuntamento } from '../../model/Appuntamento';
 import { TablePartecipazioni } from '../profiloSportivoComponent/TablePartecipazioniComponent';
 import { TabIscrizioneCorsi } from '../profiloSportivoComponent/TabIscrizioneCorsiComponent';
+import { UtentePolisportiva } from '../../model/UtentePolisportiva';
 
 export type TabRiepilogoPrenotazioniProps = {
     prenotazioniEffettuate: Prenotazione[]
     partecipazioni: Appuntamento[]
     corsiPrenotati: Prenotazione[]
-    sportivoAutenticato: Sportivo
+    sportivoAutenticato: UtentePolisportiva
 }
 
 export const TabRiepilogoPrenotazioni: React.FC<TabRiepilogoPrenotazioniProps> = ({ prenotazioniEffettuate, partecipazioni, corsiPrenotati, sportivoAutenticato }) => {

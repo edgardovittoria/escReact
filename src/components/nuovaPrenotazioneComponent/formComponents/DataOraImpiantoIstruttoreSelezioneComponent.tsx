@@ -1,6 +1,6 @@
 import React from 'react';
 import { Impianto } from '../../../model/Impianto';
-import { Istruttore } from '../../../model/Istruttore';
+import { UtentePolisportiva } from '../../../model/UtentePolisportiva';
 import { DataOraSelezione, OrarioPrenotazione } from './DataOraSelezioneComponent';
 import { ImpiantoSelezione } from './ImpiantoSelezioneComponet';
 import { IstruttoreSelezione } from './IstruttoreSelezioneComponent';
@@ -21,7 +21,7 @@ export type ArrayLisetImpiantoItem = {
 
 export type ArrayListeIstruttoreItem = {
     id: number,
-    istruttoriDisponibili: Istruttore[]
+    istruttoriDisponibili: UtentePolisportiva[]
 }
 
 

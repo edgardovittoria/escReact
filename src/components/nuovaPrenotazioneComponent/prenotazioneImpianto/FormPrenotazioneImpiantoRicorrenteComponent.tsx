@@ -6,7 +6,7 @@ import { Button, Col, Form, FormGroup, Label, Row } from 'reactstrap';
 import { formPrenotaImpiantoSelector } from '../../../store/formPrenotaImpiantoSlice';
 import { aggiornaImpiantiRicorrente, riepilogoPrenotazione } from '../../../store/prenotazioneSlice';
 import { sportivoAutenticatoSelector } from '../../../store/sportivoAutenticatoSlice';
-import { sportivoSelector } from '../../../store/sportivoSlice';
+import { utentePolisportivaSelector } from '../../../store/utentePolisportivaSlice';
 import { sportSelector } from '../../../store/SportSlice';
 import { CheckBoxPendingSelezionatoItem, DataOraImpiantoRicorrente, ImpiantiSelezionatiItem } from '../formComponents/DataOraImpiantoRicorrenteComponent';
 import { OrarioPrenotazione } from '../formComponents/DataOraSelezioneComponent';
@@ -40,7 +40,7 @@ export const FormPrenotazioneImpiantoRicorrente: React.FC = () => {
     const [postiLiberi, setPostiliberi] = useState(0);
     const [postiLiberiAggiornato, setPostiliberiAggiornati] = useState(postiLiberi);
     const sportPraticabili = useSelector(sportSelector);
-    const sportiviInvitabili = useSelector(sportivoSelector);
+    const sportiviInvitabili = useSelector(utentePolisportivaSelector);
     const sportivoAutenticato = useSelector(sportivoAutenticatoSelector);
     // const impiantiDisponibili = useSelector(impiantoSelector);
     const opzioni = useSelector(formPrenotaImpiantoSelector);

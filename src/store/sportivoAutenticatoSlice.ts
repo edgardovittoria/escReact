@@ -1,19 +1,19 @@
+import { UtentePolisportiva } from './../model/UtentePolisportiva';
 import { UserDetails } from './../model/UserDetails';
 /* eslint-disable array-callback-return */
-import { Sportivo } from '../model/Sportivo';
 
 import axios from 'axios';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export type SportivoAutenticatoState = {
-    sportivo: Sportivo
+    sportivo: UtentePolisportiva
     jwt: string
     isLoading: boolean
     errors: string
 }
 
 type AutenticazioneResponse = {
-    sportivo: Sportivo,
+    sportivo: UtentePolisportiva,
     jwt: string
 }
 
@@ -55,7 +55,8 @@ export const SportivoAutenticatoSlice = createSlice({
                 nome: "",
                 cognome: "",
                 email: "",
-                sportPraticati: []
+                ruoli: [],
+                attributiExtra: new Map<string, object>()
             }
             state.errors = action.payload
             state.isLoading = false;

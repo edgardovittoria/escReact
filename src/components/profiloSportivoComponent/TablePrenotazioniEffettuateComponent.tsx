@@ -1,10 +1,10 @@
 import React from 'react';
 import { Prenotazione } from '../../model/Prenotazone';
-import { Sportivo } from '../../model/Sportivo';
+import { UtentePolisportiva } from '../../model/UtentePolisportiva';
 
 type TableProsp = {
     prenotazioniEffettuate: Prenotazione[],
-    sportivoAutenticato: Sportivo
+    sportivoAutenticato: UtentePolisportiva
 }
 
 export const TablePrenotazioni: React.FC<TableProsp> = ({ prenotazioniEffettuate, sportivoAutenticato }) => {

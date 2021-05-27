@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { sportivoAutenticatoSelector } from '../../../store/sportivoAutenticatoSlice';
@@ -27,7 +28,8 @@ export const PrenotazioneCorso: React.FC = () => {
                     <RiepilogoUtente nome={sportivoAutenticato.sportivo.nome}
                             cognome={sportivoAutenticato.sportivo.cognome}
                             email={sportivoAutenticato.sportivo.email}
-                            sportPraticati={sportivoAutenticato.sportivo.sportPraticati}/>
+                            ruoli={sportivoAutenticato.sportivo.ruoli}
+                            attributiExtra={sportivoAutenticato.sportivo.attributiExtra}/>
                         <div className="col-8">
                             <Label>PRENOTAZIONE CORSO</Label>
                             <CorsiDisponibili corsiDisponibili={corsiDisponibili}/>

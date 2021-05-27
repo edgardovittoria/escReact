@@ -1,12 +1,12 @@
 import React from 'react';
 import { Button } from 'reactstrap';
 import { Prenotazione } from '../../model/Prenotazone';
-import { Sportivo } from '../../model/Sportivo';
+import { UtentePolisportiva } from '../../model/UtentePolisportiva';
 import { DettagliCorso } from '../nuovaPrenotazioneComponent/prenotazioneCorso/DettagliCorsoComponet';
 
 type TableCorsiProsp = {
     corsiPrenotati: Prenotazione[],
-    sportivoAutenticato: Sportivo
+    sportivoAutenticato: UtentePolisportiva
 }
 
 

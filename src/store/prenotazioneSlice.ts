@@ -11,9 +11,10 @@ import { Prenotazione } from './../model/Prenotazone';
 import { addListaImpiantiDisponibili, resetListaImpiantiDisponibili } from './impiantoSlice';
 import { addListaImpiantiDisponibiliAdArray } from './formPrenotaImpiantoSlice';
 import { addListaSportPraticabili } from './SportSlice';
-import { addListaInvitabili } from './sportivoSlice';
+import { addListaInvitabili } from './utentePolisportivaSlice';
 import { ArrayListeIstruttoreItem } from '../components/nuovaPrenotazioneComponent/formComponents/DataOraImpiantoIstruttoreSelezioneComponent';
 import { addListaIstruttori } from './IstruttoreSlice';
+import { addListaNotifiche } from './notificheSlice';
 
 export type PrenotazioneState = {
     prenotazioni: Prenotazione[]
@@ -40,7 +41,8 @@ export const PrenotazioneSlice = createSlice({
                 nome: "",
                 cognome: "",
                 email: "",
-                sportPraticati: []
+                ruoli: [],
+                attributiExtra: new Map<string, object>()
             },
             appuntamenti: [],
             infoGeneraliEvento: new Map<string, object>()
@@ -60,7 +62,8 @@ export const PrenotazioneSlice = createSlice({
                     nome: "",
                     cognome: "",
                     email: "",
-                    sportPraticati: []
+                    ruoli: [],
+                    attributiExtra: new Map<string, object>()
                 },
                 appuntamenti: [],
                 infoGeneraliEvento: new Map<string, object>()
@@ -94,6 +97,7 @@ export const PrenotazioneSlice = createSlice({
                 prenotazione.infoGeneraliEvento = mappaInfoGenerali
                 state.prenotazioniCorso.push(prenotazione)
             })
+            
         },
         addListaCorsiDiponibili(state: PrenotazioneState, action: PayloadAction<Prenotazione[]>){
             state.isLoading = false;
@@ -172,6 +176,8 @@ export const avviaNuovaPrenotazioneEventoDirettore = (emailSportivo: string, tip
     } catch (error) {
         dispatch(setLoading(false))
         dispatch(setErrors(error))
+        alert("Non sei autorizzato!")
+        window.location.href = "http://localhost:3000/profiloSportivo";
     }
 
 }
@@ -225,8 +231,10 @@ export const fetchPrenotazioni = (emailSportivo: string, jwt: string): AppThunk 
         dispatch(setLoading(true));
         const res = await axios.get("http://localhost:8080/aggiornaOpzioni/prenotazioniEPartecipazioniSportivo/", {params: {email: emailSportivo}, headers:{"Authorization": "Bearer "+jwt}})
         dispatch(addListaPrenotazioni(res.data.prenotazioniEffettuate))
+        console.log(res.data.notificheUtente)
         dispatch(addListaPartecipazioni(res.data.partecipazioni))
         dispatch(addListaPrenotazioniCorso(res.data.corsiACuiSiPartecipa))
+        dispatch(addListaNotifiche(res.data.notificheUtente))
     } catch (error) {
         dispatch(setErrors(error))
     }

@@ -1,6 +1,7 @@
+import { NotificheSlice } from './notificheSlice';
 import { FormPrenotaImpiantoSlice } from './formPrenotaImpiantoSlice';
 import { IstruttoreSlice } from './IstruttoreSlice';
-import { SportivoSlice } from './sportivoSlice';
+import { UtentePolisportivaSlice } from './utentePolisportivaSlice';
 import { ImpiantoSlice } from './impiantoSlice';
 import { SportSlice } from './SportSlice';
 import { PrenotazioneSlice } from './prenotazioneSlice';
@@ -21,8 +22,9 @@ const rootReducer = combineReducers({
   sportPraticabili: SportSlice.reducer,
   impiantiDisponibili: ImpiantoSlice.reducer,
   istruttoriDisponibili: IstruttoreSlice.reducer,
-  sportiviInvitabili: SportivoSlice.reducer,
-  formPrenotazioneImpianto: FormPrenotaImpiantoSlice.reducer
+  sportiviInvitabili: UtentePolisportivaSlice.reducer,
+  formPrenotazioneImpianto: FormPrenotaImpiantoSlice.reducer,
+  notifiche: NotificheSlice.reducer
 });
 
 const persistConfig = {

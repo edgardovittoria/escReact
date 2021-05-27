@@ -1,36 +1,36 @@
+import { UtentePolisportiva } from '../model/UtentePolisportiva';
 /* eslint-disable array-callback-return */
-import { Sportivo } from '../model/Sportivo';
 
 import axios from 'axios';
 import { AppThunk } from './store';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export type SportivoState = {
-    sportivi: Sportivo[]
+export type UtentePolisportivaState = {
+    sportivi: UtentePolisportiva[]
     isLoading: boolean
     errors: string
 }
 
 
-export const SportivoSlice = createSlice({
+export const UtentePolisportivaSlice = createSlice({
     name: 'sportivi',
     initialState: {
         sportivi: [],
         isLoading: false,
         errors: ""
-    } as SportivoState,
+    } as UtentePolisportivaState,
     reducers: {
-        addListaInvitabili(state: SportivoState, action: PayloadAction<Sportivo[]>) {
+        addListaInvitabili(state: UtentePolisportivaState, action: PayloadAction<UtentePolisportiva[]>) {
             state.isLoading = false
             state.sportivi = action.payload
         },
-        resetListaInvitabili(state: SportivoState){
+        resetListaInvitabili(state: UtentePolisportivaState){
             state.sportivi = []
         },
-        setLoading(state: SportivoState, action: PayloadAction<boolean>){
+        setLoading(state: UtentePolisportivaState, action: PayloadAction<boolean>){
             state.isLoading = action.payload
         },
-        setErrors(state: SportivoState, action: PayloadAction<string>){
+        setErrors(state: UtentePolisportivaState, action: PayloadAction<string>){
             state.errors = action.payload
         }
     }
@@ -41,9 +41,9 @@ export const {
     resetListaInvitabili,
     setLoading,
     setErrors
-} = SportivoSlice.actions
+} = UtentePolisportivaSlice.actions
 
-export const sportivoSelector = (state: { sportiviInvitabili: SportivoState }) => state.sportiviInvitabili
+export const utentePolisportivaSelector = (state: { sportiviInvitabili: UtentePolisportivaState }) => state.sportiviInvitabili
 
 export const fetchSportiviInvitabili = (): AppThunk => async dispatch => {
     try {
@@ -56,7 +56,7 @@ export const fetchSportiviInvitabili = (): AppThunk => async dispatch => {
 
 }
 
-export default SportivoSlice.reducer;
+export default UtentePolisportivaSlice.reducer;
 
 
 

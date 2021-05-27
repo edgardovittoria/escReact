@@ -1,10 +1,10 @@
 import React from 'react';
 import { Appuntamento } from '../../model/Appuntamento';
-import { Sportivo } from '../../model/Sportivo';
+import { UtentePolisportiva } from '../../model/UtentePolisportiva';
 
 type TablePartecipazioniProsp = {
     partecipazioni: Appuntamento[],
-    sportivoAutenticato: Sportivo
+    sportivoAutenticato: UtentePolisportiva
 }
 
 export const TablePartecipazioni: React.FC<TablePartecipazioniProsp> = ({ partecipazioni, sportivoAutenticato }) => {

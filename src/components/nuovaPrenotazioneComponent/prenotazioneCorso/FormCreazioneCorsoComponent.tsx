@@ -7,7 +7,7 @@ import { formPrenotaImpiantoSelector } from "../../../store/formPrenotaImpiantoS
 import { istruttoreSelector } from "../../../store/IstruttoreSlice";
 import { aggiornaImpiantiRicorrente, aggiornaIstruttori, riepilogoPrenotazione } from "../../../store/prenotazioneSlice";
 import { sportivoAutenticatoSelector } from "../../../store/sportivoAutenticatoSlice";
-import { sportivoSelector } from "../../../store/sportivoSlice";
+import { utentePolisportivaSelector } from "../../../store/utentePolisportivaSlice";
 import { sportSelector } from "../../../store/SportSlice";
 import { DataOraImpiantoIstruttoreSelezione, IstruttoriSelezionatiItem } from "../formComponents/DataOraImpiantoIstruttoreSelezioneComponent";
 import { ImpiantiSelezionatiItem } from "../formComponents/DataOraImpiantoRicorrenteComponent";
@@ -128,7 +128,7 @@ export const FormCreazioneCorso: React.FC = () => {
         setValue("formLezione.istruttori", istruttoriSelezionati)
     }
 
-    const sportiviInvitabili = useSelector(sportivoSelector);
+    const sportiviInvitabili = useSelector(utentePolisportivaSelector);
     const onSportiviInvitabiliSelezione = (emailSportivi: string[]) => {
         setValue("invitatiCorso", emailSportivi)
     }

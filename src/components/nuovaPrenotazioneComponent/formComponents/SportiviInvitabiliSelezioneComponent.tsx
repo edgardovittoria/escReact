@@ -1,8 +1,8 @@
 import React from 'react';
-import { Sportivo } from '../../../model/Sportivo';
+import { UtentePolisportiva } from '../../../model/UtentePolisportiva';
 
 export type sportiviInvitabiliProps = {
-    sportiviInvitabili: Sportivo[],
+    sportiviInvitabili: UtentePolisportiva[],
     handleSelezioneSportiviInvitabili: Function
 }
 

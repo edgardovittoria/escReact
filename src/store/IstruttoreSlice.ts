@@ -1,13 +1,13 @@
+import { UtentePolisportiva } from './../model/UtentePolisportiva';
 /* eslint-disable array-callback-return */
 import { ArrayListeIstruttoreItem } from '../components/nuovaPrenotazioneComponent/formComponents/DataOraImpiantoIstruttoreSelezioneComponent';
-import { Istruttore } from '../model/Istruttore';
 
 import axios from 'axios';
 import { AppThunk } from './store';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export type IstruttoreState = {
-    istruttori: Istruttore[]
+    istruttori: UtentePolisportiva[]
     arrayListeIstruttori: ArrayListeIstruttoreItem[]
     isLoading: boolean
     errors: string
@@ -31,7 +31,7 @@ export const IstruttoreSlice = createSlice({
         errors: ""
     } as IstruttoreState,
     reducers: {
-        addListaIstruttori(state: IstruttoreState, action: PayloadAction<Istruttore[]>) {
+        addListaIstruttori(state: IstruttoreState, action: PayloadAction<UtentePolisportiva[]>) {
             state.isLoading = false
             state.arrayListeIstruttori.map((item) => {
                 item.istruttoriDisponibili = action.payload
