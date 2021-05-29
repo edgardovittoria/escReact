@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import React from 'react';
 import { Appuntamento } from '../../model/Appuntamento';
 import { UtentePolisportiva } from '../../model/UtentePolisportiva';

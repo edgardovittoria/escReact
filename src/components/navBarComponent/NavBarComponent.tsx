@@ -1,6 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable array-callback-return */
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Collapse, DropdownItem, DropdownMenu, DropdownToggle, Nav, Navbar, NavbarBrand, NavbarText, NavbarToggler, NavItem, NavLink, UncontrolledDropdown } from 'reactstrap';
+import { Collapse, DropdownItem, DropdownMenu, DropdownToggle, Nav, Navbar, NavbarBrand, NavbarToggler, UncontrolledDropdown } from 'reactstrap';
 import { sportivoAutenticatoSelector } from '../../store/sportivoAutenticatoSlice';
 import { Notifiche } from '../notificaComponent/notificheComponent';
 
@@ -10,15 +12,14 @@ export const NavBar: React.FC = () => {
     const toggle = () => setIsOpen(!isOpen);
     const utenteAutenticato = useSelector(sportivoAutenticatoSelector);
     const [displayFunzioniDirettore, setDisplayFunzioniDirettore] = useState("none");
-    //console.log(utenteAutenticato.sportivo.ruoli)
     useEffect(() => {
         utenteAutenticato.sportivo.ruoli.map(ruolo => {
-            if(ruolo === "DIRETTORE"){
+            if (ruolo === "DIRETTORE") {
                 setDisplayFunzioniDirettore("flex")
             }
         })
     }, [])
-    
+
     return (
         <>
             <Navbar color="light" light expand="md">
@@ -32,8 +33,8 @@ export const NavBar: React.FC = () => {
                         <NavItem>
                             <NavLink href="https://github.com/reactstrap/reactstrap">GitHub</NavLink>
                         </NavItem> */}
-                        <UncontrolledDropdown nav inNavbar 
-                            style={{display: displayFunzioniDirettore}}>
+                        <UncontrolledDropdown nav inNavbar
+                            style={{ display: displayFunzioniDirettore }}>
                             <DropdownToggle nav caret>
                                 Funzioni Direttore
                             </DropdownToggle>
@@ -43,9 +44,9 @@ export const NavBar: React.FC = () => {
                                 </DropdownItem>
                             </DropdownMenu>
                         </UncontrolledDropdown>
-                        <NavItem>
-                            <Notifiche utenteAutenticato={utenteAutenticato}/>
-                        </NavItem>
+                    </Nav>
+                    <Nav>
+                        <Notifiche utenteAutenticato={utenteAutenticato} />
                     </Nav>
                 </Collapse>
             </Navbar>

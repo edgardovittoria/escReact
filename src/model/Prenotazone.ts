@@ -1,3 +1,4 @@
+import { Notificabile } from './Notificabile';
 import { UtentePolisportiva } from './UtentePolisportiva';
 import { Appuntamento } from './Appuntamento';
 
@@ -7,4 +8,4 @@ export type Prenotazione = {
     appuntamenti: Appuntamento[]
     infoGeneraliEvento: Map<string, object>
     
-}
+}&Notificabile

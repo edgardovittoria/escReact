@@ -14,7 +14,7 @@ import { addListaSportPraticabili } from './SportSlice';
 import { addListaInvitabili } from './utentePolisportivaSlice';
 import { ArrayListeIstruttoreItem } from '../components/nuovaPrenotazioneComponent/formComponents/DataOraImpiantoIstruttoreSelezioneComponent';
 import { addListaIstruttori } from './IstruttoreSlice';
-import { addListaNotifiche } from './notificheSlice';
+import { addListaNotificheUtente } from './notificheSlice';
 
 export type PrenotazioneState = {
     prenotazioni: Prenotazione[]
@@ -42,10 +42,11 @@ export const PrenotazioneSlice = createSlice({
                 cognome: "",
                 email: "",
                 ruoli: [],
-                attributiExtra: new Map<string, object>()
+                attributiExtra: new Map<string, object>(),
             },
             appuntamenti: [],
-            infoGeneraliEvento: new Map<string, object>()
+            infoGeneraliEvento: new Map<string, object>(),
+            tipoEventoNotificabile: "PRENOTAZIONE"
         },
         isLoading: false,
         errors: ""
@@ -66,7 +67,8 @@ export const PrenotazioneSlice = createSlice({
                     attributiExtra: new Map<string, object>()
                 },
                 appuntamenti: [],
-                infoGeneraliEvento: new Map<string, object>()
+                infoGeneraliEvento: new Map<string, object>(),
+                tipoEventoNotificabile: "PRENOTAZIONE"
             }
         },
         addPrenotazione(state: PrenotazioneState, action: PayloadAction<Prenotazione>){
@@ -194,7 +196,8 @@ export const riepilogoPrenotazione = (prenotazione: FormPrenotaImpianto | FormPr
             idPrenotazione: res.data.idPrenotazione,
             sportivoPrenotante: res.data.sportivoPrenotante,
             appuntamenti: res.data.appuntamenti,
-            infoGeneraliEvento: mappaInfoGenerali
+            infoGeneraliEvento: mappaInfoGenerali,
+            tipoEventoNotificabile: "PRENOTAZIONE"
         }
         dispatch(addPrenotazioneDaConfermare(prenotazioneDaConfermare))
     } catch (error) {
@@ -230,11 +233,11 @@ export const fetchPrenotazioni = (emailSportivo: string, jwt: string): AppThunk 
     try {
         dispatch(setLoading(true));
         const res = await axios.get("http://localhost:8080/aggiornaOpzioni/prenotazioniEPartecipazioniSportivo/", {params: {email: emailSportivo}, headers:{"Authorization": "Bearer "+jwt}})
+        dispatch(addListaNotificheUtente(res.data.notificheUtente))
         dispatch(addListaPrenotazioni(res.data.prenotazioniEffettuate))
-        console.log(res.data.notificheUtente)
         dispatch(addListaPartecipazioni(res.data.partecipazioni))
         dispatch(addListaPrenotazioniCorso(res.data.corsiACuiSiPartecipa))
-        dispatch(addListaNotifiche(res.data.notificheUtente))
+        
     } catch (error) {
         dispatch(setErrors(error))
     }

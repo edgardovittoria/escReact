@@ -24,7 +24,7 @@ const rootReducer = combineReducers({
   istruttoriDisponibili: IstruttoreSlice.reducer,
   sportiviInvitabili: UtentePolisportivaSlice.reducer,
   formPrenotazioneImpianto: FormPrenotaImpiantoSlice.reducer,
-  notifiche: NotificheSlice.reducer
+  notificheUtente: NotificheSlice.reducer
 });
 
 const persistConfig = {

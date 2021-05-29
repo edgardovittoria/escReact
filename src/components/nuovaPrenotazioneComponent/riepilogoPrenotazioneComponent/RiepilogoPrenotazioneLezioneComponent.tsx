@@ -1,9 +1,10 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Card, CardBody, CardImg, CardText, CardTitle, Col, ListGroup, ListGroupItem, Row, Spinner } from 'reactstrap';
-import { NavLink, useHistory } from 'react-router-dom';
+import { Button, Card, CardTitle, Col, ListGroup, ListGroupItem, Row, Spinner } from 'reactstrap';
+import { useHistory } from 'react-router-dom';
 import { confermaPrenotazione, prenotazioneSelector } from '../../../store/prenotazioneSlice';
 import { sportivoAutenticatoSelector } from '../../../store/sportivoAutenticatoSlice';
+import { RiepilogoUtente } from '../../profiloSportivoComponent/RiepilogoUtenteComponent';
 
 
 
@@ -29,29 +30,14 @@ export const RiepilogoPrenotazioneLezione: React.FC = () => {
                 <section>
                     <div className="container">
                         <div className="row justify-content-center">
-                            <Card className="col-4" style={{ height: "min-content" }}>
-                                <CardImg
-                                    src="/assets/img/avatarProfilo.png"
-                                    alt="Avatar Sportivo" />
-                                <CardBody>
-                                    <CardTitle>
-                                        {prenotazioneDaConfermare.sportivoPrenotante.nome} {prenotazioneDaConfermare.sportivoPrenotante.cognome}
-                                    </CardTitle>
-                                    <CardText>
-                                        Eventuali info dello Sportivo...
-                                    </CardText>
-                                </CardBody>
-                                <ListGroup>
-                                    <ListGroupItem>
-                                        {prenotazioneDaConfermare.sportivoPrenotante.email}
-                                    </ListGroupItem>
-                                </ListGroup>
-                                <CardBody>
-                                    <NavLink to="/profiloSportivo">Profilo</NavLink>
-                                </CardBody>
-                            </Card>
-                            <Card className="col-6">
+                            
+                            <RiepilogoUtente nome={sportivoAutenticato.sportivo.nome}
+                                cognome={sportivoAutenticato.sportivo.cognome}
+                                email={sportivoAutenticato.sportivo.email}
+                                ruoli={sportivoAutenticato.sportivo.ruoli}
+                                attributiExtra={sportivoAutenticato.sportivo.attributiExtra} />
 
+                            <Card className="col-6">
                                 <CardTitle style={{ marginTop: "3%", marginBottom: "4%" }}>
                                     Riepilogo prenotazione
                                 </CardTitle>

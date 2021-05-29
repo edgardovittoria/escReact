@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable array-callback-return */
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,8 +9,6 @@ import { faFutbol, faVolleyballBall } from '@fortawesome/free-solid-svg-icons';
 import { useHistory } from 'react-router';
 import './profiloSportivo.css';
 import { corsiPrenotatiSelector, fetchPrenotazioni, partecipazioniSelector, prenotazioniSelector, resetPrenotazioneDaConfermare } from '../../store/prenotazioneSlice';
-import { TablePrenotazioni } from './TablePrenotazioniEffettuateComponent';
-import { TablePartecipazioni } from './TablePartecipazioniComponent';
 import { TabRiepilogoPrenotazioni } from '../tabComponent/TabRiepilogoPrenotazioniProfiloComponent';
 
 

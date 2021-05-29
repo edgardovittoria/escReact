@@ -61,5 +61,16 @@
  border-radius:4px;
  }
 
+ #iconaNotificheNonLette:after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: red;
+  top: 15px;
+  right: 8px;
+  border-radius: 50%;
+}
 
 

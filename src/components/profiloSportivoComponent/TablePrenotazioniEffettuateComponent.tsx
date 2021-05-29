@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import React from 'react';
 import { Prenotazione } from '../../model/Prenotazone';
 import { UtentePolisportiva } from '../../model/UtentePolisportiva';

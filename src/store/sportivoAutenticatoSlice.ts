@@ -38,7 +38,20 @@ export const SportivoAutenticatoSlice = createSlice({
         isLoading: false,
         errors: ""
     } as SportivoAutenticatoState,
-    reducers: {},
+    reducers: {
+        resetSportivoAutenticato(state: SportivoAutenticatoState, action: PayloadAction<void>){
+            state.jwt = ""
+            let mappaVuotaAttributiExtra = new Map<string, object>()
+            state.sportivo = {
+                nome: "",
+                cognome: "",
+                email: "",
+                ruoli: [],
+                attributiExtra: mappaVuotaAttributiExtra
+            }
+            
+        }
+    },
     extraReducers: {
         [loginSportivo.fulfilled.type]: (state: SportivoAutenticatoState, action: PayloadAction<AutenticazioneResponse>) => {
             state.sportivo = action.payload.sportivo
@@ -66,9 +79,9 @@ export const SportivoAutenticatoSlice = createSlice({
     }
 });
 
-// export const {
-
-// } = SportivoAutenticatoSlice.actions
+export const {
+    resetSportivoAutenticato
+} = SportivoAutenticatoSlice.actions
 
 export const sportivoAutenticatoSelector = (state: { sportivo: SportivoAutenticatoState }) => state.sportivo
 

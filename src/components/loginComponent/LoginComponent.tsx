@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { UserDetails } from '../../model/UserDetails';
-import { loginSportivo } from "../../store/sportivoAutenticatoSlice"; 
+import { loginSportivo, resetSportivoAutenticato } from "../../store/sportivoAutenticatoSlice"; 
 
 export const Login: React.FC = () => {
 
@@ -10,6 +10,10 @@ export const Login: React.FC = () => {
     const { register, handleSubmit, formState: { errors } } = useForm<UserDetails>();
     
     const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(resetSportivoAutenticato())
+    })
 
     const onSubmit = handleSubmit((userDetails: UserDetails) => {
         dispatch(loginSportivo(userDetails))
