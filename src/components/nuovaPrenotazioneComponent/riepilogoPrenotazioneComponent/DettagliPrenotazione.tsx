@@ -14,7 +14,6 @@ export type DettagliPrenotazioneProps = {
 
 export const DettagliPrenotazione: React.FC<DettagliPrenotazioneProps> = ({prenotazione, sportivoAutenticato, history, onClick, testoBottone}) => {
     let appuntamenti = prenotazione.appuntamenti
-    console.log(appuntamenti)
     return (
         <>
             <section>

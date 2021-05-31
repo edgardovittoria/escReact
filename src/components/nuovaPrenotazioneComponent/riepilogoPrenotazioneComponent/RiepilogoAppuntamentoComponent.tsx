@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Card, Col, ListGroup, ListGroupItem, Row } from 'reactstrap';
 import { useHistory } from 'react-router-dom';
@@ -22,7 +22,15 @@ export const RiepilogoAppuntamento: React.FC<RiepilogoAppuntamentoProps> = ({ ap
         history.go(-1)
     }
 
+    const [displayPartecipa, setDisplayPartecipa] = useState("block");
 
+    useEffect(() => {
+        appuntamento.partecipanti.map(utente => {
+            if (utente.email === sportivoAutenticato.sportivo.email) {
+                setDisplayPartecipa("none")
+            }
+        })
+    }, [])
 
     return (
         <>
@@ -30,7 +38,7 @@ export const RiepilogoAppuntamento: React.FC<RiepilogoAppuntamentoProps> = ({ ap
                 <div className="container">
                     <div className="row">
                         <Card className="col-6">
-                            <ListGroup style={{marginTop:"3%"}}>
+                            <ListGroup style={{ marginTop: "3%" }}>
                                 <ListGroupItem>
                                     Creato da : {appuntamento.creatore.nome} {appuntamento.creatore.cognome}
                                 </ListGroupItem>
@@ -68,7 +76,7 @@ export const RiepilogoAppuntamento: React.FC<RiepilogoAppuntamentoProps> = ({ ap
                                 <Col>
                                     <Button
                                         outline color="success"
-                                        style={{ marginTop: "2%", marginBottom:"3%", width: "100%" }}
+                                        style={{ marginTop: "2%", marginBottom: "3%", width: "100%", display: displayPartecipa}}
                                         onClick={onClick}>Partecipa</Button>
                                 </Col>
                             </Row>

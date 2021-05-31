@@ -38,6 +38,12 @@ export const NotificheSlice = createSlice({
             state.isLoading = false
             state.notifiche = action.payload
         },
+        impostaNotificaLetta(state: NotificheState, action: PayloadAction<Notifica>) {
+            let notificheNonModificate: Notifica[]
+            notificheNonModificate = state.notifiche.filter(notifica => notifica.idNotifica !== action.payload.idNotifica)
+            notificheNonModificate.push(action.payload)
+            state.notifiche = notificheNonModificate
+        },
         addDettagliNotifica(state: NotificheState, action: PayloadAction<Prenotazione>){
             state.isLoading= false
             state.dettagliNotifica = action.payload
@@ -54,6 +60,7 @@ export const NotificheSlice = createSlice({
 export const {
     addListaNotificheUtente,
     addDettagliNotifica,
+    impostaNotificaLetta,
     setLoading,
     setErrors
 } = NotificheSlice.actions
@@ -69,16 +76,31 @@ export const fetchNotifiche = (emailSportivo: string, jwt: string): AppThunk => 
 
 }
 
-export const fetchDettagliNotificha = (idEvento: number, jwt: string): AppThunk => async dispatch => {
+export const fetchDettagliNotificha = (idEvento: number, tipoEventoNotificabile: string, jwt: string): AppThunk => async dispatch => {
     try {
         dispatch(setLoading(true));
-        const res = await axios.get("http://localhost:8080/notifiche/dettagliNotifica", { params: { idEvento: idEvento }, headers: { "Authorization": "Bearer " + jwt } })
+        const res = await axios.get("http://localhost:8080/notifiche/dettagliNotifica", { params: { idEvento: idEvento, tipoEventoNotificabile: tipoEventoNotificabile }, headers: { "Authorization": "Bearer " + jwt } })
         dispatch(addDettagliNotifica(res.data));
     } catch (error) {
         dispatch(setErrors(error))
     }
 
 }
+
+export const setNotificaLetta = (idNotifica: number, jwt: string): AppThunk => async dispatch => {
+    try {
+        dispatch(setLoading(true));
+        let object = {
+            idNotifica: idNotifica
+        }
+        const res = await axios.patch("http://localhost:8080/notifiche/impostaNotificaLetta", object , {headers: { "Authorization": "Bearer " + jwt } })
+        dispatch(impostaNotificaLetta(res.data));
+    } catch (error) {
+        dispatch(setErrors(error))
+    }
+
+}
+
 
 
 export const notificheSelector = (state: { notificheUtente: NotificheState }) => state.notificheUtente

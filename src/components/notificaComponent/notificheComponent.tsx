@@ -5,7 +5,7 @@ import { faBell } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { SportivoAutenticatoState } from '../../store/sportivoAutenticatoSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchDettagliNotificha, notificheSelector } from '../../store/notificheSlice';
+import { fetchDettagliNotificha, notificheSelector, setNotificaLetta } from '../../store/notificheSlice';
 import { useHistory } from 'react-router';
 
 type NotificheProps = {
@@ -18,8 +18,9 @@ export const Notifiche: React.FC<NotificheProps> = ({ utenteAutenticato }) => {
     const history = useHistory()
     const dispatch = useDispatch();
     
-    const onLinkClick = (idEvento: number) => {
-        dispatch(fetchDettagliNotificha(idEvento, utenteAutenticato.jwt))
+    const onLinkClick = (idEvento: number, tipoEventoNotificabile: string, idNotifica: number) => {
+        dispatch(fetchDettagliNotificha(idEvento, tipoEventoNotificabile, utenteAutenticato.jwt))
+        dispatch(setNotificaLetta(idNotifica, utenteAutenticato.jwt))
         history.push("/dettagliNotifica")
     }
 
@@ -44,7 +45,7 @@ export const Notifiche: React.FC<NotificheProps> = ({ utenteAutenticato }) => {
                     <div className="notifications-wrapper">
                         {notifiche.notifiche.map(notifica => {
                             return (
-                                <a className="content" onClick={() => onLinkClick(notifica.idEvento)}>
+                                <a className="content" onClick={() => onLinkClick(notifica.idEvento, notifica.tipoEventoNotificabile, notifica.idNotifica)}>
 
                                     <div className="notification-item">
                                         <h4 className="item-title">{notifica.mittente}</h4>
