@@ -7,7 +7,7 @@ export type PrenotazioneSpecs = {
     costo: Number
     sportAssociato: Sport
     tipoSpecifica: string
-    invitati: UtentePolisportiva[]
+    invitati: string[]
     idImpiantoPrenotato: number
     pavimentazioneImpianto: string
     istruttore: UtentePolisportiva

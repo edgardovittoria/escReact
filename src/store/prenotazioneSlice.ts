@@ -263,6 +263,7 @@ export const aggiornaImpiantiRicorrente = (object: any, id: number, jwt: string)
             impiantiDisponibili: res.data.impiantiDisponibili
         }
         dispatch(addListaImpiantiDisponibiliAdArray(item))
+        dispatch(addListaInvitabili(res.data.sportiviInvitabili))
     } catch (error) {
         dispatch(setErrors(error));
     }

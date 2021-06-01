@@ -11,4 +11,5 @@ export type Appuntamento = {
     specificaPrenotazione: PrenotazioneSpecs
     quotePartecipazione: QuotaPartecipazione[]
     creatore: UtentePolisportiva
+    manutentore: UtentePolisportiva
 }
