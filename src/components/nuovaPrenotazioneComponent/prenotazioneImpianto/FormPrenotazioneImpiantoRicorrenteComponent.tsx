@@ -24,6 +24,7 @@ export type FormPrenotaImpianto = {
     numeroGiocatoriNonIscritti: number,
     tipoPrenotazione: string,
     checkboxesPending: CheckBoxPendingSelezionatoItem[]
+    modalitaPrenotazione: string
 }
 
 let orari: OrarioPrenotazione[] = [];
@@ -47,6 +48,7 @@ export const FormPrenotazioneImpiantoRicorrente: React.FC = () => {
     function onSportSelezionato(sportSelezionato: string) {
         setValue("sportSelezionato", sportSelezionato)
         setValue("tipoPrenotazione", "IMPIANTO")
+        setValue("modalitaPrenotazione", "SINGOLO_UTENTE")
         for(let i=1; i<numeroDate+1; i++){
             aggiornaListeImpianti(i, sportSelezionato, getValues("orariSelezionati")[i])
         }

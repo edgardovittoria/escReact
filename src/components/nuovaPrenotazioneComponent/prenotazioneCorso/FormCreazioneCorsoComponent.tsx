@@ -23,6 +23,7 @@ export type FormCorso = {
     invitatiCorso: string[]
     tipoPrenotazione: string
     formLezione: FormPrenotaLezione
+    modalitaPrenotazione: string
 }
 
 let orari: OrarioPrenotazione[] = [];
@@ -52,7 +53,9 @@ export const FormCreazioneCorso: React.FC = () => {
     function onSportSelezionato(sportSelezionato: string) {
         setValue("formLezione.sportSelezionato", sportSelezionato)
         setValue("formLezione.tipoPrenotazione", "LEZIONE");
+        setValue("formLezione.modalitaPrenotazione", "SINGOLO_UTENTE")
         setValue("tipoPrenotazione", "CORSO")
+        setValue("modalitaPrenotazione", "SINGOLO_UTENTE")
         for(let i=1; i<numeroDate+1; i++){
             aggiornaListeImpianti(i, sportSelezionato, getValues("formLezione.orariSelezionati")[i])
             aggiornaListeIstruttori(i, sportSelezionato, getValues("formLezione.orariSelezionati")[i])

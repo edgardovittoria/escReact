@@ -19,6 +19,7 @@ export type FormPrenotaLezione = {
     impianti: ImpiantiSelezionatiItem[],
     istruttori: IstruttoriSelezionatiItem[],
     tipoPrenotazione: string
+    modalitaPrenotazione: string
 }
 
 let orari: OrarioPrenotazione[] = [];
@@ -41,6 +42,7 @@ export const FormPrenotazioneLezione: React.FC = () => {
     function onSportSelezionato(sportSelezionato: string) {
         setValue("sportSelezionato", sportSelezionato)
         setValue("tipoPrenotazione", "LEZIONE");
+        setValue("modalitaPrenotazione", "SINGOLO_UTENTE")
         for(let i=1; i<numeroDate+1; i++){
             aggiornaListeImpianti(i, sportSelezionato, getValues("orariSelezionati")[i])
             aggiornaListeIstruttori(i, sportSelezionato, getValues("orariSelezionati")[i])
