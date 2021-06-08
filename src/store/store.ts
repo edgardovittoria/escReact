@@ -1,3 +1,4 @@
+import { SquadraSlice } from './squadraSlice';
 import { NotificheSlice } from './notificheSlice';
 import { FormPrenotaImpiantoSlice } from './formPrenotaImpiantoSlice';
 import { IstruttoreSlice } from './IstruttoreSlice';
@@ -18,6 +19,7 @@ import persistStore from 'redux-persist/es/persistStore';
 
 const rootReducer = combineReducers({
   sportivo : SportivoAutenticatoSlice.reducer,
+  squadre: SquadraSlice.reducer,
   prenotazioni: PrenotazioneSlice.reducer,
   sportPraticabili: SportSlice.reducer,
   impiantiDisponibili: ImpiantoSlice.reducer,

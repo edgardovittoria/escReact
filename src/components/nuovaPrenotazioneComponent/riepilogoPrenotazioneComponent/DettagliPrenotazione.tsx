@@ -58,7 +58,7 @@ export const DettagliPrenotazione: React.FC<DettagliPrenotazioneProps> = ({preno
                             })}
                             <ListGroup>
                                 <ListGroupItem>
-                                    Sportivi Invitati : <ul>{appuntamenti[0].specificaPrenotazione.invitati.map((invitato) => {
+                                    Invitati : <ul>{appuntamenti[0].specificaPrenotazione.invitati.map((invitato) => {
                                     return (
                                         <li key={invitato}>{invitato}</li>
                                     )

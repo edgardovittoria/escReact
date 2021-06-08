@@ -12,7 +12,7 @@ export const CheckBoxPending: React.FC<CheckBoxPendingSelezioneProps> = ({ chiav
 
     return (
         <>
-            <Label style={{ marginLeft: "16px", marginTop: "10px" }}>Permetti anche ad utenti non invitati di partecipare</Label>
+            <Label style={{ marginLeft: "16px", marginTop: "10px" }}>Permetti anche ad utenti/squadre non invitati/e di partecipare</Label>
             <input key={chiave}
                 type="checkbox"
                 className="form-check-input"

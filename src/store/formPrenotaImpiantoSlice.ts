@@ -38,8 +38,6 @@ export const FormPrenotaImpiantoSlice = createSlice({
             state.arrayListeImpianti.map((item) => {
                 if(item.id === action.payload.id){
                     item.impiantiDisponibili = action.payload.impiantiDisponibili
-                }else{
-                    state.arrayListeImpianti.push(action.payload)
                 }
             })
         },

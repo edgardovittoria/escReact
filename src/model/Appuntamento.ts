@@ -8,6 +8,7 @@ export type Appuntamento = {
     oraInizioAppuntamento: Date
     oraFineAppuntamento: Date
     partecipanti: UtentePolisportiva[]
+    squadrePartecipanti: number[]
     specificaPrenotazione: PrenotazioneSpecs
     quotePartecipazione: QuotaPartecipazione[]
     creatore: UtentePolisportiva

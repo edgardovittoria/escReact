@@ -3,25 +3,22 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { Button, Col, Form, FormGroup, Label, Row } from 'reactstrap';
-import { formPrenotaImpiantoSelector } from '../../../store/formPrenotaImpiantoSlice';
-import { aggiornaImpiantiEInvitabili, riepilogoPrenotazione } from '../../../store/prenotazioneSlice';
-import { sportivoAutenticatoSelector } from '../../../store/sportivoAutenticatoSlice';
-import { utentePolisportivaSelector } from '../../../store/utentePolisportivaSlice';
-import { sportSelector } from '../../../store/SportSlice';
-import { CheckBoxPendingSelezionatoItem, DataOraImpiantoRicorrente, ImpiantiSelezionatiItem } from '../formComponents/DataOraImpiantoRicorrenteComponent';
-import { OrarioPrenotazione } from '../formComponents/DataOraSelezioneComponent';
-import { GiocatoriNonIscritti } from '../formComponents/GiocatoriNonIscrittiSelezioneComponent';
-import { PostiLiberi } from '../formComponents/PostiLiberiComponent';
-import { SelezioneSport } from '../formComponents/SelezioneSportComponent';
-import { SportiviInvitabiliSelezione } from '../formComponents/SportiviInvitabiliSelezioneComponent';
+import { formPrenotaImpiantoSelector } from '../../store/formPrenotaImpiantoSlice';
+import { aggiornaImpiantiEInvitabili, riepilogoPrenotazione } from '../../store/prenotazioneSlice';
+import { sportivoAutenticatoSelector } from '../../store/sportivoAutenticatoSlice';
+import { sportSelector } from '../../store/SportSlice';
+import { squadraSelector } from '../../store/squadraSlice';
+import { CheckBoxPendingSelezionatoItem, DataOraImpiantoRicorrente, ImpiantiSelezionatiItem } from '../nuovaPrenotazioneComponent/formComponents/DataOraImpiantoRicorrenteComponent';
+import { OrarioPrenotazione } from '../nuovaPrenotazioneComponent/formComponents/DataOraSelezioneComponent';
+import { PostiLiberi } from '../nuovaPrenotazioneComponent/formComponents/PostiLiberiComponent';
+import { SelezioneSport } from '../nuovaPrenotazioneComponent/formComponents/SelezioneSportComponent';
+import { SquadreInvitabiliSelezione } from '../nuovaPrenotazioneComponent/formComponents/SquadreInvitabiliSelezione';
 
-export type FormPrenotaImpianto = {
+export type FormPrenotaImpiantoSquadra = {
     sportSelezionato: string,
     orariSelezionati: OrarioPrenotazione[]
     impianti: ImpiantiSelezionatiItem[],
-    sportiviInvitati: string[],
-    postiLiberi: number,
-    numeroGiocatoriNonIscritti: number,
+    squadreInvitate: number[],
     tipoPrenotazione: string,
     checkboxesPending: CheckBoxPendingSelezionatoItem[]
     modalitaPrenotazione: string
@@ -31,24 +28,27 @@ let orari: OrarioPrenotazione[] = [];
 let impiantiSelezionati: ImpiantiSelezionatiItem[] = [];
 let checkboxes: CheckBoxPendingSelezionatoItem[] = [];
 
-export const FormPrenotazioneImpiantoRicorrente: React.FC = () => {
+export const FormPrenotazioneImpiantoSquadraRicorrente: React.FC = () => {
 
-    const { register, getValues, setValue, handleSubmit, formState: { errors } } = useForm<FormPrenotaImpianto>();
+    const { register, getValues, setValue, handleSubmit, formState: { errors } } = useForm<FormPrenotaImpiantoSquadra>();
 
     const dispatch = useDispatch();
-    const history = useHistory();
     const [numeroDate, setNumeroDate] = useState(0);
     const [postiLiberi, setPostiliberi] = useState(0);
     const [postiLiberiAggiornato, setPostiliberiAggiornati] = useState(postiLiberi);
     const sportPraticabili = useSelector(sportSelector);
-    const sportiviInvitabili = useSelector(utentePolisportivaSelector);
+    //const sportiviInvitabili = useSelector(utentePolisportivaSelector);
     const sportivoAutenticato = useSelector(sportivoAutenticatoSelector);
+    const squadreInvitabili = useSelector(squadraSelector).squadreInvitabili
     // const impiantiDisponibili = useSelector(impiantoSelector);
     const opzioni = useSelector(formPrenotaImpiantoSelector);
+    const history = useHistory()
+
     function onSportSelezionato(sportSelezionato: string) {
         setValue("sportSelezionato", sportSelezionato)
-        setValue("tipoPrenotazione", "IMPIANTO")
-        setValue("modalitaPrenotazione", "SINGOLO_UTENTE")
+        setValue("tipoPrenotazione", "IMPIANTO_SQUADRA")
+        setValue("modalitaPrenotazione", "SQUADRA")
+        console.log(opzioni.arrayListeCheckBoxPending)
         for(let i=1; i<numeroDate+1; i++){
             aggiornaListeImpianti(i, sportSelezionato, getValues("orariSelezionati")[i], getValues("modalitaPrenotazione"))
         }
@@ -57,9 +57,10 @@ export const FormPrenotazioneImpiantoRicorrente: React.FC = () => {
 
     }
 
-    const onSubmit = handleSubmit((form: FormPrenotaImpianto) => {
-        dispatch(riepilogoPrenotazione(form, sportivoAutenticato.jwt))
-        history.push("/riepilogoPrenotazione");
+    const onSubmit = handleSubmit((form: FormPrenotaImpiantoSquadra) => {
+        // dispatch(riepilogoPrenotazione(form, sportivoAutenticato.jwt))
+        // history.push("/riepilogoPrenotazione");
+        console.log(form)
     })
 
     const aggiornaListeImpianti = (id: number, sport: string, orarioSelezionato: OrarioPrenotazione, modalitaPrenotazione: string) => {
@@ -115,15 +116,10 @@ export const FormPrenotazioneImpiantoRicorrente: React.FC = () => {
         setValue("checkboxesPending", checkboxes)
     }
 
-    const onSportiviInvitabiliSelezione = (emailSportivi: string[]) => {
-        setValue("sportiviInvitati", emailSportivi)
+    const onSquadreInvitabiliSelezione = (listaSquadre: number[]) => {
+        setValue("squadreInvitate", listaSquadre)
     }
 
-    const onGiocatoriNonIscrittiSelezione = (giocatoriNonIscritti: number) => {
-        setPostiliberiAggiornati(postiLiberi - giocatoriNonIscritti)
-        setValue("postiLiberi", postiLiberi - giocatoriNonIscritti)
-        setValue("numeroGiocatoriNonIscritti", giocatoriNonIscritti)
-    }
 
 
     return (
@@ -135,15 +131,6 @@ export const FormPrenotazioneImpiantoRicorrente: React.FC = () => {
                     id="numeroDate"
                     onClick={(value) => {
                         setNumeroDate(Number.parseInt(value.currentTarget.value))
-                        let checkboxesPendingDefault: CheckBoxPendingSelezionatoItem[] = [];
-                        for(let i = 1; i<= Number.parseInt(value.currentTarget.value); i++){
-                            let checkboxesPendingItem: CheckBoxPendingSelezionatoItem = {
-                                idSelezione: i,
-                                pending: false
-                            }
-                            checkboxesPendingDefault.push(checkboxesPendingItem)
-                        }
-                        setValue("checkboxesPending", checkboxesPendingDefault)
                     }}
                 >
                     <option key={1} value={1}>1</option>
@@ -175,20 +162,11 @@ export const FormPrenotazioneImpiantoRicorrente: React.FC = () => {
                     {...register("orariSelezionati", {required: true})}/>
             </FormGroup>
             <FormGroup>
-                <Label>Invita sportivi alla prenotazione</Label>
+                <Label>Invita squadre alla prenotazione</Label>
                 <Row>
                     <Col>
-                        <SportiviInvitabiliSelezione sportiviInvitabili={sportiviInvitabili.sportivi}
-                            handleSelezioneSportiviInvitabili={onSportiviInvitabiliSelezione} />
-                    </Col>
-                </Row>
-            </FormGroup>
-            <FormGroup>
-                <Label>Numero giocatori non iscritti da associare alla prenotazione</Label>
-                <Row>
-                    <Col>
-                        <GiocatoriNonIscritti postiLiberi={postiLiberi}
-                            handleGiocatoriNonIscrittiSelezione={onGiocatoriNonIscrittiSelezione} />
+                        <SquadreInvitabiliSelezione squadreInvitabili={squadreInvitabili}
+                        handleSelezioneSquadra={onSquadreInvitabiliSelezione}/>
                     </Col>
                 </Row>
             </FormGroup>

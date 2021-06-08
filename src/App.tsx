@@ -16,6 +16,8 @@ import { RiepilogoCreazioneCorso } from './components/nuovaPrenotazioneComponent
 import { PrenotazioneCorso } from './components/nuovaPrenotazioneComponent/prenotazioneCorso/prenotazioneCorsoComponent';
 import { NavBar } from './components/navBarComponent/NavBarComponent';
 import { DettagliNotifica } from './components/notificaComponent/DettagliNotificaComponent';
+import { ProfiloSquadra } from './components/profiloSquadraComponent/ProfiloSquadraComponent';
+import { NuovaPrenotazioneImpiantoSquadra } from './components/nuovaPrenotazioneSquadraComponent/NuovaPrenotazioneImpiantoSquadraComponent';
 
 
 
@@ -38,6 +40,8 @@ export const App: React.FC = () => {
             <Route path="/riepilogoPrenotazioneLezione"><RiepilogoPrenotazioneLezione /></Route>
             <Route path="/riepilogoCreazioneCorso"><RiepilogoCreazioneCorso /></Route>
             <Route path="/dettagliNotifica"><DettagliNotifica /></Route>
+            <Route path="/profiloSquadra"><ProfiloSquadra/></Route>
+            <Route path="/nuovaPrenotazioneImpiantoSquadra"><NuovaPrenotazioneImpiantoSquadra /></Route>
             <Redirect to="/login" />
           </Switch>
         </BrowserRouter>

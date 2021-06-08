@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { FormCorso } from './../components/nuovaPrenotazioneComponent/prenotazioneCorso/FormCreazioneCorsoComponent';
 /* eslint-disable array-callback-return */
 import { FormPrenotaLezione } from '../components/nuovaPrenotazioneComponent/prenotazioneLezione/FormPrenotazioneLezioneComponent';
@@ -15,6 +16,8 @@ import { addListaInvitabili } from './utentePolisportivaSlice';
 import { ArrayListeIstruttoreItem } from '../components/nuovaPrenotazioneComponent/formComponents/DataOraImpiantoIstruttoreSelezioneComponent';
 import { addListaIstruttori } from './IstruttoreSlice';
 import { addListaNotificheUtente } from './notificheSlice';
+import { addListaSquadre, addListaSquadreInvitabili } from './squadraSlice';
+import { FormPrenotaImpiantoSquadra } from '../components/nuovaPrenotazioneSquadraComponent/FormPrenotazioneImpiantoSquadraRicorrente';
 
 export type PrenotazioneState = {
     prenotazioni: Prenotazione[]
@@ -22,6 +25,7 @@ export type PrenotazioneState = {
     prenotazioniCorso: Prenotazione[]
     corsiDisponibili: Prenotazione[]
     appuntamentiSottoscrivibili: Appuntamento[]
+    appuntamentiSottoscrivibiliSquadra: Appuntamento[]
     prenotazioneDaConfermare: Prenotazione
     isLoading: boolean
     errors: string
@@ -35,6 +39,7 @@ export const PrenotazioneSlice = createSlice({
         prenotazioniCorso: [],
         corsiDisponibili: [],
         appuntamentiSottoscrivibili: [],
+        appuntamentiSottoscrivibiliSquadra: [],
         prenotazioneDaConfermare: {
             idPrenotazione: null,
             sportivoPrenotante: {
@@ -147,10 +152,10 @@ export const corsiDisponibiliSelector = (state: {prenotazioni: PrenotazioneState
 export const partecipazioniSelector = (state: {prenotazioni: PrenotazioneState}) => state.prenotazioni.partecipazioni
 export const corsiPrenotatiSelector = (state: {prenotazioni: PrenotazioneState}) => state.prenotazioni.prenotazioniCorso
 
-export const avviaNuovaPrenotazione = (emailSportivo: string, tipoPren: string, jwt: string): AppThunk => async dispatch => {
+export const avviaNuovaPrenotazione = (emailSportivo: string, tipoPren: string, modalitaPrenotazione: string, jwt: string): AppThunk => async dispatch => {
     try {
         dispatch(setLoading(true));
-        const res = await axios.get("http://localhost:8080/effettuaPrenotazione/avviaNuovaPrenotazione", {params: {email: emailSportivo, tipoPrenotazione: tipoPren}, headers:{"Authorization": "Bearer "+jwt}})
+        const res = await axios.get("http://localhost:8080/effettuaPrenotazione/avviaNuovaPrenotazione", {params: {email: emailSportivo, tipoPrenotazione: tipoPren, modalitaPrenotazione: modalitaPrenotazione}, headers:{"Authorization": "Bearer "+jwt}})
         if(tipoPren === "LEZIONE"){
             dispatch(addListaSportPraticabili(res.data.sportPraticabili))
         }else if(tipoPren === "IMPIANTO"){
@@ -169,10 +174,10 @@ export const avviaNuovaPrenotazione = (emailSportivo: string, tipoPren: string, 
 
 }
 
-export const avviaNuovaPrenotazioneEventoDirettore = (emailSportivo: string, tipoPren: string, jwt: string): AppThunk => async dispatch => {
+export const avviaNuovaPrenotazioneEventoDirettore = (emailSportivo: string, tipoPren: string, modalitaPrenotazione: string, jwt: string): AppThunk => async dispatch => {
     try {
         dispatch(setLoading(true));
-        const res = await axios.get("http://localhost:8080/effettuaPrenotazione/avviaNuovaPrenotazioneEventoDirettore", {params: {email: emailSportivo, tipoPrenotazione: tipoPren}, headers:{"Authorization": "Bearer "+jwt}})
+        const res = await axios.get("http://localhost:8080/effettuaPrenotazione/avviaNuovaPrenotazioneEventoDirettore", {params: {email: emailSportivo, tipoPrenotazione: tipoPren, modalitaPrenotazione: modalitaPrenotazione}, headers:{"Authorization": "Bearer "+jwt}})
         dispatch(addListaSportPraticabili(res.data.sportPraticabili))
         dispatch(addListaInvitabili(res.data.sportiviInvitabili))
     } catch (error) {
@@ -185,7 +190,7 @@ export const avviaNuovaPrenotazioneEventoDirettore = (emailSportivo: string, tip
 }
 
 
-export const riepilogoPrenotazione = (prenotazione: FormPrenotaImpianto | FormPrenotaLezione | FormCorso, jwt: string): AppThunk => async dispatch => {
+export const riepilogoPrenotazione = (prenotazione: FormPrenotaImpianto | FormPrenotaLezione | FormCorso | FormPrenotaImpiantoSquadra, jwt: string): AppThunk => async dispatch => {
     try {
         dispatch(setLoading(true));
         const res = await axios.post("http://localhost:8080/effettuaPrenotazione/riepilogoPrenotazione", prenotazione, {headers:{"Authorization": "Bearer "+jwt}}) 
@@ -233,10 +238,12 @@ export const fetchPrenotazioni = (emailSportivo: string, jwt: string): AppThunk 
     try {
         dispatch(setLoading(true));
         const res = await axios.get("http://localhost:8080/aggiornaOpzioni/prenotazioniEPartecipazioniSportivo/", {params: {email: emailSportivo}, headers:{"Authorization": "Bearer "+jwt}})
+        dispatch(addListaSquadre(res.data.squadre))
         dispatch(addListaNotificheUtente(res.data.notificheUtente))
         dispatch(addListaPrenotazioni(res.data.prenotazioniEffettuate))
         dispatch(addListaPartecipazioni(res.data.partecipazioni))
         dispatch(addListaPrenotazioniCorso(res.data.corsiACuiSiPartecipa))
+        
         
     } catch (error) {
         dispatch(setErrors(error))
@@ -255,7 +262,7 @@ export const aggiornaImpianti = (object: any): AppThunk => async dispatch => {
 
 }
 
-export const aggiornaImpiantiRicorrente = (object: any, id: number, jwt: string): AppThunk => async dispatch => {
+export const aggiornaImpiantiEInvitabili = (object: any, id: number, jwt: string): AppThunk => async dispatch => {
     try {
         const res = await axios.post("http://localhost:8080/effettuaPrenotazione/aggiornaDatiOpzioni", object, {headers:{"Authorization": "Bearer "+jwt}})
         let item: ArrayLisetImpiantoItem = {
@@ -264,6 +271,7 @@ export const aggiornaImpiantiRicorrente = (object: any, id: number, jwt: string)
         }
         dispatch(addListaImpiantiDisponibiliAdArray(item))
         dispatch(addListaInvitabili(res.data.sportiviInvitabili))
+        dispatch(addListaSquadreInvitabili(res.data.squadreInvitabili))
     } catch (error) {
         dispatch(setErrors(error));
     }

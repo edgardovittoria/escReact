@@ -5,7 +5,7 @@ import { useHistory } from 'react-router';
 import { Button, Col, Form, FormGroup, Label, Row } from 'reactstrap';
 import { formPrenotaImpiantoSelector } from '../../../store/formPrenotaImpiantoSlice';
 import { istruttoreSelector } from '../../../store/IstruttoreSlice';
-import { aggiornaImpiantiRicorrente, aggiornaIstruttori, riepilogoPrenotazione } from '../../../store/prenotazioneSlice';
+import { aggiornaImpiantiEInvitabili, aggiornaIstruttori, riepilogoPrenotazione } from '../../../store/prenotazioneSlice';
 import { sportivoAutenticatoSelector } from '../../../store/sportivoAutenticatoSlice';
 import { sportSelector } from '../../../store/SportSlice';
 import { DataOraImpiantoIstruttoreSelezione, IstruttoriSelezionatiItem } from '../formComponents/DataOraImpiantoIstruttoreSelezioneComponent';
@@ -60,17 +60,17 @@ export const FormPrenotazioneLezione: React.FC = () => {
                 sport: sport,
                 orario: orarioSelezionato
             }
-            dispatch(aggiornaImpiantiRicorrente(object, id, sportivoAutenticato.jwt));
+            dispatch(aggiornaImpiantiEInvitabili(object, id, sportivoAutenticato.jwt));
         }else if (sport === undefined && orarioSelezionato !== undefined){
             let object = {
                 orario : orarioSelezionato
             }
-            dispatch(aggiornaImpiantiRicorrente(object, id, sportivoAutenticato.jwt));
+            dispatch(aggiornaImpiantiEInvitabili(object, id, sportivoAutenticato.jwt));
         }else if(sport !== undefined && orarioSelezionato === undefined){
             let object = {
                 sport: sport
             }
-            dispatch(aggiornaImpiantiRicorrente(object, id, sportivoAutenticato.jwt))
+            dispatch(aggiornaImpiantiEInvitabili(object, id, sportivoAutenticato.jwt))
         }
 
     }
