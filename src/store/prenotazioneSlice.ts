@@ -25,7 +25,6 @@ export type PrenotazioneState = {
     prenotazioniCorso: Prenotazione[]
     corsiDisponibili: Prenotazione[]
     appuntamentiSottoscrivibili: Appuntamento[]
-    appuntamentiSottoscrivibiliSquadra: Appuntamento[]
     prenotazioneDaConfermare: Prenotazione
     isLoading: boolean
     errors: string
@@ -39,7 +38,6 @@ export const PrenotazioneSlice = createSlice({
         prenotazioniCorso: [],
         corsiDisponibili: [],
         appuntamentiSottoscrivibili: [],
-        appuntamentiSottoscrivibiliSquadra: [],
         prenotazioneDaConfermare: {
             idPrenotazione: null,
             sportivoPrenotante: {
@@ -57,11 +55,11 @@ export const PrenotazioneSlice = createSlice({
         errors: ""
     } as PrenotazioneState,
     reducers: {
-        addPrenotazioneDaConfermare(state: PrenotazioneState, action: PayloadAction<Prenotazione>){
+        addPrenotazioneDaConfermare(state: PrenotazioneState, action: PayloadAction<Prenotazione>) {
             state.isLoading = false
             state.prenotazioneDaConfermare = action.payload
         },
-        resetPrenotazioneDaConfermare(state: PrenotazioneState){
+        resetPrenotazioneDaConfermare(state: PrenotazioneState) {
             state.prenotazioneDaConfermare = {
                 idPrenotazione: null,
                 sportivoPrenotante: {
@@ -76,23 +74,23 @@ export const PrenotazioneSlice = createSlice({
                 tipoEventoNotificabile: "PRENOTAZIONE"
             }
         },
-        addPrenotazione(state: PrenotazioneState, action: PayloadAction<Prenotazione>){
+        addPrenotazione(state: PrenotazioneState, action: PayloadAction<Prenotazione>) {
             state.isLoading = false
             state.errors = ""
             state.prenotazioni.push(action.payload)
             alert("La prenotazione è avvenuta con successo!");
         },
-        addListaPrenotazioni(state: PrenotazioneState, action: PayloadAction<Prenotazione[]>){
+        addListaPrenotazioni(state: PrenotazioneState, action: PayloadAction<Prenotazione[]>) {
             state.isLoading = false
             state.errors = ""
             state.prenotazioni = action.payload
         },
-        addListaPartecipazioni(state: PrenotazioneState, action: PayloadAction<Appuntamento[]>){
+        addListaPartecipazioni(state: PrenotazioneState, action: PayloadAction<Appuntamento[]>) {
             state.isLoading = false;
             state.errors = "";
             state.partecipazioni = action.payload
         },
-        addListaPrenotazioniCorso(state: PrenotazioneState, action: PayloadAction<Prenotazione[]>){
+        addListaPrenotazioniCorso(state: PrenotazioneState, action: PayloadAction<Prenotazione[]>) {
             state.isLoading = false;
             state.errors = "";
             let infoGenerali: any = action.payload[0].infoGeneraliEvento
@@ -104,9 +102,9 @@ export const PrenotazioneSlice = createSlice({
                 prenotazione.infoGeneraliEvento = mappaInfoGenerali
                 state.prenotazioniCorso.push(prenotazione)
             })
-            
+
         },
-        addListaCorsiDiponibili(state: PrenotazioneState, action: PayloadAction<Prenotazione[]>){
+        addListaCorsiDiponibili(state: PrenotazioneState, action: PayloadAction<Prenotazione[]>) {
             state.isLoading = false;
             state.errors = "";
             let infoGenerali: any = action.payload[0].infoGeneraliEvento
@@ -119,15 +117,15 @@ export const PrenotazioneSlice = createSlice({
                 state.corsiDisponibili.push(prenotazione)
             })
         },
-        addAppuntamentiSottoscrivibili(state: PrenotazioneState, action: PayloadAction<Appuntamento[]>){
+        addAppuntamentiSottoscrivibili(state: PrenotazioneState, action: PayloadAction<Appuntamento[]>) {
             state.isLoading = false
             state.errors = ""
             state.appuntamentiSottoscrivibili = action.payload
         },
-        setLoading(state: PrenotazioneState, action: PayloadAction<boolean>){
+        setLoading(state: PrenotazioneState, action: PayloadAction<boolean>) {
             state.isLoading = action.payload
         },
-        setErrors(state: PrenotazioneState, action: PayloadAction<string>){
+        setErrors(state: PrenotazioneState, action: PayloadAction<string>) {
             state.errors = action.payload
         }
     }
@@ -148,21 +146,27 @@ export const {
 
 export const prenotazioneSelector = (state: { prenotazioni: PrenotazioneState }) => state.prenotazioni
 export const prenotazioniSelector = (state: { prenotazioni: PrenotazioneState }) => state.prenotazioni.prenotazioni
-export const corsiDisponibiliSelector = (state: {prenotazioni: PrenotazioneState}) => state.prenotazioni.corsiDisponibili
-export const partecipazioniSelector = (state: {prenotazioni: PrenotazioneState}) => state.prenotazioni.partecipazioni
-export const corsiPrenotatiSelector = (state: {prenotazioni: PrenotazioneState}) => state.prenotazioni.prenotazioniCorso
+export const corsiDisponibiliSelector = (state: { prenotazioni: PrenotazioneState }) => state.prenotazioni.corsiDisponibili
+export const partecipazioniSelector = (state: { prenotazioni: PrenotazioneState }) => state.prenotazioni.partecipazioni
+export const corsiPrenotatiSelector = (state: { prenotazioni: PrenotazioneState }) => state.prenotazioni.prenotazioniCorso
 
-export const avviaNuovaPrenotazione = (emailSportivo: string, tipoPren: string, modalitaPrenotazione: string, jwt: string): AppThunk => async dispatch => {
+export const avviaNuovaPrenotazione = (emailSportivo: string, idSquadra: number, tipoPren: string, modalitaPrenotazione: string, jwt: string): AppThunk => async dispatch => {
     try {
         dispatch(setLoading(true));
-        const res = await axios.get("http://localhost:8080/effettuaPrenotazione/avviaNuovaPrenotazione", {params: {email: emailSportivo, tipoPrenotazione: tipoPren, modalitaPrenotazione: modalitaPrenotazione}, headers:{"Authorization": "Bearer "+jwt}})
-        if(tipoPren === "LEZIONE"){
+        const res = await axios.get("http://localhost:8080/effettuaPrenotazione/avviaNuovaPrenotazione", { params: { email: emailSportivo, idSquadra: idSquadra, tipoPrenotazione: tipoPren, modalitaPrenotazione: modalitaPrenotazione }, headers: { "Authorization": "Bearer " + jwt } })
+        if (tipoPren === "LEZIONE") {
             dispatch(addListaSportPraticabili(res.data.sportPraticabili))
-        }else if(tipoPren === "IMPIANTO"){
+        } else if (tipoPren === "IMPIANTO") {
             dispatch(addListaSportPraticabili(res.data.sportPraticabili))
-            dispatch(addListaInvitabili(res.data.sportiviInvitabili))
-            dispatch(addAppuntamentiSottoscrivibili(res.data.appuntamentiSottoscrivibili))
-        }else if(tipoPren === "CORSO"){
+            if (modalitaPrenotazione === "SINGOLO_UTENTE") {
+                dispatch(addListaInvitabili(res.data.sportiviInvitabili))
+                dispatch(addAppuntamentiSottoscrivibili(res.data.appuntamentiSottoscrivibili))
+            }else{
+                dispatch(addListaSquadreInvitabili(res.data.squadreInvitabili))
+                dispatch(addAppuntamentiSottoscrivibili(res.data.appuntamentiSottoscrivibiliSquadra))
+            }
+
+        } else if (tipoPren === "CORSO") {
             dispatch(addListaCorsiDiponibili(res.data.corsiDisponibili))
         }
         
@@ -177,7 +181,7 @@ export const avviaNuovaPrenotazione = (emailSportivo: string, tipoPren: string, 
 export const avviaNuovaPrenotazioneEventoDirettore = (emailSportivo: string, tipoPren: string, modalitaPrenotazione: string, jwt: string): AppThunk => async dispatch => {
     try {
         dispatch(setLoading(true));
-        const res = await axios.get("http://localhost:8080/effettuaPrenotazione/avviaNuovaPrenotazioneEventoDirettore", {params: {email: emailSportivo, tipoPrenotazione: tipoPren, modalitaPrenotazione: modalitaPrenotazione}, headers:{"Authorization": "Bearer "+jwt}})
+        const res = await axios.get("http://localhost:8080/effettuaPrenotazione/avviaNuovaPrenotazioneEventoDirettore", { params: { email: emailSportivo, tipoPrenotazione: tipoPren, modalitaPrenotazione: modalitaPrenotazione }, headers: { "Authorization": "Bearer " + jwt } })
         dispatch(addListaSportPraticabili(res.data.sportPraticabili))
         dispatch(addListaInvitabili(res.data.sportiviInvitabili))
     } catch (error) {
@@ -193,7 +197,7 @@ export const avviaNuovaPrenotazioneEventoDirettore = (emailSportivo: string, tip
 export const riepilogoPrenotazione = (prenotazione: FormPrenotaImpianto | FormPrenotaLezione | FormCorso | FormPrenotaImpiantoSquadra, jwt: string): AppThunk => async dispatch => {
     try {
         dispatch(setLoading(true));
-        const res = await axios.post("http://localhost:8080/effettuaPrenotazione/riepilogoPrenotazione", prenotazione, {headers:{"Authorization": "Bearer "+jwt}}) 
+        const res = await axios.post("http://localhost:8080/effettuaPrenotazione/riepilogoPrenotazione", prenotazione, { headers: { "Authorization": "Bearer " + jwt } })
         let mappaInfoGenerali = new Map<string, object>(
             Object.keys(res.data.infoGeneraliEvento).map(k => [k, res.data.infoGeneraliEvento[k]])
         );
@@ -214,7 +218,7 @@ export const riepilogoPrenotazione = (prenotazione: FormPrenotaImpianto | FormPr
 export const confermaPrenotazione = (jwt: string): AppThunk => async dispatch => {
     try {
         dispatch(setLoading(true));
-        const res = await axios.post("http://localhost:8080/effettuaPrenotazione/confermaPrenotazione", null, {headers:{"Authorization": "Bearer "+jwt}})
+        const res = await axios.post("http://localhost:8080/effettuaPrenotazione/confermaPrenotazione", null, { headers: { "Authorization": "Bearer " + jwt } })
         //dispatch(addPrenotazione(res.data))
     } catch (error) {
         dispatch(setErrors(error))
@@ -225,7 +229,7 @@ export const confermaPrenotazione = (jwt: string): AppThunk => async dispatch =>
 export const creaCorso = (jwt: string): AppThunk => async dispatch => {
     try {
         dispatch(setLoading(true));
-        await axios.post("http://localhost:8080/effettuaPrenotazione/confermaPrenotazione", null, {headers:{"Authorization": "Bearer "+jwt}})
+        await axios.post("http://localhost:8080/effettuaPrenotazione/confermaPrenotazione", null, { headers: { "Authorization": "Bearer " + jwt } })
         //dispatch(addPrenotazione(res.data))
     } catch (error) {
         dispatch(setErrors(error))
@@ -237,14 +241,14 @@ export const creaCorso = (jwt: string): AppThunk => async dispatch => {
 export const fetchPrenotazioni = (emailSportivo: string, jwt: string): AppThunk => async dispatch => {
     try {
         dispatch(setLoading(true));
-        const res = await axios.get("http://localhost:8080/aggiornaOpzioni/prenotazioniEPartecipazioniSportivo/", {params: {email: emailSportivo}, headers:{"Authorization": "Bearer "+jwt}})
+        const res = await axios.get("http://localhost:8080/aggiornaOpzioni/prenotazioniEPartecipazioniSportivo/", { params: { email: emailSportivo }, headers: { "Authorization": "Bearer " + jwt } })
         dispatch(addListaSquadre(res.data.squadre))
         dispatch(addListaNotificheUtente(res.data.notificheUtente))
         dispatch(addListaPrenotazioni(res.data.prenotazioniEffettuate))
         dispatch(addListaPartecipazioni(res.data.partecipazioni))
         dispatch(addListaPrenotazioniCorso(res.data.corsiACuiSiPartecipa))
-        
-        
+
+
     } catch (error) {
         dispatch(setErrors(error))
     }
@@ -264,7 +268,7 @@ export const aggiornaImpianti = (object: any): AppThunk => async dispatch => {
 
 export const aggiornaImpiantiEInvitabili = (object: any, id: number, jwt: string): AppThunk => async dispatch => {
     try {
-        const res = await axios.post("http://localhost:8080/effettuaPrenotazione/aggiornaDatiOpzioni", object, {headers:{"Authorization": "Bearer "+jwt}})
+        const res = await axios.post("http://localhost:8080/effettuaPrenotazione/aggiornaDatiOpzioni", object, { headers: { "Authorization": "Bearer " + jwt } })
         let item: ArrayLisetImpiantoItem = {
             id: id,
             impiantiDisponibili: res.data.impiantiDisponibili
@@ -280,7 +284,7 @@ export const aggiornaImpiantiEInvitabili = (object: any, id: number, jwt: string
 
 export const aggiornaIstruttori = (object: any, id: number, jwt: string): AppThunk => async dispatch => {
     try {
-        const res = await axios.post("http://localhost:8080/effettuaPrenotazione/aggiornaDatiOpzioni", object, {headers:{"Authorization": "Bearer "+jwt}})
+        const res = await axios.post("http://localhost:8080/effettuaPrenotazione/aggiornaDatiOpzioni", object, { headers: { "Authorization": "Bearer " + jwt } })
         let item: ArrayListeIstruttoreItem = {
             id: id,
             istruttoriDisponibili: res.data.istruttoriDisponibili
@@ -294,17 +298,17 @@ export const aggiornaIstruttori = (object: any, id: number, jwt: string): AppThu
 
 export const partecipazioneEventoEsistente = (idEvento: number | null, emailPartecipante: string, jwt: string): AppThunk => async dispatch => {
     try {
-        dispatch(setLoading(true)); 
+        dispatch(setLoading(true));
         let object = {
             idEvento: idEvento,
             emailPartecipante: emailPartecipante
         }
-        const res = await axios.patch("http://localhost:8080/effettuaPrenotazione/partecipazioneEventoEsistente", object, {headers:{"Authorization": "Bearer "+jwt}})
+        const res = await axios.patch("http://localhost:8080/effettuaPrenotazione/partecipazioneEventoEsistente", object, { headers: { "Authorization": "Bearer " + jwt } })
         let partecipazione: Appuntamento[] = [];
         partecipazione.push(res.data)
         dispatch(addListaPartecipazioni(partecipazione))
         alert("Partecipazione Effettuata!")
-        if(res.status === 204){
+        if (res.status === 204) {
             alert("Partecipazione confermata")
         }
     } catch (error) {
@@ -315,12 +319,12 @@ export const partecipazioneEventoEsistente = (idEvento: number | null, emailPart
 
 export const partecipazioneCorso = (idEvento: number | null, emailPartecipante: string, jwt: string): AppThunk => async dispatch => {
     try {
-        dispatch(setLoading(true)); 
+        dispatch(setLoading(true));
         let object = {
             idEvento: idEvento,
             emailPartecipante: emailPartecipante
         }
-        const res = await axios.patch("http://localhost:8080/effettuaPrenotazione/partecipazioneEventoEsistente", object, {headers:{"Authorization": "Bearer "+jwt}})
+        const res = await axios.patch("http://localhost:8080/effettuaPrenotazione/partecipazioneEventoEsistente", object, { headers: { "Authorization": "Bearer " + jwt } })
         let partecipazione: Prenotazione[] = [];
         partecipazione.push(res.data)
         dispatch(addListaPrenotazioniCorso(partecipazione))

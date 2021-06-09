@@ -38,7 +38,7 @@ export const TabNuovaPrenotazioneSquadraComponent: React.FC = () => {
                     <FormPrenotazioneImpiantoSquadraRicorrente/>
                 </TabPane>
                 <TabPane tabId="2">
-                    <AppuntamentiSottoscrivibili appuntamenti={prenotazione.appuntamentiSottoscrivibiliSquadra} />
+                    <AppuntamentiSottoscrivibili appuntamenti={prenotazione.appuntamentiSottoscrivibili} />
                 </TabPane>
             </TabContent>
         </>
