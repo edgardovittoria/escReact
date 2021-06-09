@@ -15,7 +15,7 @@ export const PrenotazioneCorso: React.FC = () => {
     const sportivoAutenticato = useSelector(sportivoAutenticatoSelector);
     
     useEffect(() => {
-        dispatch(avviaNuovaPrenotazione(sportivoAutenticato.sportivo.email, "CORSO", sportivoAutenticato.jwt))
+        dispatch(avviaNuovaPrenotazione(sportivoAutenticato.sportivo.email, "CORSO", "SINGOLO_UTENTE", sportivoAutenticato.jwt))
     }, [])
 
 

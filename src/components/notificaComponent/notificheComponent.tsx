@@ -39,7 +39,7 @@ export const Notifiche: React.FC<NotificheProps> = ({ utenteAutenticato }) => {
                 )}
 
                 <ul className="dropdown-menu dropdown-menu-right notifications" role="menu" aria-labelledby="dLabel">
-                    <div className="notification-heading"><h4 className="menu-title">Notifications</h4><h4 className="menu-title pull-right">View all<i className="glyphicon glyphicon-circle-arrow-right"></i></h4>
+                    <div className="notification-heading"><h4 className="menu-title">Notifiche</h4>
                     </div>
                     <li className="divider"></li>
                     <div className="notifications-wrapper">
@@ -48,8 +48,8 @@ export const Notifiche: React.FC<NotificheProps> = ({ utenteAutenticato }) => {
                                 <a className="content" onClick={() => onLinkClick(notifica.idEvento, notifica.tipoEventoNotificabile, notifica.idNotifica)}>
 
                                     <div className="notification-item">
-                                        <h4 className="item-title">{notifica.mittente}</h4>
-                                        <p className="item-info">{notifica.messaggio}</p>
+                                        <h4 className="item-title" style={{color: "black"}}>{notifica.mittente}</h4>
+                                        <p className="item-info" style={{color: "black"}}>{notifica.messaggio}</p>
                                     </div>
 
                                 </a>
@@ -57,7 +57,6 @@ export const Notifiche: React.FC<NotificheProps> = ({ utenteAutenticato }) => {
                         })}
                     </div>
                     <li className="divider"></li>
-                    <div className="notification-footer"><h4 className="menu-title">View all<i className="glyphicon glyphicon-circle-arrow-right"></i></h4></div>
                 </ul>
 
             </div>

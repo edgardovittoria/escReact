@@ -17,66 +17,98 @@ export const NavBar: React.FC = () => {
     const squadre = useSelector(squadraSelector).squadre
     //in questo caso lo stato iniziale deve essere "none"
     const [displayFunzioniSquadra, setDisplayFunzioniSquadra] = useState("none");
+    const [displayItem, setDisplayItem] = useState("none");
     const dispatch = useDispatch();
     const history = useHistory()
     useEffect(() => {
-        if(squadre.length !== 0){
+        if (squadre.length !== 0) {
             setDisplayFunzioniSquadra("flex")
         }
 
     }, [squadre])
 
     useEffect(() => {
+        if (utenteAutenticato.sportivo.nome === "") {
+            setDisplayFunzioniDirettore("none")
+            setDisplayFunzioniSquadra("none")
+            setDisplayItem("none")
+        } else {
+            setDisplayItem("block")
+        }
         utenteAutenticato.sportivo.ruoli.map(ruolo => {
             if (ruolo === "DIRETTORE") {
                 setDisplayFunzioniDirettore("flex")
             }
         })
-    }, [])
+    }, [utenteAutenticato])
 
-    
+
 
     return (
         <>
             <Navbar color="dark" light expand="md">
-                <NavbarBrand href="/" style={{color: "white"}}>esc</NavbarBrand>
+                <NavbarBrand href="/" style={{ color: "white" }}>esc</NavbarBrand>
                 <NavbarToggler onClick={toggle} />
-                <Collapse isOpen={isOpen} navbar>
-                    <Nav className="mr-auto" navbar>
-                        <NavItem style={{padding: "5px", borderLeft: "2px solid white"}}>
-                            <NavLink href="http://localhost:3000/profiloSportivo" style={{color: "white"}}>Profilo Sportivo</NavLink>
-                        </NavItem>
+                <Collapse isOpen={isOpen} navbar style={{borderLeft: "2px solid white"}}>
+                    <Nav className="mr-auto" navbar>    
                         <UncontrolledDropdown nav inNavbar
-                            style={{ display: displayFunzioniSquadra, marginLeft: "10px", padding: "5px"}}>
-                            <DropdownToggle nav caret style={{color: "white"}}>
+                            style={{ display: displayFunzioniSquadra, marginLeft: "10px", padding: "5px" }}>
+                            <DropdownToggle nav caret style={{ color: "white" }}>
                                 Squadre
                             </DropdownToggle>
-                            <DropdownMenu right>
+                            <DropdownMenu right 
+                                style={{backgroundColor: "#343A40"}}>
                                 {squadre.map((squadra) => {
-                                    return(
-                                        <DropdownItem onClick={() => {
-                                            dispatch(addSquadraSelezionata(squadra))
-                                            history.push("/profiloSquadra")
-                                        }}>{squadra.nome}</DropdownItem>
+                                    return (
+                                        <DropdownItem
+                                            key={squadra.idSquadra}
+                                            style={{color: "white"}}
+                                            onClick={() => {
+                                                dispatch(addSquadraSelezionata(squadra))
+                                                history.push("/profiloSquadra")
+                                            }}>{squadra.nome}</DropdownItem>
                                     )
                                 })}
                             </DropdownMenu>
                         </UncontrolledDropdown>
                         <UncontrolledDropdown nav inNavbar
-                            style={{ display: displayFunzioniDirettore, marginLeft: "10px", padding: "5px"}}>
-                            <DropdownToggle nav caret style={{color: "white"}}>
+                            style={{ display: displayFunzioniDirettore, marginLeft: "10px", padding: "5px" }}>
+                            <DropdownToggle nav caret style={{ color: "white" }}>
                                 Funzioni Direttore
                             </DropdownToggle>
-                            <DropdownMenu right>
-                                <DropdownItem href="/creazioneCorso">
+                            <DropdownMenu right 
+                                style={{backgroundColor: "#343A40", color: "white"}}>
+                                <DropdownItem href="/creazioneCorso" style={{color: "white"}}>
                                     Creazione Corsi
                                 </DropdownItem>
                             </DropdownMenu>
                         </UncontrolledDropdown>
                     </Nav>
-                    <Nav>
+                    <Nav style={{display: displayItem}}>
                         <Notifiche utenteAutenticato={utenteAutenticato} />
                     </Nav>
+                    <Nav>
+                        <UncontrolledDropdown nav inNavbar
+                            style={{ marginLeft: "10px", padding: "0px", display: displayItem }}>
+                            <DropdownToggle nav caret style={{ color: "white" }} id="dropdownImgProfilo">
+                                <img src="/assets/img/avatarProfilo.png" alt="immagine Profilo"
+                                id="imgProfilo" />
+                            </DropdownToggle>
+                            <DropdownMenu right
+                                style={{backgroundColor: "#343A40"}}>
+                                <DropdownItem href="/profiloSportivo"
+                                    style={{color: "white"}}>
+                                    Profilo
+                                </DropdownItem>
+                                <DropdownItem href="/"
+                                    style={{color: "white"}}>
+                                    Logout
+                                </DropdownItem>
+                            </DropdownMenu>
+                        </UncontrolledDropdown>
+                    </Nav>
+
+
                 </Collapse>
             </Navbar>
         </>

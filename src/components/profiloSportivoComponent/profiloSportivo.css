@@ -7,8 +7,6 @@
 img{
     width: 15%;
     height: 60%;
-    border: 2px solid black;
-    border-radius: 100px;
 }
 
 .container {
@@ -61,3 +59,23 @@ tr:nth-child(even) {
     background-color: #dddddd;
 }
 
+#imgProfilo{
+    width: 50px;
+    border: 5px solid rgb(47, 255, 106);
+    border-radius: 100px;
+}
+
+.dropdown-item{
+    font-weight: 400;
+    text-align: center;
+}
+
+.dropdown-item:hover{
+    background-color: #343A40;
+    font-weight: 900;
+}
+
+#dropdownImgProfilo::after{
+    display: none;
+    padding: 0px;
+}
