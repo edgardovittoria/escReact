@@ -45,7 +45,7 @@ export const ProfiloSportivo: React.FC = () => {
     return (
         <>
             <div className="img-container">
-                <img src="/assets/img/avatarProfilo.png" alt="avatar profilo" />
+                {/* <img src="/assets/img/avatarProfilo.png" alt="avatar profilo" /> */}
                 <h2>{sportivoAutenticato.sportivo.nome} {sportivoAutenticato.sportivo.cognome}</h2>
                 <h3>{sportivoAutenticato.sportivo.email}</h3>
             </div>
