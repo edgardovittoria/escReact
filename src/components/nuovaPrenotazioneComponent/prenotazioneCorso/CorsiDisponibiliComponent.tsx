@@ -22,7 +22,7 @@ export const CorsiDisponibili: React.FC<CorsiDisponibiliProps> = ({ corsiDisponi
                     return (
                         <>
                             <li key={index} style={{ marginTop: "20px" }}>
-                                {corso.appuntamenti[0].specificaPrenotazione.sportAssociato.nome.toUpperCase()} {corso.infoGeneraliEvento.get("costoPerPartecipante")} €
+                                {corso.appuntamenti[0].specificaPrenotazione.sportAssociato.nome.toUpperCase()} {corso.infoGeneraliEvento.costoPerPartecipante} €
                                 <Button outline color="success"
                                     style={{ marginLeft: "20%", width: "20%" }}
                                     onClick={() => {

@@ -3,5 +3,10 @@ export type UtentePolisportiva = {
     cognome : string
     email: string
     ruoli: string[]
-    attributiExtra: Map<string, object>
+    attributiExtra: AttributiExtra
+}
+
+export type AttributiExtra = {
+    moroso: boolean,
+    sportPraticati: string[]
 }

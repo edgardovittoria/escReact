@@ -6,6 +6,13 @@ export type Prenotazione = {
     idPrenotazione: number | null
     sportivoPrenotante: UtentePolisportiva
     appuntamenti: Appuntamento[]
-    infoGeneraliEvento: Map<string, object>
+    infoGeneraliEvento: InfoGeneraliEvento
     
 }&Notificabile
+
+export type InfoGeneraliEvento = {
+    numeroMinimoParteciapanti: number
+    numeroMassimoPartecipanti: number
+    costoPerPartecipante: number
+    invitatiCorso: UtentePolisportiva[]
+}

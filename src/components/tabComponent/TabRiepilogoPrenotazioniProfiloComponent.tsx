@@ -7,12 +7,14 @@ import { Appuntamento } from '../../model/Appuntamento';
 import { TablePartecipazioni } from '../profiloSportivoComponent/TablePartecipazioniComponent';
 import { TabIscrizioneCorsi } from '../profiloSportivoComponent/TabIscrizioneCorsiComponent';
 import { UtentePolisportiva } from '../../model/UtentePolisportiva';
+import { RiepilogoPrenotazioniEffettuate } from '../profiloSportivoComponent/RiepilogoPrenotazioniEffettuateComponent';
+import { SportivoAutenticatoState } from '../../store/sportivoAutenticatoSlice';
 
 export type TabRiepilogoPrenotazioniProps = {
     prenotazioniEffettuate: Prenotazione[]
     partecipazioni: Appuntamento[]
     corsiPrenotati: Prenotazione[]
-    sportivoAutenticato: UtentePolisportiva
+    sportivoAutenticato: SportivoAutenticatoState
 }
 
 export const TabRiepilogoPrenotazioni: React.FC<TabRiepilogoPrenotazioniProps> = ({ prenotazioniEffettuate, partecipazioni, corsiPrenotati, sportivoAutenticato }) => {
@@ -28,6 +30,7 @@ export const TabRiepilogoPrenotazioni: React.FC<TabRiepilogoPrenotazioniProps> =
                     <NavLink
                         className={classnames({ active: activeTab === '1' })}
                         onClick={() => { toggle('1'); }}
+                        style={{fontSize: "14px"}}
                     >
                         PRENOTAZIONI EFFETTUATE
                     </NavLink>
@@ -36,6 +39,7 @@ export const TabRiepilogoPrenotazioni: React.FC<TabRiepilogoPrenotazioniProps> =
                     <NavLink
                         className={classnames({ active: activeTab === '2' })}
                         onClick={() => { toggle('2'); }}
+                        style={{fontSize: "14px"}}
                     >
                         ISCRIZIONI AD UNA PRENOTAZIONE ESISTENTE
                     </NavLink>
@@ -44,6 +48,7 @@ export const TabRiepilogoPrenotazioni: React.FC<TabRiepilogoPrenotazioniProps> =
                     <NavLink
                         className={classnames({ active: activeTab === '3' })}
                         onClick={() => { toggle('3'); }}
+                        style={{fontSize: "14px"}}
                     >
                         ISCRIZIONI AI CORSI
                     </NavLink>
@@ -51,16 +56,16 @@ export const TabRiepilogoPrenotazioni: React.FC<TabRiepilogoPrenotazioniProps> =
             </Nav>
             <TabContent activeTab={activeTab}>
                 <TabPane tabId="1">
-                    <TablePrenotazioni prenotazioniEffettuate={prenotazioniEffettuate}
+                    <RiepilogoPrenotazioniEffettuate prenotazioni={prenotazioniEffettuate}
                         sportivoAutenticato={sportivoAutenticato} />
                 </TabPane>
                 <TabPane tabId="2">
                     <TablePartecipazioni partecipazioni={partecipazioni}
-                        sportivoAutenticato={sportivoAutenticato} />
+                        sportivoAutenticato={sportivoAutenticato.sportivo} />
                 </TabPane>
                 <TabPane tabId="3">
                     <TabIscrizioneCorsi corsiPrenotati={corsiPrenotati}
-                        sportivoAutenticato={sportivoAutenticato}/>
+                        sportivoAutenticato={sportivoAutenticato.sportivo}/>
                 </TabPane>
             </TabContent>
         </>

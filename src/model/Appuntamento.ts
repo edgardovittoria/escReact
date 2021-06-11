@@ -13,4 +13,5 @@ export type Appuntamento = {
     quotePartecipazione: QuotaPartecipazione[]
     creatore: UtentePolisportiva
     manutentore: UtentePolisportiva
+    modalitaPrenotazione: string
 }

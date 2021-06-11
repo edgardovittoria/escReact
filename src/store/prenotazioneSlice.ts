@@ -45,10 +45,18 @@ export const PrenotazioneSlice = createSlice({
                 cognome: "",
                 email: "",
                 ruoli: [],
-                attributiExtra: new Map<string, object>(),
+                attributiExtra: {
+                    moroso: false,
+                    sportPraticati: []
+                }
             },
             appuntamenti: [],
-            infoGeneraliEvento: new Map<string, object>(),
+            infoGeneraliEvento: {
+                numeroMassimoPartecipanti: -1,
+                numeroMinimoParteciapanti: -1,
+                costoPerPartecipante: -1,
+                invitatiCorso: []
+            },
             tipoEventoNotificabile: "PRENOTAZIONE"
         },
         isLoading: false,
@@ -67,10 +75,18 @@ export const PrenotazioneSlice = createSlice({
                     cognome: "",
                     email: "",
                     ruoli: [],
-                    attributiExtra: new Map<string, object>()
+                    attributiExtra: {
+                        moroso: false,
+                        sportPraticati: []
+                    }
                 },
                 appuntamenti: [],
-                infoGeneraliEvento: new Map<string, object>(),
+                infoGeneraliEvento: {
+                    numeroMassimoPartecipanti: -1,
+                    numeroMinimoParteciapanti: -1,
+                    costoPerPartecipante: -1,
+                    invitatiCorso: []
+                },
                 tipoEventoNotificabile: "PRENOTAZIONE"
             }
         },
@@ -93,13 +109,8 @@ export const PrenotazioneSlice = createSlice({
         addListaPrenotazioniCorso(state: PrenotazioneState, action: PayloadAction<Prenotazione[]>) {
             state.isLoading = false;
             state.errors = "";
-            let infoGenerali: any = action.payload[0].infoGeneraliEvento
-            let mappaInfoGenerali = new Map<string, object>(
-                Object.keys(infoGenerali).map(k => [k, infoGenerali[k]])
-            );
             state.prenotazioniCorso = [];
             action.payload.map((prenotazione) => {
-                prenotazione.infoGeneraliEvento = mappaInfoGenerali
                 state.prenotazioniCorso.push(prenotazione)
             })
 
@@ -107,13 +118,8 @@ export const PrenotazioneSlice = createSlice({
         addListaCorsiDiponibili(state: PrenotazioneState, action: PayloadAction<Prenotazione[]>) {
             state.isLoading = false;
             state.errors = "";
-            let infoGenerali: any = action.payload[0].infoGeneraliEvento
-            let mappaInfoGenerali = new Map<string, object>(
-                Object.keys(infoGenerali).map(k => [k, infoGenerali[k]])
-            );
             state.corsiDisponibili = [];
             action.payload.map((prenotazione) => {
-                prenotazione.infoGeneraliEvento = mappaInfoGenerali
                 state.corsiDisponibili.push(prenotazione)
             })
         },
@@ -198,14 +204,11 @@ export const riepilogoPrenotazione = (prenotazione: FormPrenotaImpianto | FormPr
     try {
         dispatch(setLoading(true));
         const res = await axios.post("http://localhost:8080/effettuaPrenotazione/riepilogoPrenotazione", prenotazione, { headers: { "Authorization": "Bearer " + jwt } })
-        let mappaInfoGenerali = new Map<string, object>(
-            Object.keys(res.data.infoGeneraliEvento).map(k => [k, res.data.infoGeneraliEvento[k]])
-        );
         let prenotazioneDaConfermare: Prenotazione = {
             idPrenotazione: res.data.idPrenotazione,
             sportivoPrenotante: res.data.sportivoPrenotante,
             appuntamenti: res.data.appuntamenti,
-            infoGeneraliEvento: mappaInfoGenerali,
+            infoGeneraliEvento: res.data.infoGeneraliEvento,
             tipoEventoNotificabile: "PRENOTAZIONE"
         }
         dispatch(addPrenotazioneDaConfermare(prenotazioneDaConfermare))

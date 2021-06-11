@@ -10,7 +10,6 @@ import { sportSelector } from '../../store/SportSlice';
 import { squadraSelector } from '../../store/squadraSlice';
 import { CheckBoxPendingSelezionatoItem, DataOraImpiantoRicorrente, ImpiantiSelezionatiItem } from '../nuovaPrenotazioneComponent/formComponents/DataOraImpiantoRicorrenteComponent';
 import { OrarioPrenotazione } from '../nuovaPrenotazioneComponent/formComponents/DataOraSelezioneComponent';
-import { PostiLiberi } from '../nuovaPrenotazioneComponent/formComponents/PostiLiberiComponent';
 import { SelezioneSport } from '../nuovaPrenotazioneComponent/formComponents/SelezioneSportComponent';
 import { SquadreInvitabiliSelezione } from '../nuovaPrenotazioneComponent/formComponents/SquadreInvitabiliSelezione';
 
@@ -34,8 +33,6 @@ export const FormPrenotazioneImpiantoSquadraRicorrente: React.FC = () => {
 
     const dispatch = useDispatch();
     const [numeroDate, setNumeroDate] = useState(0);
-    const [postiLiberi, setPostiliberi] = useState(0);
-    const [postiLiberiAggiornato, setPostiliberiAggiornati] = useState(postiLiberi);
     const sportPraticabili = useSelector(sportSelector);
     //const sportiviInvitabili = useSelector(utentePolisportivaSelector);
     const sportivoAutenticato = useSelector(sportivoAutenticatoSelector);
@@ -52,15 +49,12 @@ export const FormPrenotazioneImpiantoSquadraRicorrente: React.FC = () => {
         for(let i=1; i<numeroDate+1; i++){
             aggiornaListeImpianti(i, sportSelezionato, getValues("orariSelezionati")[i], getValues("modalitaPrenotazione"))
         }
-        setPostiliberiAggiornati(sportPraticabili.sports.filter((sport) => sport.nome === sportSelezionato)[0].postiLiberi)
-        setPostiliberi(sportPraticabili.sports.filter((sport) => sport.nome === sportSelezionato)[0].postiLiberi)
-
     }
 
     const onSubmit = handleSubmit((form: FormPrenotaImpiantoSquadra) => {
-        // dispatch(riepilogoPrenotazione(form, sportivoAutenticato.jwt))
-        // history.push("/riepilogoPrenotazione");
-        console.log(form)
+        dispatch(riepilogoPrenotazione(form, sportivoAutenticato.jwt))
+        history.push("/riepilogoPrenotazione");
+        //  console.log(form)
     })
 
     const aggiornaListeImpianti = (id: number, sport: string, orarioSelezionato: OrarioPrenotazione, modalitaPrenotazione: string) => {
@@ -149,7 +143,6 @@ export const FormPrenotazioneImpiantoSquadraRicorrente: React.FC = () => {
                             {...register("sportSelezionato", {required: true})} />
                             {errors.sportSelezionato?.type === "required" && "Selezionare uno sport prima di procedere"}
                     </Col>
-                    <Col id="postiLiberiContenitore">Posti Liberi: <PostiLiberi postiLiberiAggiornati={postiLiberiAggiornato} /></Col>
                 </Row>
             </FormGroup>
             <FormGroup className="border border-dark rounded" style={{ textAlign: 'left' }}>

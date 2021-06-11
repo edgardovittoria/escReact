@@ -62,22 +62,22 @@ export const RiepilogoCreazioneCorso: React.FC = () => {
                                 </ListGroup>
                                 <ListGroup>
                                     <ListGroupItem key="numeroMinimoPartecipanti">
-                                        Numero Minimo Partecipanti : {prenotazioneDaConfermare.infoGeneraliEvento.get("numeroMinimoPartecipanti")}
+                                        Numero Minimo Partecipanti : {prenotazioneDaConfermare.infoGeneraliEvento.numeroMinimoParteciapanti}
                                     </ListGroupItem>
                                 </ListGroup>
                                 <ListGroup>
                                     <ListGroupItem key="numeroMassimoPartecipanti">
-                                        Numero Massimo Partecipanti : {prenotazioneDaConfermare.infoGeneraliEvento.get("numeroMassimoPartecipanti")}
+                                        Numero Massimo Partecipanti : {prenotazioneDaConfermare.infoGeneraliEvento.numeroMassimoPartecipanti}
                                     </ListGroupItem>
                                 </ListGroup>
                                 <ListGroup>
                                     <ListGroupItem key="costoPerPartecipante">
-                                        Costo per partecipante : {prenotazioneDaConfermare.infoGeneraliEvento.get("costoPerPartecipante")}€
+                                        Costo per partecipante : {prenotazioneDaConfermare.infoGeneraliEvento.costoPerPartecipante}€
                                     </ListGroupItem>
                                 </ListGroup>
                                 <ListGroup>
                                     <ListGroupItem>
-                                        Sportivi Invitati : <ul>{(prenotazioneDaConfermare.infoGeneraliEvento.get("invitatiCorso") as UtentePolisportiva[]).map((invitato) => {
+                                        Sportivi Invitati : <ul>{(prenotazioneDaConfermare.infoGeneraliEvento.invitatiCorso).map((invitato) => {
                                         return (
                                             <li key={invitato.email}>{invitato.nome} {invitato.cognome}</li>
                                         )

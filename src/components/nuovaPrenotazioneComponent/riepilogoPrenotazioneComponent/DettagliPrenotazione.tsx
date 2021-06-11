@@ -1,8 +1,10 @@
 import React from "react"
-import { Card, CardTitle, ListGroup, ListGroupItem, Row, Col, Button } from "reactstrap"
 import { Prenotazione } from "../../../model/Prenotazone"
 import { SportivoAutenticatoState } from "../../../store/sportivoAutenticatoSlice"
 import { RiepilogoUtente } from "../../profiloSportivoComponent/RiepilogoUtenteComponent"
+import {
+    CardRiepilogoPrenotazioneImpianto
+} from "./CardRiepilogoPrenotazioneImpiantoComponent"
 
 export type DettagliPrenotazioneProps = {
     prenotazione: Prenotazione,
@@ -10,82 +12,27 @@ export type DettagliPrenotazioneProps = {
     history: any
     onClick: () => void
     testoBottone: string
+    displayButtons: string
 }
 
-export const DettagliPrenotazione: React.FC<DettagliPrenotazioneProps> = ({prenotazione, sportivoAutenticato, history, onClick, testoBottone}) => {
+export const DettagliPrenotazione: React.FC<DettagliPrenotazioneProps> = ({ prenotazione, sportivoAutenticato, history, onClick, testoBottone, displayButtons }) => {
     let appuntamenti = prenotazione.appuntamenti
     return (
         <>
             <section>
                 <div className="container">
                     <div className="row justify-content-center">
-                    <RiepilogoUtente nome={sportivoAutenticato.sportivo.nome}
-                        cognome={sportivoAutenticato.sportivo.cognome}
-                        email={sportivoAutenticato.sportivo.email}
-                        ruoli={sportivoAutenticato.sportivo.ruoli}
-                        attributiExtra={sportivoAutenticato.sportivo.attributiExtra}/>
-                        
-                        <Card className="col-6">
+                        <RiepilogoUtente nome={sportivoAutenticato.sportivo.nome}
+                            cognome={sportivoAutenticato.sportivo.cognome}
+                            email={sportivoAutenticato.sportivo.email}
+                            ruoli={sportivoAutenticato.sportivo.ruoli}
+                            attributiExtra={sportivoAutenticato.sportivo.attributiExtra} />
 
-                            <CardTitle style={{ marginTop: "3%", marginBottom: "4%" }}>
-                                Riepilogo prenotazione
-                            </CardTitle>
-                            <ListGroup>
-                                <ListGroupItem key="sportPrenotato">
-                                    Sport Prenotato : {appuntamenti[0].specificaPrenotazione.sportAssociato.nome}
-                                </ListGroupItem>
-                            </ListGroup>
-                            {appuntamenti.map((appuntamento, index) => {
-                                return (
-                                    <div key={index}>
-                                        <ListGroupItem>
-                                            Impianto Prenotato : {appuntamento.specificaPrenotazione.pavimentazioneImpianto}
-                                        </ListGroupItem>
-                                        <ListGroupItem>
-                                            Data Prenotata : {appuntamento.dataAppuntamento}
-                                        </ListGroupItem>
-                                        <ListGroupItem>
-                                            Ora Inizio : {appuntamento.oraInizioAppuntamento}
-                                        </ListGroupItem>
-                                        <ListGroupItem>
-                                            Ora Fine : {appuntamento.oraFineAppuntamento}
-                                        </ListGroupItem>
-                                        <ListGroupItem>
-                                            Costo Totale : {appuntamento.specificaPrenotazione.costo}€
-                                        </ListGroupItem>
-                                    </div>
-                                )
-                            })}
-                            <ListGroup>
-                                <ListGroupItem>
-                                    Invitati : <ul>{appuntamenti[0].specificaPrenotazione.invitati.map((invitato) => {
-                                    return (
-                                        <li key={invitato}>{invitato}</li>
-                                    )
-                                })}
-                                    </ul>
-                                </ListGroupItem>
-
-                            </ListGroup>
-                            <Row>
-                                <Col>
-                                    <Button
-                                        type="submit"
-                                        outline color="danger"
-                                        style={{ marginTop: "20%", width: "100%" }}
-                                        onClick={() => {
-                                            history.push("/profiloSportivo")
-                                        }} >Annulla</Button>
-                                </Col>
-                                <Col>
-                                    <Button
-                                        outline color="success"
-                                        style={{ marginTop: "20%", width: "100%" }}
-                                        onClick={onClick}>{testoBottone}</Button>
-                                </Col>
-                            </Row>
-
-                        </Card>
+                        <CardRiepilogoPrenotazioneImpianto prenotazione={prenotazione}
+                            history={history}
+                            onClick={onClick}
+                            testoBottone={testoBottone}
+                            displayButtons={displayButtons} />
                     </div>
                 </div>
             </section>

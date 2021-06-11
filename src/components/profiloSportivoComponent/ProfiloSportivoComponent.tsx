@@ -10,13 +10,13 @@ import { useHistory } from 'react-router';
 import './profiloSportivo.css';
 import { corsiPrenotatiSelector, fetchPrenotazioni, partecipazioniSelector, prenotazioniSelector, resetPrenotazioneDaConfermare } from '../../store/prenotazioneSlice';
 import { TabRiepilogoPrenotazioni } from '../tabComponent/TabRiepilogoPrenotazioniProfiloComponent';
+import { RiepilogoUtente } from './RiepilogoUtenteComponent';
 
 
 export const ProfiloSportivo: React.FC = () => {
 
-    
-
     const sportivoAutenticato = useSelector(sportivoAutenticatoSelector);
+
 
     useEffect(() => {
         dispatch(fetchPrenotazioni(sportivoAutenticato.sportivo.email, sportivoAutenticato.jwt))
@@ -44,38 +44,45 @@ export const ProfiloSportivo: React.FC = () => {
 
     return (
         <>
-            <div className="img-container">
-                {/* <img src="/assets/img/avatarProfilo.png" alt="avatar profilo" /> */}
-                <h2>{sportivoAutenticato.sportivo.nome} {sportivoAutenticato.sportivo.cognome}</h2>
-                <h3>{sportivoAutenticato.sportivo.email}</h3>
-            </div>
-            <div className="container">
-                <p>Prenota un impianto una lezione o un corso</p>
-            </div>
-            <div className="btn-container" style={{marginBottom:"80px"}}>
-                <span></span>
-                <button className="btnProfilo" id="prenotazioneLezione" onClick={() => history.push("/nuovaPrenotazioneLezione")}>
-                    <FontAwesomeIcon icon={faTableTennis} style={style} />
-                    <i></i>LEZIONE
-                </button>
-                <button className="btnProfilo" id="prenotazioneImpianto" onClick={() => history.push("/nuovaPrenotazioneImpianto")}>
-                    <FontAwesomeIcon icon={faFutbol} style={style} />
-                    <i></i>IMPIANTO
-                </button>
 
-                <button className="btnProfilo" id="prenotazioneCorso" onClick={() => history.push("/prenotazioneCorso")}>
-                    <FontAwesomeIcon icon={faVolleyballBall} style={style} />
-                    <i></i>CORSO
-                </button>
-            </div>
-            <div id="riepilogoPrenotazioni" style={{margin:"auto", width:"60%"}}>
-            <TabRiepilogoPrenotazioni prenotazioniEffettuate={prenotazioniEffettuate}
-                partecipazioni={partecipazioniEffettuate}
-                corsiPrenotati={corsiPrenotati}
-                sportivoAutenticato={sportivoAutenticato.sportivo} 
-                />
-            </div>
+            <section>
+                <div className="container">
+                    <div className="row justify-content-center">
 
+                        <RiepilogoUtente nome={sportivoAutenticato.sportivo.nome}
+                            cognome={sportivoAutenticato.sportivo.cognome}
+                            email={sportivoAutenticato.sportivo.email}
+                            ruoli={sportivoAutenticato.sportivo.ruoli}
+                            attributiExtra={sportivoAutenticato.sportivo.attributiExtra} />
+
+                        <div className="col-8">
+                            <h4>Prenota un impianto una lezione o un corso</h4>
+                            <div className="btn-container" style={{ marginBottom: "80px" }}>
+                                <button className="btnProfilo" id="prenotazioneLezione" onClick={() => history.push("/nuovaPrenotazioneLezione")}>
+                                    <FontAwesomeIcon icon={faTableTennis} style={style} />
+                                    <i></i>LEZIONE
+                                </button>
+                                <button className="btnProfilo" id="prenotazioneImpianto" onClick={() => history.push("/nuovaPrenotazioneImpianto")}>
+                                    <FontAwesomeIcon icon={faFutbol} style={style} />
+                                    <i></i>IMPIANTO
+                                </button>
+
+                                <button className="btnProfilo" id="prenotazioneCorso" onClick={() => history.push("/prenotazioneCorso")}>
+                                    <FontAwesomeIcon icon={faVolleyballBall} style={style} />
+                                    <i></i>CORSO
+                                </button>
+                            </div>
+                            <div id="riepilogoPrenotazioni" style={{ margin: "auto", width: "100%" }}>
+                                <TabRiepilogoPrenotazioni prenotazioniEffettuate={prenotazioniEffettuate}
+                                    partecipazioni={partecipazioniEffettuate}
+                                    corsiPrenotati={corsiPrenotati}
+                                    sportivoAutenticato={sportivoAutenticato}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </>
     )
 

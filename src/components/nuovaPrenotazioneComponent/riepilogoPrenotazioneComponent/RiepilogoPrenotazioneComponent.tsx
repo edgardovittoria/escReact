@@ -27,7 +27,8 @@ export const RiepilogoPrenotazione: React.FC = () => {
                 sportivoAutenticato={sportivoAutenticato}
                 history={history}
                 onClick={onClick}
-                testoBottone="Conferma Prenotazione"/>
+                testoBottone="Conferma Prenotazione"
+                displayButtons="block"/>
 
         )
     } else {

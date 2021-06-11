@@ -23,10 +23,18 @@ export const NotificheSlice = createSlice({
                 cognome: "",
                 email: "",
                 ruoli: [],
-                attributiExtra: new Map<string, object>()
+                attributiExtra: {
+                    moroso: false,
+                    sportPraticati: []
+                }
             },
             appuntamenti: [],
-            infoGeneraliEvento: new Map<string, object>(),
+            infoGeneraliEvento: {
+                numeroMassimoPartecipanti: -1,
+                numeroMinimoParteciapanti: -1,
+                costoPerPartecipante: -1,
+                invitatiCorso: []
+            },
             tipoEventoNotificabile: ""
 
         },

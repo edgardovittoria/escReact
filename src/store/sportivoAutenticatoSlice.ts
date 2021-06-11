@@ -1,3 +1,5 @@
+import { useDispatch } from 'react-redux';
+import { AppThunk } from './store';
 import { UtentePolisportiva } from './../model/UtentePolisportiva';
 import { UserDetails } from './../model/UserDetails';
 /* eslint-disable array-callback-return */
@@ -47,13 +49,16 @@ export const SportivoAutenticatoSlice = createSlice({
                 cognome: "",
                 email: "",
                 ruoli: [],
-                attributiExtra: mappaVuotaAttributiExtra
+                attributiExtra: {
+                    moroso: false,
+                    sportPraticati: []
+                }
             }
             
-        }
+        },
     },
     extraReducers: {
-        [loginSportivo.fulfilled.type]: (state: SportivoAutenticatoState, action: PayloadAction<AutenticazioneResponse>) => {
+        [loginSportivo.fulfilled.type]: (state: SportivoAutenticatoState, action: PayloadAction<AutenticazioneResponse>) =>  {
             state.sportivo = action.payload.sportivo
             state.jwt = action.payload.jwt
             state.isLoading = false
@@ -69,7 +74,10 @@ export const SportivoAutenticatoSlice = createSlice({
                 cognome: "",
                 email: "",
                 ruoli: [],
-                attributiExtra: new Map<string, object>()
+                attributiExtra: {
+                    moroso: false,
+                    sportPraticati: []
+                }
             }
             state.errors = action.payload
             state.isLoading = false;
@@ -80,7 +88,7 @@ export const SportivoAutenticatoSlice = createSlice({
 });
 
 export const {
-    resetSportivoAutenticato
+    resetSportivoAutenticato,
 } = SportivoAutenticatoSlice.actions
 
 export const sportivoAutenticatoSelector = (state: { sportivo: SportivoAutenticatoState }) => state.sportivo

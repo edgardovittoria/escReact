@@ -53,7 +53,7 @@ export const RiepilogoPrenotazioneLezione: React.FC = () => {
                                                 Impianto Prenotato : {appuntamento.specificaPrenotazione.pavimentazioneImpianto}
                                             </ListGroupItem>
                                             <ListGroupItem>
-                                                Istruttore Scelto : {appuntamento.specificaPrenotazione.istruttore.nome} {appuntamento.specificaPrenotazione.istruttore.cognome}
+                                                Istruttore Scelto : {appuntamento.specificaPrenotazione.istruttore.email}
                                             </ListGroupItem>
                                             <ListGroupItem>
                                                 Data Prenotata : {appuntamento.dataAppuntamento}
