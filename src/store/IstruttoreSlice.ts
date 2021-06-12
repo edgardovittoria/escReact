@@ -1,6 +1,6 @@
-import { UtentePolisportiva } from './../model/UtentePolisportiva';
+import { UtentePolisportiva } from '../model/UtentePolisportiva';
 /* eslint-disable array-callback-return */
-import { ArrayListeIstruttoreItem } from '../components/nuovaPrenotazioneComponent/formComponents/DataOraImpiantoIstruttoreSelezioneComponent';
+import { ArrayListeIstruttoreItem } from '../components/formComponents/DataOraImpiantoIstruttoreSelezione';
 
 import axios from 'axios';
 import { AppThunk } from './store';

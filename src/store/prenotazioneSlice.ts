@@ -1,23 +1,23 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { FormCorso } from './../components/nuovaPrenotazioneComponent/prenotazioneCorso/FormCreazioneCorsoComponent';
+import { FormCorso } from '../pages/creazioneCorso/components/FormCreazioneCorso';
 /* eslint-disable array-callback-return */
-import { FormPrenotaLezione } from '../components/nuovaPrenotazioneComponent/prenotazioneLezione/FormPrenotazioneLezioneComponent';
-import { FormPrenotaImpianto } from '../components/nuovaPrenotazioneComponent/prenotazioneImpianto/FormPrenotazioneImpiantoRicorrenteComponent';
-import { ArrayLisetImpiantoItem } from '../components/nuovaPrenotazioneComponent/formComponents/DataOraImpiantoRicorrenteComponent';
+import { FormPrenotaLezione } from '../pages/nuovaPrenotazioneUtenteSingolo/prenotazioneLezione/components/FormPrenotazioneLezione';
+import { FormPrenotaImpianto } from '../pages/nuovaPrenotazioneUtenteSingolo/prenotazioneImpianto/components/FormPrenotazioneImpiantoRicorrente';
+import { ArrayLisetImpiantoItem } from '../components/formComponents/DataOraImpiantoRicorrente';
 import axios from 'axios';
 import { AppThunk } from './store';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Appuntamento } from './../model/Appuntamento';
-import { Prenotazione } from './../model/Prenotazone';
+import { Appuntamento } from '../model/Appuntamento';
+import { Prenotazione } from '../model/Prenotazone';
 import { addListaImpiantiDisponibili, resetListaImpiantiDisponibili } from './impiantoSlice';
 import { addListaImpiantiDisponibiliAdArray } from './formPrenotaImpiantoSlice';
 import { addListaSportPraticabili } from './SportSlice';
 import { addListaInvitabili } from './utentePolisportivaSlice';
-import { ArrayListeIstruttoreItem } from '../components/nuovaPrenotazioneComponent/formComponents/DataOraImpiantoIstruttoreSelezioneComponent';
+import { ArrayListeIstruttoreItem } from '../components/formComponents/DataOraImpiantoIstruttoreSelezione';
 import { addListaIstruttori } from './IstruttoreSlice';
 import { addListaNotificheUtente } from './notificheSlice';
 import { addListaSquadre, addListaSquadreInvitabili } from './squadraSlice';
-import { FormPrenotaImpiantoSquadra } from '../components/nuovaPrenotazioneSquadraComponent/FormPrenotazioneImpiantoSquadraRicorrente';
+import { FormPrenotaImpiantoSquadra } from '../pages/nuovaPrenotazioneSquadra/nuovaPrenotazioneImpiantoSquadra/components/FormPrenotazioneImpiantoSquadraRicorrente';
 
 export type PrenotazioneState = {
     prenotazioni: Prenotazione[]
@@ -221,8 +221,7 @@ export const riepilogoPrenotazione = (prenotazione: FormPrenotaImpianto | FormPr
 export const confermaPrenotazione = (jwt: string): AppThunk => async dispatch => {
     try {
         dispatch(setLoading(true));
-        const res = await axios.post("http://localhost:8080/effettuaPrenotazione/confermaPrenotazione", null, { headers: { "Authorization": "Bearer " + jwt } })
-        //dispatch(addPrenotazione(res.data))
+        await axios.post("http://localhost:8080/effettuaPrenotazione/confermaPrenotazione", null, { headers: { "Authorization": "Bearer " + jwt } })
     } catch (error) {
         dispatch(setErrors(error))
     }

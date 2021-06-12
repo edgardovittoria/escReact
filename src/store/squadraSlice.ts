@@ -1,5 +1,5 @@
 /* eslint-disable array-callback-return */
-import { Squadra } from './../model/Squadra';
+import { Squadra } from '../model/Squadra';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export type SquadraState = {

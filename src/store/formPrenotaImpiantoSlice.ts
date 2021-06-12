@@ -1,6 +1,6 @@
 /* eslint-disable array-callback-return */
-import { ArrayCheckBoxPendingItem } from './../components/nuovaPrenotazioneComponent/formComponents/DataOraImpiantoRicorrenteComponent';
-import { ArrayLisetImpiantoItem } from '../components/nuovaPrenotazioneComponent/formComponents/DataOraImpiantoRicorrenteComponent';
+import { ArrayCheckBoxPendingItem } from '../components/formComponents/DataOraImpiantoRicorrente';
+import { ArrayLisetImpiantoItem } from '../components/formComponents/DataOraImpiantoRicorrente';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 

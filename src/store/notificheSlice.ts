@@ -1,5 +1,5 @@
-import { Prenotazione } from './../model/Prenotazone';
-import { Notifica } from './../model/Notifica';
+import { Prenotazione } from '../model/Prenotazone';
+import { Notifica } from '../model/Notifica';
 /* eslint-disable array-callback-return */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';

@@ -1,7 +1,5 @@
-import { useDispatch } from 'react-redux';
-import { AppThunk } from './store';
-import { UtentePolisportiva } from './../model/UtentePolisportiva';
-import { UserDetails } from './../model/UserDetails';
+import { UtentePolisportiva } from '../model/UtentePolisportiva';
+import { UserDetails } from '../model/UserDetails';
 /* eslint-disable array-callback-return */
 
 import axios from 'axios';
@@ -41,9 +39,8 @@ export const SportivoAutenticatoSlice = createSlice({
         errors: ""
     } as SportivoAutenticatoState,
     reducers: {
-        resetSportivoAutenticato(state: SportivoAutenticatoState, action: PayloadAction<void>){
+        resetSportivoAutenticato(state: SportivoAutenticatoState){
             state.jwt = ""
-            let mappaVuotaAttributiExtra = new Map<string, object>()
             state.sportivo = {
                 nome: "",
                 cognome: "",

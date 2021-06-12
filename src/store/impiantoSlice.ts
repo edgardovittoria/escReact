@@ -1,7 +1,7 @@
 /* eslint-disable array-callback-return */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { Impianto } from './../model/Impianto';
+import { Impianto } from '../model/Impianto'
 import { AppThunk } from './store';
 
 export type ImpiantoState = {
