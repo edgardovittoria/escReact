@@ -54,16 +54,14 @@ export const TabRiepilogoPrenotazioni: React.FC<TabRiepilogoPrenotazioniProps> =
             </Nav>
             <TabContent activeTab={activeTab}>
                 <TabPane tabId="1">
-                    <RiepilogoPrenotazioniEffettuate prenotazioni={prenotazioniEffettuate}
-                        sportivoAutenticato={sportivoAutenticato} />
+                    <RiepilogoPrenotazioniEffettuate prenotazioni={prenotazioniEffettuate}/>
                 </TabPane>
                 <TabPane tabId="2">
                     <TablePartecipazioni partecipazioni={partecipazioni}
                         sportivoAutenticato={sportivoAutenticato.sportivo} />
                 </TabPane>
                 <TabPane tabId="3">
-                    <RiepilogoIscrizioneCorsi corsiPrenotati={corsiPrenotati}
-                        sportivoAutenticato={sportivoAutenticato.sportivo}/>
+                    <RiepilogoIscrizioneCorsi corsiPrenotati={corsiPrenotati}/>
                 </TabPane>
             </TabContent>
         </>

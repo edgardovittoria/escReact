@@ -74,6 +74,7 @@ export const FormPrenotazioneLezione: React.FC = () => {
         }
 
     }
+
     const aggiornaListeIstruttori = (id: number, sport: string, orarioSelezionato: OrarioPrenotazione) => {
         if (sport !== undefined && orarioSelezionato !== undefined) {
             let object = {
@@ -93,6 +94,7 @@ export const FormPrenotazioneLezione: React.FC = () => {
             dispatch(aggiornaIstruttori(object, id, sportivoAutenticato.jwt))
         }
     }
+
     const onOrarioSelezione = (orarioSelezionato: OrarioPrenotazione) => {
         if(orari.filter(orario => orario.id === orarioSelezionato.id).length === 0){
             orari.push(orarioSelezionato)
@@ -114,6 +116,7 @@ export const FormPrenotazioneLezione: React.FC = () => {
         }
         setValue("impianti", impiantiSelezionati)
     }
+
     const onIstruttoreSelezioneRicorrente = (istruttoreItem: IstruttoriSelezionatiItem) => {
         if (istruttoriSelezionati.filter(item => item.idSelezione === istruttoreItem.idSelezione).length === 0) {
             istruttoriSelezionati.push(istruttoreItem)

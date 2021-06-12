@@ -43,9 +43,9 @@ export const FormPrenotazioneImpiantoRicorrente: React.FC = () => {
     const sportPraticabili = useSelector(sportSelector);
     const sportiviInvitabili = useSelector(utentePolisportivaSelector);
     const sportivoAutenticato = useSelector(sportivoAutenticatoSelector);
-    // const impiantiDisponibili = useSelector(impiantoSelector);
     const opzioni = useSelector(formPrenotaImpiantoSelector);
-    function onSportSelezionato(sportSelezionato: string) {
+
+    const onSportSelezionato = (sportSelezionato: string) => {
         setValue("sportSelezionato", sportSelezionato)
         setValue("tipoPrenotazione", "IMPIANTO")
         setValue("modalitaPrenotazione", "SINGOLO_UTENTE")
@@ -85,6 +85,7 @@ export const FormPrenotazioneImpiantoRicorrente: React.FC = () => {
         }
 
     }
+
     const onOrarioSelezione = (orarioSelezionato: OrarioPrenotazione) => {
         if(orari.filter(orario => orario.id === orarioSelezionato.id).length === 0){
             orari.push(orarioSelezionato)

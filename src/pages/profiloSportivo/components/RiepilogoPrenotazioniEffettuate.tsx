@@ -1,13 +1,11 @@
 import React from 'react';
 import { Button } from 'reactstrap';
 import { Prenotazione } from '../../../model/Prenotazone';
-import { SportivoAutenticatoState } from '../../../store/sportivoAutenticatoSlice';
 import { CardRiepilogoPrenotazioneImpianto } from '../../../components/cardRiepilogoPrenotazione/CardRiepilogoPrenotazioneImpianto';
 import { CardRiepilogoPrenotazioneLezione } from '../../../components/cardRiepilogoPrenotazione/CardRiepilogoPrenotazioneLezione';
 
 type RiepilogoPrenotazioniEffettuateProsp = {
     prenotazioni: Prenotazione[],
-    sportivoAutenticato: SportivoAutenticatoState
 }
 
 
