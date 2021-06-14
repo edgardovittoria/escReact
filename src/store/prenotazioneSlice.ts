@@ -298,12 +298,13 @@ export const aggiornaIstruttori = (object: any, id: number, jwt: string): AppThu
 
 }
 
-export const partecipazioneEventoEsistente = (idEvento: number | null, emailPartecipante: string, jwt: string): AppThunk => async dispatch => {
+export const partecipazioneEventoEsistente = (idEvento: number | null, emailPartecipante: string, tipoPrenotazione: string, jwt: string): AppThunk => async dispatch => {
     try {
         dispatch(setLoading(true));
         let object = {
             idEvento: idEvento,
-            emailPartecipante: emailPartecipante
+            emailPartecipante: emailPartecipante,
+            tipoPrenotazione: tipoPrenotazione
         }
         const res = await axios.patch("http://localhost:8080/effettuaPrenotazione/partecipazioneEventoEsistente", object, { headers: { "Authorization": "Bearer " + jwt } })
         let partecipazione: Appuntamento[] = [];

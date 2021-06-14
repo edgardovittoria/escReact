@@ -20,7 +20,7 @@ export const RiepilogoAppuntamento: React.FC<RiepilogoAppuntamentoProps> = ({ ap
     const history = useHistory();
 
     const onClick = () => {
-        dispatch(partecipazioneEventoEsistente(appuntamento.idAppuntamento, sportivoAutenticato.sportivo.email, sportivoAutenticato.jwt))
+        dispatch(partecipazioneEventoEsistente(appuntamento.idAppuntamento, sportivoAutenticato.sportivo.email, appuntamento.specificaPrenotazione.tipoSpecifica, sportivoAutenticato.jwt))
         history.go(-1)
     }
 
