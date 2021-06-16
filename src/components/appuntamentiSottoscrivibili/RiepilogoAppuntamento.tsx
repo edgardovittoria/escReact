@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { partecipazioneEventoEsistente } from '../../store/prenotazioneSlice';
 import { Appuntamento } from '../../model/Appuntamento';
 import { sportivoAutenticatoSelector } from '../../store/sportivoAutenticatoSlice';
+import {notificheSelector} from "../../store/notificheSlice";
 
 export type RiepilogoAppuntamentoProps = {
     appuntamento: Appuntamento
@@ -17,10 +18,23 @@ export const RiepilogoAppuntamento: React.FC<RiepilogoAppuntamentoProps> = ({ ap
 
     const dispatch = useDispatch();
     const sportivoAutenticato = useSelector(sportivoAutenticatoSelector);
+    const notificaSelezionata = useSelector(notificheSelector).notificaSelezionata;
     const history = useHistory();
 
     const onClick = () => {
-        dispatch(partecipazioneEventoEsistente(appuntamento.idAppuntamento, sportivoAutenticato.sportivo.email, appuntamento.specificaPrenotazione.tipoSpecifica, sportivoAutenticato.jwt))
+        if(appuntamento.modalitaPrenotazione === "SQUADRA" && notificaSelezionata.squadraDelDestinatario?.idSquadra){
+            dispatch(partecipazioneEventoEsistente(
+                appuntamento.idAppuntamento,
+                notificaSelezionata.squadraDelDestinatario?.idSquadra,
+                appuntamento.specificaPrenotazione.tipoSpecifica,
+                appuntamento.modalitaPrenotazione, sportivoAutenticato.jwt))
+        }else if(appuntamento.modalitaPrenotazione === "SINGOLO_UTENTE"){
+            dispatch(partecipazioneEventoEsistente(
+                appuntamento.idAppuntamento,
+                sportivoAutenticato.sportivo.email,
+                appuntamento.specificaPrenotazione.tipoSpecifica,
+                appuntamento.modalitaPrenotazione, sportivoAutenticato.jwt))
+        }
         history.go(-1)
     }
 
@@ -32,7 +46,12 @@ export const RiepilogoAppuntamento: React.FC<RiepilogoAppuntamentoProps> = ({ ap
                 setDisplayPartecipa("none")
             }
         })
-    }, [])
+        appuntamento.squadrePartecipanti.map(squadra => {
+            if(squadra === notificaSelezionata.squadraDelDestinatario?.idSquadra){
+                setDisplayPartecipa("none")
+            }
+        })
+    }, [notificaSelezionata.squadraDelDestinatario])
 
     return (
         <>
@@ -74,6 +93,13 @@ export const RiepilogoAppuntamento: React.FC<RiepilogoAppuntamentoProps> = ({ ap
                                 </ListGroupItem>
 
                             </ListGroup>
+                            {(appuntamento.modalitaPrenotazione === "SQUADRA") ? <ListGroup>
+                                <ListGroupItem>Squadre Partecipanti : <ul>{appuntamento.squadrePartecipanti.map((squadra) => {
+                                    return(
+                                        <li key={squadra}>{squadra}</li>
+                                    )
+                                })}</ul></ListGroupItem>
+                            </ListGroup> : null}
                             <Row>
                                 <Col>
                                     <Button

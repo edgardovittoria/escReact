@@ -11,6 +11,7 @@ import './css/profiloSportivo.css';
 import { corsiPrenotatiSelector, fetchPrenotazioni, partecipazioniSelector, prenotazioniSelector, resetPrenotazioneDaConfermare } from '../../store/prenotazioneSlice';
 import { TabRiepilogoPrenotazioni } from './components/TabRiepilogoPrenotazioniProfilo';
 import { RiepilogoUtente } from '../../components/riepilogoProfilo/RiepilogoUtente';
+import {CalendarioSportivo} from "./components/CalendarioSportivo";
 
 
 export const ProfiloSportivo: React.FC = () => {
@@ -73,11 +74,12 @@ export const ProfiloSportivo: React.FC = () => {
                                 </button>
                             </div>
                             <div id="riepilogoPrenotazioni" style={{ margin: "auto", width: "100%" }}>
-                                <TabRiepilogoPrenotazioni prenotazioniEffettuate={prenotazioniEffettuate}
+                                {/*<TabRiepilogoPrenotazioni prenotazioniEffettuate={prenotazioniEffettuate}
                                     partecipazioni={partecipazioniEffettuate}
                                     corsiPrenotati={corsiPrenotati}
                                     sportivoAutenticato={sportivoAutenticato}
-                                />
+                                />*/}
+                                <CalendarioSportivo sportivo={sportivoAutenticato.sportivo} />
                             </div>
                         </div>
                     </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
@@ -6,11 +6,9 @@ import { Button, Col, Form, FormGroup, Label, Row } from 'reactstrap';
 import { formPrenotaImpiantoSelector } from '../../../../store/formPrenotaImpiantoSlice';
 import { aggiornaImpiantiEInvitabili, riepilogoPrenotazione } from '../../../../store/prenotazioneSlice';
 import { sportivoAutenticatoSelector } from '../../../../store/sportivoAutenticatoSlice';
-import { sportSelector } from '../../../../store/SportSlice';
 import { squadraSelector } from '../../../../store/squadraSlice';
 import { CheckBoxPendingSelezionatoItem, DataOraImpiantoRicorrente, ImpiantiSelezionatiItem } from '../../../../components/formComponents/DataOraImpiantoRicorrente';
 import { OrarioPrenotazione } from '../../../../components/formComponents/DataOraSelezione';
-import { SelezioneSport } from '../../../../components/formComponents/SelezioneSport';
 import { SquadreInvitabiliSelezione } from '../../../../components/formComponents/SquadreInvitabiliSelezione';
 
 export type FormPrenotaImpiantoSquadra = {
@@ -27,29 +25,28 @@ let orari: OrarioPrenotazione[] = [];
 let impiantiSelezionati: ImpiantiSelezionatiItem[] = [];
 let checkboxes: CheckBoxPendingSelezionatoItem[] = [];
 
-export const FormPrenotazioneImpiantoSquadraRicorrente: React.FC = () => {
+export interface FormPrenotazioneImpiantoSquadraRicorrenteProps {
+    sport: string
+}
+
+export const FormPrenotazioneImpiantoSquadraRicorrente: React.FC<FormPrenotazioneImpiantoSquadraRicorrenteProps> = ({sport}) => {
 
     const { register, getValues, setValue, handleSubmit, formState: { errors } } = useForm<FormPrenotaImpiantoSquadra>();
 
     const dispatch = useDispatch();
     const [numeroDate, setNumeroDate] = useState(0);
-    const sportPraticabili = useSelector(sportSelector);
-    //const sportiviInvitabili = useSelector(utentePolisportivaSelector);
     const sportivoAutenticato = useSelector(sportivoAutenticatoSelector);
     const squadreInvitabili = useSelector(squadraSelector).squadreInvitabili
-    // const impiantiDisponibili = useSelector(impiantoSelector);
     const opzioni = useSelector(formPrenotaImpiantoSelector);
     const history = useHistory()
 
-    function onSportSelezionato(sportSelezionato: string) {
-        setValue("sportSelezionato", sportSelezionato)
+    useEffect(() => {
+        setValue("sportSelezionato", sport)
         setValue("tipoPrenotazione", "IMPIANTO_SQUADRA")
         setValue("modalitaPrenotazione", "SQUADRA")
-        console.log(opzioni.arrayListeCheckBoxPending)
-        for(let i=1; i<numeroDate+1; i++){
-            aggiornaListeImpianti(i, sportSelezionato, getValues("orariSelezionati")[i], getValues("modalitaPrenotazione"))
-        }
-    }
+    }, [setValue, sport]);
+
+
 
     const onSubmit = handleSubmit((form: FormPrenotaImpiantoSquadra) => {
         dispatch(riepilogoPrenotazione(form, sportivoAutenticato.jwt))
@@ -133,17 +130,6 @@ export const FormPrenotazioneImpiantoSquadraRicorrente: React.FC = () => {
                     <option key={4} value={4}>4</option>
                     <option key={5} value={5}>5</option>
                 </select>
-            </FormGroup>
-            <FormGroup className="border border-dark rounded" style={{ textAlign: 'left' }}>
-                <Label style={{ marginLeft: '5px' }}>Seleziona Sport</Label>
-                <Row style={{ marginLeft: '1px' }}>
-                    <Col>
-                        <SelezioneSport sports={sportPraticabili.sports}
-                            handleSelezioneSport={onSportSelezionato}
-                            {...register("sportSelezionato", {required: true})} />
-                            {errors.sportSelezionato?.type === "required" && "Selezionare uno sport prima di procedere"}
-                    </Col>
-                </Row>
             </FormGroup>
             <FormGroup className="border border-dark rounded" style={{ textAlign: 'left' }}>
                 <DataOraImpiantoRicorrente impianti={opzioni.arrayListeImpianti}

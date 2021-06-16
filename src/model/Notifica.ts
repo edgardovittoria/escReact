@@ -1,3 +1,5 @@
+import {Squadra} from "./Squadra";
+
 export type Notifica = {
     idNotifica: number
     messaggio: string
@@ -5,4 +7,6 @@ export type Notifica = {
     letta: boolean
     idEvento: number
     tipoEventoNotificabile: string
+    squadraDelMittente: Squadra | null
+    squadraDelDestinatario: Squadra | null
 }

@@ -7,8 +7,9 @@ import { AppThunk } from './store';
 
 export type NotificheState = {
     notifiche: Notifica[]
+    notificaSelezionata: Notifica
     dettagliNotifica: Prenotazione
-    isLoading: boolean,
+    isLoading: boolean
     errors: string
 }
 
@@ -16,6 +17,16 @@ export const NotificheSlice = createSlice({
     name: 'notifiche',
     initialState: {
         notifiche: [],
+        notificaSelezionata: {
+            idNotifica: -1,
+            idEvento: -1,
+            letta: false,
+            messaggio: "",
+            mittente: "",
+            tipoEventoNotificabile: "",
+            squadraDelDestinatario: null,
+            squadraDelMittente: null,
+        },
         dettagliNotifica: {
             idPrenotazione: null,
             sportivoPrenotante: {
@@ -25,7 +36,10 @@ export const NotificheSlice = createSlice({
                 ruoli: [],
                 attributiExtra: {
                     moroso: false,
-                    sportPraticati: []
+                    sportPraticati: [],
+                    appuntamentiSportivo: [],
+                    appuntamentiManutentore: [],
+                    appuntamentiLezioni: []
                 }
             },
             appuntamenti: [],
@@ -51,6 +65,7 @@ export const NotificheSlice = createSlice({
             notificheNonModificate = state.notifiche.filter(notifica => notifica.idNotifica !== action.payload.idNotifica)
             notificheNonModificate.push(action.payload)
             state.notifiche = notificheNonModificate
+            state.notificaSelezionata = action.payload
         },
         addDettagliNotifica(state: NotificheState, action: PayloadAction<Prenotazione>){
             state.isLoading= false
@@ -76,7 +91,7 @@ export const {
 export const fetchNotifiche = (emailSportivo: string, jwt: string): AppThunk => async dispatch => {
     try {
         dispatch(setLoading(true));
-        const res = await axios.get("http://localhost:8080/aggiornaOpzioni/notificheUtente", { params: { email: emailSportivo }, headers: { "Authorization": "Bearer " + jwt } })
+        const res = await axios.get("http://localhost:8080/notifiche/notificheUtente", { params: { email: emailSportivo }, headers: { "Authorization": "Bearer " + jwt } })
         dispatch(addListaNotificheUtente(res.data));
     } catch (error) {
         dispatch(setErrors(error))

@@ -6,7 +6,11 @@ import { useSelector } from 'react-redux';
 import { prenotazioneSelector } from '../../../../store/prenotazioneSlice';
 import { FormPrenotazioneImpiantoSquadraRicorrente } from './FormPrenotazioneImpiantoSquadraRicorrente';
 
-export const TabNuovaPrenotazioneSquadra: React.FC = () => {
+export interface TabNuovaPrenotazioneSquadraProps {
+    sport: string
+}
+
+export const TabNuovaPrenotazioneSquadra: React.FC<TabNuovaPrenotazioneSquadraProps> = ({sport}) => {
     const [activeTab, setActiveTab] = useState('1');
     const prenotazione = useSelector(prenotazioneSelector)
 
@@ -35,7 +39,7 @@ export const TabNuovaPrenotazioneSquadra: React.FC = () => {
             </Nav>
             <TabContent activeTab={activeTab}>
                 <TabPane tabId="1">
-                    <FormPrenotazioneImpiantoSquadraRicorrente/>
+                    <FormPrenotazioneImpiantoSquadraRicorrente sport={sport}/>
                 </TabPane>
                 <TabPane tabId="2">
                     <AppuntamentiSottoscrivibili appuntamenti={prenotazione.appuntamentiSottoscrivibili} />

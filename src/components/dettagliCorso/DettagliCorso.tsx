@@ -21,6 +21,8 @@ export const DettagliCorso: React.FC<DettagliCorsoProps> = ({ corso, giaPrenotat
     const onClick = () => {
         dispatch(partecipazioneCorso(corso.idPrenotazione,
             sportivoAutenticato.sportivo.email,
+            corso.appuntamenti[0].tipoPrenotazione,
+            corso.appuntamenti[0].modalitaPrenotazione,
             sportivoAutenticato.jwt));
         history.push("profiloSportivo")
     }

@@ -1,3 +1,5 @@
+import {Appuntamento} from "./Appuntamento";
+
 export type UtentePolisportiva = {
     nome: string
     cognome : string
@@ -8,5 +10,8 @@ export type UtentePolisportiva = {
 
 export type AttributiExtra = {
     moroso: boolean,
-    sportPraticati: string[]
+    sportPraticati: string[],
+    appuntamentiSportivo: Appuntamento[]
+    appuntamentiLezioni: Appuntamento[]
+    appuntamentiManutentore: Appuntamento[]
 }

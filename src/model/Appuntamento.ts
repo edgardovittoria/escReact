@@ -14,4 +14,5 @@ export type Appuntamento = {
     creatore: UtentePolisportiva
     manutentore: UtentePolisportiva
     modalitaPrenotazione: string
+    tipoPrenotazione: string
 }

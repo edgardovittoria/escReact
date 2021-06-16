@@ -193,6 +193,7 @@ export const avviaNuovaPrenotazioneEventoDirettore = (emailSportivo: string, tip
     } catch (error) {
         dispatch(setLoading(false))
         dispatch(setErrors(error))
+        console.log(error)
         alert("Non sei autorizzato!")
         window.location.href = "http://localhost:3000/profiloSportivo";
     }
@@ -298,18 +299,16 @@ export const aggiornaIstruttori = (object: any, id: number, jwt: string): AppThu
 
 }
 
-export const partecipazioneEventoEsistente = (idEvento: number | null, emailPartecipante: string, tipoPrenotazione: string, jwt: string): AppThunk => async dispatch => {
+export const partecipazioneEventoEsistente = (idEvento: number | null, identificativoPartecipante: string | number, tipoPrenotazione: string, modalitaPrenotazione: string, jwt: string): AppThunk => async dispatch => {
     try {
         dispatch(setLoading(true));
         let object = {
             idEvento: idEvento,
-            emailPartecipante: emailPartecipante,
-            tipoPrenotazione: tipoPrenotazione
+            identificativoPartecipante: identificativoPartecipante,
+            tipoPrenotazione: tipoPrenotazione,
+            modalitaPrenotazione: modalitaPrenotazione
         }
         const res = await axios.patch("http://localhost:8080/effettuaPrenotazione/partecipazioneEventoEsistente", object, { headers: { "Authorization": "Bearer " + jwt } })
-        let partecipazione: Appuntamento[] = [];
-        partecipazione.push(res.data)
-        dispatch(addListaPartecipazioni(partecipazione))
         alert("Partecipazione Effettuata!")
         if (res.status === 204) {
             alert("Partecipazione confermata")
@@ -320,12 +319,14 @@ export const partecipazioneEventoEsistente = (idEvento: number | null, emailPart
 
 }
 
-export const partecipazioneCorso = (idEvento: number | null, emailPartecipante: string, jwt: string): AppThunk => async dispatch => {
+export const partecipazioneCorso = (idEvento: number | null, emailPartecipante: string, tipoPrenotazione: string, modalitaPrenotazione: string, jwt: string): AppThunk => async dispatch => {
     try {
         dispatch(setLoading(true));
         let object = {
             idEvento: idEvento,
-            emailPartecipante: emailPartecipante
+            emailPartecipante: emailPartecipante,
+            tipoPrenotazione: tipoPrenotazione,
+            modalitaPrenotazione: modalitaPrenotazione
         }
         const res = await axios.patch("http://localhost:8080/effettuaPrenotazione/partecipazioneEventoEsistente", object, { headers: { "Authorization": "Bearer " + jwt } })
         let partecipazione: Prenotazione[] = [];
