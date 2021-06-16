@@ -4,6 +4,9 @@ import { UserDetails } from '../model/UserDetails';
 
 import axios from 'axios';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {Appuntamento} from "../model/Appuntamento";
+import {AppThunk} from "./store";
+import {setErrors, setLoading} from "./prenotazioneSlice";
 
 export type SportivoAutenticatoState = {
     sportivo: UtentePolisportiva
@@ -54,8 +57,12 @@ export const SportivoAutenticatoSlice = createSlice({
                     appuntamentiManutentore: []
                 }
             }
-            
         },
+        aggiornaSportivo(state: SportivoAutenticatoState, action: PayloadAction<UtentePolisportiva>){
+            state.isLoading = false
+            state.errors = ""
+            state.sportivo = action.payload
+        }
     },
     extraReducers: {
         [loginSportivo.fulfilled.type]: (state: SportivoAutenticatoState, action: PayloadAction<AutenticazioneResponse>) =>  {
@@ -92,7 +99,20 @@ export const SportivoAutenticatoSlice = createSlice({
 
 export const {
     resetSportivoAutenticato,
+    aggiornaSportivo
 } = SportivoAutenticatoSlice.actions
+
+export const fetchSportivo = (emailSportivo: string, jwt: string): AppThunk => async dispatch => {
+    try {
+        dispatch(setLoading(true));
+        const res = await axios.get("http://localhost:8080/aggiornaOpzioni/sportivo/", { params: { email: emailSportivo }, headers: { "Authorization": "Bearer " + jwt } })
+        dispatch(aggiornaSportivo(res.data))
+    } catch (error) {
+        dispatch(setErrors(error))
+    }
+
+}
+
 
 export const sportivoAutenticatoSelector = (state: { sportivo: SportivoAutenticatoState }) => state.sportivo
 

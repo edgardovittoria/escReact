@@ -15,9 +15,9 @@ import { addListaSportPraticabili } from './SportSlice';
 import { addListaInvitabili } from './utentePolisportivaSlice';
 import { ArrayListeIstruttoreItem } from '../components/formComponents/DataOraImpiantoIstruttoreSelezione';
 import { addListaIstruttori } from './IstruttoreSlice';
-import { addListaNotificheUtente } from './notificheSlice';
-import { addListaSquadre, addListaSquadreInvitabili } from './squadraSlice';
+import { addListaSquadreInvitabili } from './squadraSlice';
 import { FormPrenotaImpiantoSquadra } from '../pages/nuovaPrenotazioneSquadra/nuovaPrenotazioneImpiantoSquadra/components/FormPrenotazioneImpiantoSquadraRicorrente';
+import {addCalendarioSportivo} from "./sportivoAutenticatoSlice";
 
 export type PrenotazioneState = {
     prenotazioni: Prenotazione[]
@@ -228,8 +228,7 @@ export const riepilogoPrenotazione = (prenotazione: FormPrenotaImpianto | FormPr
 export const confermaPrenotazione = (jwt: string): AppThunk => async dispatch => {
     try {
         dispatch(setLoading(true));
-        const res = await axios.post("http://localhost:8080/effettuaPrenotazione/confermaPrenotazione", null, { headers: { "Authorization": "Bearer " + jwt } })
-        dispatch(addPrenotazione(res.data))
+        await axios.post("http://localhost:8080/effettuaPrenotazione/confermaPrenotazione", null, { headers: { "Authorization": "Bearer " + jwt } })
     } catch (error) {
         dispatch(setErrors(error))
     }
@@ -248,17 +247,11 @@ export const creaCorso = (jwt: string): AppThunk => async dispatch => {
 }
 
 
-export const fetchPrenotazioni = (emailSportivo: string, jwt: string): AppThunk => async dispatch => {
+export const fetchCalendarioSportivo = (emailSportivo: string, jwt: string): AppThunk => async dispatch => {
     try {
         dispatch(setLoading(true));
-        const res = await axios.get("http://localhost:8080/aggiornaOpzioni/prenotazioniEPartecipazioniSportivo/", { params: { email: emailSportivo }, headers: { "Authorization": "Bearer " + jwt } })
-        dispatch(addListaSquadre(res.data.squadre))
-        dispatch(addListaNotificheUtente(res.data.notificheUtente))
-        dispatch(addListaPrenotazioni(res.data.prenotazioniEffettuate))
-        dispatch(addListaPartecipazioni(res.data.partecipazioni))
-        dispatch(addListaPrenotazioniCorso(res.data.corsiACuiSiPartecipa))
-
-
+        const res = await axios.get("http://localhost:8080/aggiornaOpzioni/calendarioSportivo/", { params: { email: emailSportivo }, headers: { "Authorization": "Bearer " + jwt } })
+        dispatch(addCalendarioSportivo(res.data))
     } catch (error) {
         dispatch(setErrors(error))
     }
