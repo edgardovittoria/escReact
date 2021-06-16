@@ -48,7 +48,10 @@ export const SportivoAutenticatoSlice = createSlice({
                 ruoli: [],
                 attributiExtra: {
                     moroso: false,
-                    sportPraticati: []
+                    sportPraticati: [],
+                    appuntamentiSportivo: [],
+                    appuntamentiLezioni: [],
+                    appuntamentiManutentore: []
                 }
             }
             
@@ -73,7 +76,10 @@ export const SportivoAutenticatoSlice = createSlice({
                 ruoli: [],
                 attributiExtra: {
                     moroso: false,
-                    sportPraticati: []
+                    sportPraticati: [],
+                    appuntamentiSportivo: [],
+                    appuntamentiLezioni: [],
+                    appuntamentiManutentore: []
                 }
             }
             state.errors = action.payload

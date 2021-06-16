@@ -47,7 +47,10 @@ export const PrenotazioneSlice = createSlice({
                 ruoli: [],
                 attributiExtra: {
                     moroso: false,
-                    sportPraticati: []
+                    sportPraticati: [],
+                    appuntamentiSportivo: [],
+                    appuntamentiLezioni: [],
+                    appuntamentiManutentore: []
                 }
             },
             appuntamenti: [],
@@ -77,7 +80,10 @@ export const PrenotazioneSlice = createSlice({
                     ruoli: [],
                     attributiExtra: {
                         moroso: false,
-                        sportPraticati: []
+                        sportPraticati: [],
+                        appuntamentiSportivo: [],
+                        appuntamentiLezioni: [],
+                        appuntamentiManutentore: []
                     }
                 },
                 appuntamenti: [],
