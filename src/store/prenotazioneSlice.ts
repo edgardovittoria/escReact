@@ -17,7 +17,6 @@ import { ArrayListeIstruttoreItem } from '../components/formComponents/DataOraIm
 import { addListaIstruttori } from './IstruttoreSlice';
 import { addListaSquadreInvitabili } from './squadraSlice';
 import { FormPrenotaImpiantoSquadra } from '../pages/nuovaPrenotazioneSquadra/nuovaPrenotazioneImpiantoSquadra/components/FormPrenotazioneImpiantoSquadraRicorrente';
-import {addCalendarioSportivo} from "./sportivoAutenticatoSlice";
 
 export type PrenotazioneState = {
     prenotazioni: Prenotazione[]
@@ -246,17 +245,6 @@ export const creaCorso = (jwt: string): AppThunk => async dispatch => {
 
 }
 
-
-export const fetchCalendarioSportivo = (emailSportivo: string, jwt: string): AppThunk => async dispatch => {
-    try {
-        dispatch(setLoading(true));
-        const res = await axios.get("http://localhost:8080/aggiornaOpzioni/calendarioSportivo/", { params: { email: emailSportivo }, headers: { "Authorization": "Bearer " + jwt } })
-        dispatch(addCalendarioSportivo(res.data))
-    } catch (error) {
-        dispatch(setErrors(error))
-    }
-
-}
 
 export const aggiornaImpianti = (object: any): AppThunk => async dispatch => {
     try {
