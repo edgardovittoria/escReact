@@ -8,10 +8,12 @@ import { faTableTennis } from '@fortawesome/free-solid-svg-icons/faTableTennis';
 import { faFutbol, faVolleyballBall } from '@fortawesome/free-solid-svg-icons';
 import { useHistory } from 'react-router';
 import './css/profiloSportivo.css';
-import { corsiPrenotatiSelector, fetchPrenotazioni, partecipazioniSelector, prenotazioniSelector, resetPrenotazioneDaConfermare } from '../../store/prenotazioneSlice';
+import { corsiPrenotatiSelector, partecipazioniSelector, prenotazioniSelector, resetPrenotazioneDaConfermare } from '../../store/prenotazioneSlice';
 import { TabRiepilogoPrenotazioni } from './components/TabRiepilogoPrenotazioniProfilo';
 import { RiepilogoUtente } from '../../components/riepilogoProfilo/RiepilogoUtente';
 import {CalendarioSportivo} from "./components/CalendarioSportivo";
+import {fetchNotifiche} from "../../store/notificheSlice";
+import {fetchSquadre} from "../../store/squadraSlice";
 
 
 export const ProfiloSportivo: React.FC = () => {
@@ -20,7 +22,8 @@ export const ProfiloSportivo: React.FC = () => {
 
 
     useEffect(() => {
-        dispatch(fetchPrenotazioni(sportivoAutenticato.sportivo.email, sportivoAutenticato.jwt))
+        dispatch(fetchNotifiche(sportivoAutenticato.sportivo.email, sportivoAutenticato.jwt))
+        dispatch(fetchSquadre(sportivoAutenticato.sportivo.email, sportivoAutenticato.jwt))
     }, [sportivoAutenticato])
 
 

@@ -1,6 +1,9 @@
 /* eslint-disable array-callback-return */
 import { Squadra } from '../model/Squadra';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {AppThunk} from "./store";
+import axios from "axios";
+import {addListaNotificheUtente, setErrors, setLoading} from "./notificheSlice";
 
 export type SquadraState = {
     squadre: Squadra[]
@@ -55,6 +58,17 @@ export const {
    addSquadraSelezionata,
    addListaSquadreInvitabili
 } = SquadraSlice.actions
+
+export const fetchSquadre = (emailSportivo: string, jwt: string): AppThunk => async dispatch => {
+    try {
+        dispatch(setLoading(true));
+        const res = await axios.get("http://localhost:8080/aggiornaOpzioni/squadreSportivo", { params: { email: emailSportivo }, headers: { "Authorization": "Bearer " + jwt } })
+        dispatch(addListaSquadre(res.data));
+    } catch (error) {
+        dispatch(setErrors(error))
+    }
+
+}
 
 export const squadraSelector = (state: { squadre: SquadraState }) => state.squadre
 
