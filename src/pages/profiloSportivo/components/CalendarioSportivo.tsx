@@ -10,8 +10,14 @@ interface CalendarioSportivoProps {
 
 export const CalendarioSportivo: React.FC<CalendarioSportivoProps> = ({sportivo}) => {
     let appuntamenti: Appuntamento[] = sportivo.attributiExtra.appuntamentiSportivo
-    appuntamenti.push(...sportivo.attributiExtra.appuntamentiLezioni)
-    appuntamenti.push(...sportivo.attributiExtra.appuntamentiManutentore)
+    if(sportivo.attributiExtra.appuntamentiLezioni !== undefined){
+        appuntamenti.push(...sportivo.attributiExtra.appuntamentiLezioni)
+    }
+    if(sportivo.attributiExtra.appuntamentiManutentore !== undefined){
+        appuntamenti.push(...sportivo.attributiExtra.appuntamentiManutentore)
+    }
+
+
     if(appuntamenti.length !== 0){
         return (
             <ul style={{ textAlign: "left", marginTop: "20px" }}>
