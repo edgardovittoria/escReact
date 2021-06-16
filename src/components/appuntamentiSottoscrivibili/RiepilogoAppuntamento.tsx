@@ -42,7 +42,7 @@ export const RiepilogoAppuntamento: React.FC<RiepilogoAppuntamentoProps> = ({ ap
 
     useEffect(() => {
         appuntamento.partecipanti.map(utente => {
-            if (utente.email === sportivoAutenticato.sportivo.email) {
+            if (utente === sportivoAutenticato.sportivo.email) {
                 setDisplayPartecipa("none")
             }
         })
@@ -61,7 +61,7 @@ export const RiepilogoAppuntamento: React.FC<RiepilogoAppuntamentoProps> = ({ ap
                         <Card className="col-6">
                             <ListGroup style={{ marginTop: "3%" }}>
                                 <ListGroupItem>
-                                    Creato da : {appuntamento.creatore.nome} {appuntamento.creatore.cognome}
+                                    Creato da : {appuntamento.creatore}
                                 </ListGroupItem>
                                 <ListGroupItem key="sportPrenotato">
                                     Sport Prenotato : {appuntamento.specificaPrenotazione.sportAssociato.nome}
@@ -86,7 +86,7 @@ export const RiepilogoAppuntamento: React.FC<RiepilogoAppuntamentoProps> = ({ ap
                                 <ListGroupItem>
                                     Sportivi Partecipanti : <ul>{appuntamento.partecipanti.map((partecipante) => {
                                     return (
-                                        <li key={partecipante.email}>{partecipante.nome} {partecipante.cognome}</li>
+                                        <li key={partecipante}>{partecipante}</li>
                                     )
                                 })}
                                     </ul>

@@ -50,7 +50,7 @@ const TableRows: React.FC<TablePartecipazioniProsp> = ({ partecipazioni, sportiv
                 <th>{partecipazione.partecipanti.length}</th>
                 <th>{partecipazione.specificaPrenotazione.costo} €</th>
                 <th>{(partecipazione.quotePartecipazione.length !== 0) ? partecipazione.quotePartecipazione.filter(quota =>
-                    quota.sportivo.email === sportivoAutenticato.email)[0].costo : "in attesa di conferma"}</th>
+                    quota.sportivo === sportivoAutenticato.email)[0].costo : "in attesa di conferma"}</th>
             </tr>
         )
     })
