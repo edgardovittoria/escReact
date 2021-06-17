@@ -30,7 +30,7 @@ export const ProfiloSportivo: React.FC = () => {
         dispatch(fetchNotifiche(sportivoAutenticato.sportivo.email, sportivoAutenticato.jwt))
         dispatch(fetchSquadre(sportivoAutenticato.sportivo.email, sportivoAutenticato.jwt))
         dispatch(fetchSportivo(sportivoAutenticato.sportivo.email, sportivoAutenticato.jwt))
-    }, [sportivoAutenticato])
+    }, [])
 
 
 
