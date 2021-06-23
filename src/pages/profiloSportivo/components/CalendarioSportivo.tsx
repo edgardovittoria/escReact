@@ -25,7 +25,7 @@ export const CalendarioSportivo: React.FC<CalendarioSportivoProps> = ({sportivo}
                     return (
                         <>
                             <li key={appuntamento.idAppuntamento} style={{ marginTop: "20px", marginLeft: "20px" }}>
-                                <b>{appuntamento.specificaPrenotazione.tipoSpecifica} </b><b>{appuntamento.specificaPrenotazione.sportAssociato.nome.toUpperCase()}</b> {appuntamento.dataAppuntamento} {appuntamento.oraInizioAppuntamento} {appuntamento.oraFineAppuntamento}
+                                <b>{appuntamento.tipoPrenotazione} </b><b>{appuntamento.sportAssociato.nome.toUpperCase()}</b> {appuntamento.dataAppuntamento} {appuntamento.oraInizioAppuntamento} {appuntamento.oraFineAppuntamento}
                                 <Button outline color="success"
                                         style={{ marginLeft: "20%", width: "20%" }}
                                         onClick={() => {

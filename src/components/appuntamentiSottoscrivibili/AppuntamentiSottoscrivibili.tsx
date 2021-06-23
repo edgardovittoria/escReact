@@ -22,7 +22,7 @@ export const AppuntamentiSottoscrivibili: React.FC<AppuntamentiSottoscrivibiliPr
                     return (
                         <>
                             <li key={index} style={{ marginTop: "20px" }}>
-                                {appuntamento.specificaPrenotazione.sportAssociato.nome.toUpperCase()} {appuntamento.dataAppuntamento} {appuntamento.oraInizioAppuntamento} {appuntamento.oraFineAppuntamento}
+                                {appuntamento.sportAssociato.nome.toUpperCase()} {appuntamento.dataAppuntamento} {appuntamento.oraInizioAppuntamento} {appuntamento.oraFineAppuntamento}
                                 <Button outline color="success"
                                     style={{ marginLeft: "20%", width: "20%" }}
                                     onClick={() => {

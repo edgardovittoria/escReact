@@ -15,7 +15,7 @@ export const DettagliNotifica: React.FC = () => {
 
     if(dettagliNotifica.idPrenotazione !== null){
         if(dettagliNotifica.appuntamenti[0].tipoPrenotazione === "CORSO"){
-            return <DettagliCorso corso={dettagliNotifica} giaPrenotato={"block"}/>
+            return <DettagliCorso corso={dettagliNotifica} />
         }else{
             return <AppuntamentiSottoscrivibili appuntamenti={dettagliNotifica.appuntamenti} />
         }

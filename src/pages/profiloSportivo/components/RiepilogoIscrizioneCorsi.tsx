@@ -17,7 +17,7 @@ export const RiepilogoIscrizioneCorsi: React.FC<RiepilogoIscrizioneCorsiProsp> =
                         <>
                             <ListItemCorso index={index} corso={corso} />
                             <div id={"dettagliCorso"+index} style={{display: "none"}}>
-                                <DettagliCorso corso={corso} giaPrenotato="none"/>
+                                <DettagliCorso corso={corso} />
                             </div>
 
                         </>

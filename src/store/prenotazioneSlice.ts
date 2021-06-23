@@ -238,7 +238,6 @@ export const creaCorso = (jwt: string): AppThunk => async dispatch => {
     try {
         dispatch(setLoading(true));
         await axios.post("http://localhost:8080/effettuaPrenotazione/confermaPrenotazione", null, { headers: { "Authorization": "Bearer " + jwt } })
-        //dispatch(addPrenotazione(res.data))
     } catch (error) {
         dispatch(setErrors(error))
     }
@@ -312,7 +311,7 @@ export const partecipazioneCorso = (idEvento: number | null, emailPartecipante: 
         dispatch(setLoading(true));
         let object = {
             idEvento: idEvento,
-            emailPartecipante: emailPartecipante,
+            identificativoPartecipante: emailPartecipante,
             tipoPrenotazione: tipoPrenotazione,
             modalitaPrenotazione: modalitaPrenotazione
         }

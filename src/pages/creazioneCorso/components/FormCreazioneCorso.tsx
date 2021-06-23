@@ -17,6 +17,7 @@ import { SportiviInvitabiliSelezione } from "../../../components/formComponents/
 import { FormPrenotaLezione } from "../../nuovaPrenotazioneUtenteSingolo/prenotazioneLezione/components/FormPrenotazioneLezione";
 
 export type FormCorso = {
+    sportSelezionato: string,
     numeroMinimoPartecipanti: number
     numeroMassimoPartecipanti: number
     costoPerPartecipante: number
@@ -51,6 +52,7 @@ export const FormCreazioneCorso: React.FC = () => {
     const istruttoriDisponibili = useSelector(istruttoreSelector);
 
     function onSportSelezionato(sportSelezionato: string) {
+        setValue("sportSelezionato", sportSelezionato)
         setValue("formLezione.sportSelezionato", sportSelezionato)
         setValue("formLezione.tipoPrenotazione", "LEZIONE");
         setValue("formLezione.modalitaPrenotazione", "SINGOLO_UTENTE")

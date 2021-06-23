@@ -21,7 +21,7 @@ export const RiepilogoUtente: React.FC<UtentePolisportiva> = ({ nome, cognome, e
                     <ListGroup>
                         {(attributiExtra.sportPraticati).map(sport => {
                             return(
-                                <ListGroupItem>{sport}</ListGroupItem>
+                                <ListGroupItem key={sport}>{sport}</ListGroupItem>
                             )
                         })}
                     </ListGroup>

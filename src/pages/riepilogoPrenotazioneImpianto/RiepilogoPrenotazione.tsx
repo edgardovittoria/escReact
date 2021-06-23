@@ -17,7 +17,7 @@ export const RiepilogoPrenotazione: React.FC = () => {
 
     const onClick = () => {
         dispatch(confermaPrenotazione(sportivoAutenticato.jwt));
-        window.location.href = "http://localhost:3000/profiloSportivo"
+        history.push("/profiloSportivo")
     }
 
     if (prenotazioneDaConfermare.appuntamenti[0] !== undefined) {

@@ -1,6 +1,5 @@
-import { UtentePolisportiva } from './UtentePolisportiva';
-import { PrenotazioneSpecs } from './PrenotazioneSpecs';
 import { QuotaPartecipazione } from './QuotaPartecipazione';
+import {Sport} from "./Sport";
 
 export type Appuntamento = {
     idAppuntamento: number
@@ -9,10 +8,17 @@ export type Appuntamento = {
     oraFineAppuntamento: Date
     partecipanti: string[]
     squadrePartecipanti: number[]
-    specificaPrenotazione: PrenotazioneSpecs
     quotePartecipazione: QuotaPartecipazione[]
     creatore: string
-    manutentore: UtentePolisportiva
+    manutentore: string
     modalitaPrenotazione: string
     tipoPrenotazione: string
+    confermata: boolean
+    pending: boolean
+    costo: Number
+    sportAssociato: Sport
+    invitati: string[]
+    idImpiantoPrenotato: number
+    pavimentazioneImpianto: string
+    istruttore: string
 }

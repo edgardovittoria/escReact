@@ -45,7 +45,9 @@ export const Notifiche: React.FC<NotificheProps> = ({ utenteAutenticato }) => {
                     <div className="notifications-wrapper">
                         {notifiche.notifiche.map(notifica => {
                             return (
-                                <a className="content" onClick={() => onLinkClick(notifica.idEvento, notifica.tipoEventoNotificabile, notifica.idNotifica)}>
+                                <a className="content"
+                                   key={notifica.idNotifica}
+                                   onClick={() => onLinkClick(notifica.idEvento, notifica.tipoEventoNotificabile, notifica.idNotifica)}>
 
                                     <div className="notification-item">
                                         <h4 className="item-title" style={{color: "black"}}>{notifica.mittente}</h4>

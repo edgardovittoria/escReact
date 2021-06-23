@@ -24,14 +24,14 @@ export const CardRiepilogoPrenotazioneImpianto: React.FC<CardRiepilogoPrenotazio
         </CardTitle>
         <ListGroup>
             <ListGroupItem key="sportPrenotato">
-                Sport Prenotato : {appuntamenti[0].specificaPrenotazione.sportAssociato.nome}
+                Sport Prenotato : {appuntamenti[0].sportAssociato.nome}
             </ListGroupItem>
         </ListGroup>
         {appuntamenti.map((appuntamento, index) => {
             return (
                 <div key={index}>
                     <ListGroupItem>
-                        Impianto Prenotato : {appuntamento.specificaPrenotazione.pavimentazioneImpianto}
+                        Impianto Prenotato : {appuntamento.pavimentazioneImpianto}
                     </ListGroupItem>
                     <ListGroupItem>
                         Modalità prenotazione : {appuntamento.modalitaPrenotazione}
@@ -46,14 +46,14 @@ export const CardRiepilogoPrenotazioneImpianto: React.FC<CardRiepilogoPrenotazio
                         Ora Fine : {appuntamento.oraFineAppuntamento}
                     </ListGroupItem>
                     <ListGroupItem>
-                        Costo Totale : {appuntamento.specificaPrenotazione.costo}€
+                        Costo Totale : {appuntamento.costo}€
                     </ListGroupItem>
                 </div>
             )
         })}
         <ListGroup>
             <ListGroupItem>
-                Invitati : <ul>{appuntamenti[0].specificaPrenotazione.invitati.map((invitato) => {
+                Invitati : <ul>{appuntamenti[0].invitati.map((invitato) => {
                 return (
                     <li key={invitato}>{invitato}</li>
                 )

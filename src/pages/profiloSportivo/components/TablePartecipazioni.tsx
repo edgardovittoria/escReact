@@ -42,13 +42,13 @@ const TableRows: React.FC<TablePartecipazioniProsp> = ({ partecipazioni, sportiv
     partecipazioni.map((partecipazione, index) => {
         tableRow.push(
             <tr key={index}>
-                <th>{partecipazione.specificaPrenotazione.sportAssociato.nome}</th>
-                <th>{partecipazione.specificaPrenotazione.pavimentazioneImpianto}</th>
+                <th>{partecipazione.sportAssociato.nome}</th>
+                <th>{partecipazione.pavimentazioneImpianto}</th>
                 <th>{partecipazione.dataAppuntamento}</th>
                 <th>{partecipazione.oraInizioAppuntamento}</th>
                 <th>{partecipazione.oraFineAppuntamento}</th>
                 <th>{partecipazione.partecipanti.length}</th>
-                <th>{partecipazione.specificaPrenotazione.costo} €</th>
+                <th>{partecipazione.costo} €</th>
                 <th>{(partecipazione.quotePartecipazione.length !== 0) ? partecipazione.quotePartecipazione.filter(quota =>
                     quota.sportivo === sportivoAutenticato.email)[0].costo : "in attesa di conferma"}</th>
             </tr>

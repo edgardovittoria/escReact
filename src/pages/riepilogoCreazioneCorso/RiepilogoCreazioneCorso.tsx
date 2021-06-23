@@ -56,7 +56,7 @@ export const RiepilogoCreazioneCorso: React.FC = () => {
                                 </CardTitle>
                                 <ListGroup>
                                     <ListGroupItem key="sportPrenotato">
-                                        Sport Prenotato : {appuntamenti[0].specificaPrenotazione.sportAssociato.nome}
+                                        Sport Prenotato : {appuntamenti[0].sportAssociato.nome}
                                     </ListGroupItem>
                                 </ListGroup>
                                 <ListGroup>
@@ -89,10 +89,10 @@ export const RiepilogoCreazioneCorso: React.FC = () => {
                                     return (
                                         <>
                                             <ListGroupItem>
-                                                Impianto Prenotato : {appuntamento.specificaPrenotazione.pavimentazioneImpianto}
+                                                Impianto Prenotato : {appuntamento.pavimentazioneImpianto}
                                             </ListGroupItem>
                                             <ListGroupItem>
-                                                Istruttore Scelto : {appuntamento.specificaPrenotazione.istruttore} {appuntamento.specificaPrenotazione.istruttore.cognome}
+                                                Istruttore Scelto : {appuntamento.istruttore}
                                             </ListGroupItem>
                                             <ListGroupItem>
                                                 Data Prenotata : {appuntamento.dataAppuntamento}
@@ -104,7 +104,7 @@ export const RiepilogoCreazioneCorso: React.FC = () => {
                                                 Ora Fine : {appuntamento.oraFineAppuntamento}
                                             </ListGroupItem>
                                             <ListGroupItem>
-                                                Costo Totale : {appuntamento.specificaPrenotazione.costo}€
+                                                Costo Totale : {appuntamento.costo}€
                                             </ListGroupItem>
                                         </>
                                     )

@@ -4,7 +4,6 @@ import { UserDetails } from '../model/UserDetails';
 
 import axios from 'axios';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import {Appuntamento} from "../model/Appuntamento";
 import {AppThunk} from "./store";
 import {setErrors, setLoading} from "./prenotazioneSlice";
 

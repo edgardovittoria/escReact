@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from 'reactstrap';
+import {Button, ListGroupItem} from 'reactstrap';
 import {Prenotazione} from "../../model/Prenotazone";
 
 export interface ListItemCorsoProps {
@@ -9,10 +9,10 @@ export interface ListItemCorsoProps {
 
 export const ListItemCorso: React.FC<ListItemCorsoProps> = ({corso, index}) => {
     return(
-        <li key={index} style={{ marginTop: "20px" }}>
-            {corso.appuntamenti[0].specificaPrenotazione.sportAssociato.nome.toUpperCase()} {corso.infoGeneraliEvento.costoPerPartecipante} €
+        <ListGroupItem key={index} style={{ marginTop: "20px" }}>
+            {corso.appuntamenti[0].sportAssociato.nome.toUpperCase()} {corso.infoGeneraliEvento.costoPerPartecipante} €
             <Button outline color="success"
-                    style={{ marginLeft: "20%", width: "20%" }}
+                    style={{ marginLeft: "66%", width: "20%" }}
                     onClick={() => {
                         let element = document.getElementById("dettagliCorso"+index);
                         if(element?.style.display === "none"){
@@ -25,7 +25,7 @@ export const ListItemCorso: React.FC<ListItemCorsoProps> = ({corso, index}) => {
                 Dettagli
             </Button>
             <hr />
-        </li>
+        </ListGroupItem>
     )
 }
 

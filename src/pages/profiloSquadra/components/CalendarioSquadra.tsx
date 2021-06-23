@@ -42,12 +42,12 @@ const TableRows: React.FC<CalendarioSquadraProps> = ({ appuntamenti, squadraSele
     appuntamenti.map((appuntamento) => {
         tableRow.push(
             <tr key={index}>
-                <th>{appuntamento.specificaPrenotazione.sportAssociato.nome}</th>
-                <th>{appuntamento.specificaPrenotazione.pavimentazioneImpianto}</th>
+                <th>{appuntamento.sportAssociato.nome}</th>
+                <th>{appuntamento.pavimentazioneImpianto}</th>
                 <th>{appuntamento.dataAppuntamento}</th>
                 <th>{appuntamento.oraInizioAppuntamento}</th>
                 <th>{appuntamento.oraFineAppuntamento}</th>
-                <th>{appuntamento.specificaPrenotazione.costo} €</th>
+                <th>{appuntamento.costo} €</th>
                 <th>{appuntamento.squadrePartecipanti.filter((idSquadra) =>
                     squadraSelezionata.idSquadra !== idSquadra)}
                 </th>

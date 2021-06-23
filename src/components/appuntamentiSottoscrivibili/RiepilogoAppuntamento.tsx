@@ -26,16 +26,16 @@ export const RiepilogoAppuntamento: React.FC<RiepilogoAppuntamentoProps> = ({ ap
             dispatch(partecipazioneEventoEsistente(
                 appuntamento.idAppuntamento,
                 notificaSelezionata.squadraDelDestinatario?.idSquadra,
-                appuntamento.specificaPrenotazione.tipoSpecifica,
+                appuntamento.tipoPrenotazione,
                 appuntamento.modalitaPrenotazione, sportivoAutenticato.jwt))
         }else if(appuntamento.modalitaPrenotazione === "SINGOLO_UTENTE"){
             dispatch(partecipazioneEventoEsistente(
                 appuntamento.idAppuntamento,
                 sportivoAutenticato.sportivo.email,
-                appuntamento.specificaPrenotazione.tipoSpecifica,
+                appuntamento.tipoPrenotazione,
                 appuntamento.modalitaPrenotazione, sportivoAutenticato.jwt))
         }
-        window.location.href = "http://localhost:3000/profiloSportivo"
+        history.push("/profiloSportivo")
     }
 
     const [displayPartecipa, setDisplayPartecipa] = useState("block");
@@ -43,13 +43,11 @@ export const RiepilogoAppuntamento: React.FC<RiepilogoAppuntamentoProps> = ({ ap
     useEffect(() => {
         appuntamento.partecipanti.map(utente => {
             if (utente === sportivoAutenticato.sportivo.email) {
-                console.log("check partecipante")
                 setDisplayPartecipa("none")
             }
         })
         appuntamento.squadrePartecipanti.map(squadra => {
             if(squadra === notificaSelezionata.squadraDelDestinatario?.idSquadra){
-                console.log("check squadra")
                 setDisplayPartecipa("none")
             }
         })
@@ -66,10 +64,10 @@ export const RiepilogoAppuntamento: React.FC<RiepilogoAppuntamentoProps> = ({ ap
                                     Creato da : {appuntamento.creatore}
                                 </ListGroupItem>
                                 <ListGroupItem key="sportPrenotato">
-                                    Sport Prenotato : {appuntamento.specificaPrenotazione.sportAssociato.nome}
+                                    Sport Prenotato : {appuntamento.sportAssociato.nome}
                                 </ListGroupItem>
                                 <ListGroupItem>
-                                    Impianto Prenotato : {appuntamento.specificaPrenotazione.idImpiantoPrenotato} {appuntamento.specificaPrenotazione.pavimentazioneImpianto}
+                                    Impianto Prenotato : {appuntamento.idImpiantoPrenotato} {appuntamento.pavimentazioneImpianto}
                                 </ListGroupItem>
                                 <ListGroupItem>
                                     Data Prenotata : {appuntamento.dataAppuntamento}
@@ -81,27 +79,24 @@ export const RiepilogoAppuntamento: React.FC<RiepilogoAppuntamentoProps> = ({ ap
                                     Ora Fine : {appuntamento.oraFineAppuntamento}
                                 </ListGroupItem>
                                 <ListGroupItem>
-                                    Costo Totale : {appuntamento.specificaPrenotazione.costo}€
+                                    Costo Totale : {appuntamento.costo}€
                                 </ListGroupItem>
                             </ListGroup>
                             <ListGroup>
-                                <ListGroupItem>
-                                    Sportivi Partecipanti : <ul>{appuntamento.partecipanti.map((partecipante) => {
+                                    Sportivi Partecipanti : {appuntamento.partecipanti.map((partecipante) => {
                                     return (
-                                        <li key={partecipante}>{partecipante}</li>
+                                        <ListGroupItem key={partecipante}>{partecipante}</ListGroupItem>
                                     )
                                 })}
-                                    </ul>
-                                </ListGroupItem>
-
                             </ListGroup>
-                            {(appuntamento.modalitaPrenotazione === "SQUADRA") ? <ListGroup>
-                                <ListGroupItem>Squadre Partecipanti : <ul>{appuntamento.squadrePartecipanti.map((squadra) => {
+
+                            {(appuntamento.modalitaPrenotazione === "SQUADRA") ?
+                                <ListGroup>Squadre Partecipanti : {appuntamento.squadrePartecipanti.map((squadra) => {
                                     return(
-                                        <li key={squadra}>{squadra}</li>
+                                        <ListGroupItem key={squadra}>{squadra}</ListGroupItem>
                                     )
-                                })}</ul></ListGroupItem>
-                            </ListGroup> : null}
+                                })}</ListGroup> : null}
+
                             <Row>
                                 <Col>
                                     <Button

@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable array-callback-return,react-hooks/exhaustive-deps */
+import React, {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Card, Col, ListGroup, ListGroupItem, Row, Spinner } from 'reactstrap';
 import { useHistory } from 'react-router-dom';
@@ -7,16 +8,25 @@ import { sportivoAutenticatoSelector } from '../../store/sportivoAutenticatoSlic
 import { Prenotazione } from '../../model/Prenotazone';
 
 export type DettagliCorsoProps = {
-    corso: Prenotazione,
-    giaPrenotato: string
+    corso: Prenotazione
 }
 
 
-export const DettagliCorso: React.FC<DettagliCorsoProps> = ({ corso, giaPrenotato}) => {
+export const DettagliCorso: React.FC<DettagliCorsoProps> = ({ corso}) => {
 
     const sportivoAutenticato = useSelector(sportivoAutenticatoSelector)
     const history = useHistory();
     const dispatch = useDispatch();
+
+    const [displayIscriviti, setDisplayIscriviti] = useState<string>("block")
+
+    useEffect(() => {
+        corso.appuntamenti[0].partecipanti.map(utente => {
+            if (utente === sportivoAutenticato.sportivo.email) {
+               setDisplayIscriviti("none");
+            }
+        })
+    }, [])
 
     const onClick = () => {
         dispatch(partecipazioneCorso(corso.idPrenotazione,
@@ -45,10 +55,10 @@ export const DettagliCorso: React.FC<DettagliCorsoProps> = ({ corso, giaPrenotat
                                                     LEZIONE {index+1}
                                                 </ListGroupItem>
                                                 <ListGroupItem>
-                                                    Impianto Prenotato : {appuntamento.specificaPrenotazione.pavimentazioneImpianto}
+                                                    Impianto Prenotato : {appuntamento.pavimentazioneImpianto}
                                                 </ListGroupItem>
                                                 <ListGroupItem>
-                                                    Istruttore : {appuntamento.specificaPrenotazione.istruttore}
+                                                    Istruttore : {appuntamento.istruttore}
                                                 </ListGroupItem>
                                                 <ListGroupItem>
                                                     Data Prenotata : {appuntamento.dataAppuntamento}
@@ -63,11 +73,16 @@ export const DettagliCorso: React.FC<DettagliCorsoProps> = ({ corso, giaPrenotat
                                         )
                                     })}
                                 </ListGroup>
+                                <ListGroup>
+                                    Partecipanti : {appuntamenti[0].partecipanti.map(partecipante => {
+                                        return <ListGroupItem key={partecipante}>{partecipante}</ListGroupItem>
+                                })}
+                                </ListGroup>
                                 <Row>
                                     <Col>
                                         <Button
                                             outline color="success"
-                                            style={{ marginTop: "2%", marginBottom: "3%", width: "100%", display: giaPrenotato}}
+                                            style={{ marginTop: "2%", marginBottom: "3%", width: "100%", display: displayIscriviti}}
                                             onClick={onClick}>Iscriviti</Button>
                                     </Col>
                                 </Row>

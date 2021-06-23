@@ -17,7 +17,7 @@ export const RiepilogoPrenotazioniEffettuate: React.FC<RiepilogoPrenotazioniEffe
                     return (
                         <>
                             <li key={prenotazione.idPrenotazione} style={{ marginTop: "20px", marginLeft: "20px" }}>
-                                <b>{prenotazione.appuntamenti[0].specificaPrenotazione.tipoSpecifica} </b><b>{prenotazione.appuntamenti[0].specificaPrenotazione.sportAssociato.nome.toUpperCase()}</b> {prenotazione.appuntamenti[0].dataAppuntamento} {prenotazione.appuntamenti[0].oraInizioAppuntamento} {prenotazione.appuntamenti[0].oraFineAppuntamento}
+                                <b>{prenotazione.appuntamenti[0].tipoPrenotazione} </b><b>{prenotazione.appuntamenti[0].sportAssociato.nome.toUpperCase()}</b> {prenotazione.appuntamenti[0].dataAppuntamento} {prenotazione.appuntamenti[0].oraInizioAppuntamento} {prenotazione.appuntamenti[0].oraFineAppuntamento}
                                 <Button outline color="success"
                                     style={{ marginLeft: "20%", width: "20%" }}
                                     onClick={() => {
@@ -34,7 +34,7 @@ export const RiepilogoPrenotazioniEffettuate: React.FC<RiepilogoPrenotazioniEffe
                                 <hr />
                             </li>
                             <div id={"dettagliPrenotazione" + index} style={{ display: "none" }}>
-                                {(prenotazione.appuntamenti[0].specificaPrenotazione.tipoSpecifica === "IMPIANTO") ?
+                                {(prenotazione.appuntamenti[0].tipoPrenotazione === "IMPIANTO") ?
                                     <CardRiepilogoPrenotazioneImpianto prenotazione={prenotazione}
                                                                        history={null}
                                                                        onClick={() => { }}

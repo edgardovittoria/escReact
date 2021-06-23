@@ -2,6 +2,7 @@ import React from 'react';
 import { Prenotazione } from '../../../../model/Prenotazone';
 import { DettagliCorso } from '../../../../components/dettagliCorso/DettagliCorso';
 import {ListItemCorso} from "../../../../components/dettagliCorso/ListItemCorso";
+import {ListGroup} from "reactstrap";
 
 export type CorsiDisponibiliProps = {
     corsiDisponibili: Prenotazione[]
@@ -17,19 +18,18 @@ export const CorsiDisponibili: React.FC<CorsiDisponibiliProps> = ({ corsiDisponi
         )
     } else {
         return (
-            <ul style={{ textAlign: "left", marginTop: "20px" }}>
+            <ListGroup style={{ textAlign: "left", marginTop: "20px" }}>
                 {corsiDisponibili.map((corso, index) => {
                     return (
-                        <>
+                        <div key={corso.idPrenotazione}>
                             <ListItemCorso index={index} corso={corso}/>
                             <div id={"dettagliCorso"+index} style={{display: "none"}}>
-                                <DettagliCorso corso={corso} giaPrenotato="block" />
+                                <DettagliCorso corso={corso}  />
                             </div>
-
-                        </>
+                        </div>
                     )
                 })}
-            </ul>
+            </ListGroup>
 
         )
     }
