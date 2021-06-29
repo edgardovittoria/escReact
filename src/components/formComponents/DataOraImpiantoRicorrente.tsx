@@ -13,7 +13,7 @@ export type DataOraImpiantoRicorrenteProps = {
 }
 
 export type ArrayLisetImpiantoItem = {
-    id: number,
+    id: number | undefined,
     impiantiDisponibili: Impianto[]
 }
 
@@ -48,12 +48,7 @@ export const DataOraImpiantoRicorrente: React.FC<DataOraImpiantoRicorrenteProps>
     }
 
     const onCheckBoxPendingSelezioneRicorrente = (pending: boolean, chiave: number) => {
-        // let pendingBoolean: boolean = false;
-        // if(pending === "true"){
-        //     pendingBoolean = true
-        // }else{
-        //     pendingBoolean = false
-        // }
+
         let checkBoxPendingItem: CheckBoxPendingSelezionatoItem = {
             idSelezione: chiave,
             pending: pending

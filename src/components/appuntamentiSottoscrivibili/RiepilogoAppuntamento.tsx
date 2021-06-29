@@ -35,7 +35,10 @@ export const RiepilogoAppuntamento: React.FC<RiepilogoAppuntamentoProps> = ({ ap
                 appuntamento.tipoPrenotazione,
                 appuntamento.modalitaPrenotazione, sportivoAutenticato.jwt))
         }
-        history.push("/profiloSportivo")
+        setTimeout(() => {
+            history.push("/profiloSportivo")
+        },500);
+
     }
 
     const [displayPartecipa, setDisplayPartecipa] = useState("block");
@@ -46,12 +49,15 @@ export const RiepilogoAppuntamento: React.FC<RiepilogoAppuntamentoProps> = ({ ap
                 setDisplayPartecipa("none")
             }
         })
+    }, [appuntamento.partecipanti])
+
+    useEffect(() => {
         appuntamento.squadrePartecipanti.map(squadra => {
             if(squadra === notificaSelezionata.squadraDelDestinatario?.idSquadra){
                 setDisplayPartecipa("none")
             }
         })
-    }, [])
+    }, [appuntamento.squadrePartecipanti])
 
     return (
         <>

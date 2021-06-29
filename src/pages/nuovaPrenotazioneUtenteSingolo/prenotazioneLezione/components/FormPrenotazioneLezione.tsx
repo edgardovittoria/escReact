@@ -5,22 +5,17 @@ import { useHistory } from 'react-router';
 import { Button, Col, Form, FormGroup, Label, Row } from 'reactstrap';
 import { formPrenotaImpiantoSelector } from '../../../../store/formPrenotaImpiantoSlice';
 import { istruttoreSelector } from '../../../../store/IstruttoreSlice';
-import { aggiornaImpiantiEInvitabili, aggiornaIstruttori, riepilogoPrenotazione } from '../../../../store/prenotazioneSlice';
+import { riepilogoPrenotazione } from '../../../../store/prenotazioneSlice';
 import { sportivoAutenticatoSelector } from '../../../../store/sportivoAutenticatoSlice';
 import { sportSelector } from '../../../../store/SportSlice';
 import { DataOraImpiantoIstruttoreSelezione, IstruttoriSelezionatiItem } from '../../../../components/formComponents/DataOraImpiantoIstruttoreSelezione';
-import { ImpiantiSelezionatiItem } from '../../../../components/formComponents/DataOraImpiantoRicorrente';
 import { OrarioPrenotazione } from '../../../../components/formComponents/DataOraSelezione';
 import { SelezioneSport } from '../../../../components/formComponents/SelezioneSport';
-
-export type FormPrenotaLezione = {
-    sportSelezionato: string,
-    orariSelezionati: OrarioPrenotazione[],
-    impianti: ImpiantiSelezionatiItem[],
-    istruttori: IstruttoriSelezionatiItem[],
-    tipoPrenotazione: string
-    modalitaPrenotazione: string
-}
+import {FormPrenotazione} from "../../../../model/FormPrenotazione";
+import {DatiPerAggiornamentoOpzioni} from "../../prenotazioneImpianto/components/FormPrenotazioneImpiantoRicorrente";
+import {useAggiornaOpzioniSuSelezioneSport} from "../../prenotazioneImpianto/hooks/useAggiornaOpzioniSuSelezioneSport";
+import {useAggironaOpzioniSuSelezioneOrario} from "../../prenotazioneImpianto/hooks/useAggironaOpzioniSuSelezioneOrario";
+import { ImpiantiSelezionatiItem } from '../../../../components/formComponents/DataOraImpiantoRicorrente';
 
 let orari: OrarioPrenotazione[] = [];
 let impiantiSelezionati: ImpiantiSelezionatiItem[] = [];
@@ -28,7 +23,7 @@ let istruttoriSelezionati: IstruttoriSelezionatiItem[] = [];
 
 export const FormPrenotazioneLezione: React.FC = () => {
 
-    const { getValues, setValue, handleSubmit, /*formState: { errors }*/ } = useForm<FormPrenotaLezione>();
+    const { getValues, setValue, handleSubmit, /*formState: { errors }*/ } = useForm<FormPrenotazione>();
 
     const dispatch = useDispatch();
     const history = useHistory();
@@ -38,62 +33,28 @@ export const FormPrenotazioneLezione: React.FC = () => {
     const formPrenotaLezione = useSelector(formPrenotaImpiantoSelector);
     const istruttoriDisponibili = useSelector(istruttoreSelector);
     const sportivoAutenticato = useSelector(sportivoAutenticatoSelector);
-
-    function onSportSelezionato(sportSelezionato: string) {
-        setValue("sportSelezionato", sportSelezionato)
-        setValue("tipoPrenotazione", "LEZIONE");
-        setValue("modalitaPrenotazione", "SINGOLO_UTENTE")
-        for(let i=1; i<numeroDate+1; i++){
-            aggiornaListeImpianti(i, sportSelezionato, getValues("orariSelezionati")[i])
-            aggiornaListeIstruttori(i, sportSelezionato, getValues("orariSelezionati")[i])
-        }
+    const aggiornaOpzioniSuSelezioneSport = useAggiornaOpzioniSuSelezioneSport()
+    const aggiornaOpzioniSuSelezioneOrario = useAggironaOpzioniSuSelezioneOrario()
+    let datiPerAggiornamentoOpzioni: DatiPerAggiornamentoOpzioni = {
+        jwt: sportivoAutenticato.jwt
     }
 
-    const onSubmit = handleSubmit((form: FormPrenotaLezione) => {
+    function onSportSelezionato(sportSelezionato: string) {
+        datiPerAggiornamentoOpzioni.sport = sportSelezionato
+        setValue("sportSelezionato", sportSelezionato)
+        aggiornaOpzioniSuSelezioneSport(datiPerAggiornamentoOpzioni)
+        /*for(let i=1; i<numeroDate+1; i++){
+            aggiornaListeImpianti(i, sportSelezionato, getValues("orariSelezionati")[i])
+            aggiornaListeIstruttori(i, sportSelezionato, getValues("orariSelezionati")[i])
+        }*/
+    }
+
+    const onSubmit = handleSubmit((form: FormPrenotazione) => {
         dispatch(riepilogoPrenotazione(form, sportivoAutenticato.jwt))
         history.push("/riepilogoPrenotazioneLezione");
     })
 
-    const aggiornaListeImpianti = (id: number, sport: string, orarioSelezionato: OrarioPrenotazione) => {
-        if (sport !== undefined && orarioSelezionato !== undefined) {
-            let object = {
-                sport: sport,
-                orario: orarioSelezionato
-            }
-            dispatch(aggiornaImpiantiEInvitabili(object, id, sportivoAutenticato.jwt));
-        }else if (sport === undefined && orarioSelezionato !== undefined){
-            let object = {
-                orario : orarioSelezionato
-            }
-            dispatch(aggiornaImpiantiEInvitabili(object, id, sportivoAutenticato.jwt));
-        }else if(sport !== undefined && orarioSelezionato === undefined){
-            let object = {
-                sport: sport
-            }
-            dispatch(aggiornaImpiantiEInvitabili(object, id, sportivoAutenticato.jwt))
-        }
 
-    }
-
-    const aggiornaListeIstruttori = (id: number, sport: string, orarioSelezionato: OrarioPrenotazione) => {
-        if (sport !== undefined && orarioSelezionato !== undefined) {
-            let object = {
-                sport: sport,
-                orario: orarioSelezionato
-            }
-            dispatch(aggiornaIstruttori(object, id, sportivoAutenticato.jwt));
-        }else if (sport === undefined && orarioSelezionato !== undefined){
-            let object = {
-                orario : orarioSelezionato
-            }
-            dispatch(aggiornaIstruttori(object, id, sportivoAutenticato.jwt));
-        }else if(sport !== undefined && orarioSelezionato === undefined){
-            let object = {
-                sport: sport
-            }
-            dispatch(aggiornaIstruttori(object, id, sportivoAutenticato.jwt))
-        }
-    }
 
     const onOrarioSelezione = (orarioSelezionato: OrarioPrenotazione) => {
         if(orari.filter(orario => orario.id === orarioSelezionato.id).length === 0){
@@ -103,9 +64,10 @@ export const FormPrenotazioneLezione: React.FC = () => {
             orari.filter(orario => orario.id === orarioSelezionato.id)[0].oraInizio = orarioSelezionato.oraInizio
             orari.filter(orario => orario.id === orarioSelezionato.id)[0].oraFine = orarioSelezionato.oraFine
         }
+        datiPerAggiornamentoOpzioni.orario = orarioSelezionato
+        datiPerAggiornamentoOpzioni.orariSelezionati = orari
         setValue("orariSelezionati", orari);
-        aggiornaListeImpianti(orarioSelezionato.id, getValues("sportSelezionato"), orarioSelezionato)
-        aggiornaListeIstruttori(orarioSelezionato.id, getValues("sportSelezionato"), orarioSelezionato)
+        aggiornaOpzioniSuSelezioneOrario(datiPerAggiornamentoOpzioni)
     }
 
     const onImpiantoSelezioneRicorrente = (impiantoItem: ImpiantiSelezionatiItem) => {
@@ -137,6 +99,7 @@ export const FormPrenotazioneLezione: React.FC = () => {
                     name="numeroDate"
                     id="numeroDate"
                     onClick={(value) => {
+                        datiPerAggiornamentoOpzioni.numeroDate = Number.parseInt(value.currentTarget.value)
                         setNumeroDate(Number.parseInt(value.currentTarget.value))
                     }}
                 >

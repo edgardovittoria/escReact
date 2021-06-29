@@ -26,7 +26,7 @@ export const DettagliCorso: React.FC<DettagliCorsoProps> = ({ corso}) => {
                setDisplayIscriviti("none");
             }
         })
-    }, [])
+    }, [corso.appuntamenti[0].partecipanti])
 
     const onClick = () => {
         dispatch(partecipazioneCorso(corso.idPrenotazione,
@@ -34,7 +34,10 @@ export const DettagliCorso: React.FC<DettagliCorsoProps> = ({ corso}) => {
             corso.appuntamenti[0].tipoPrenotazione,
             corso.appuntamenti[0].modalitaPrenotazione,
             sportivoAutenticato.jwt));
-        history.push("profiloSportivo")
+        setTimeout(() => {
+            history.push("profiloSportivo")
+        },500);
+
     }
 
     if (corso.appuntamenti[0] !== undefined) {

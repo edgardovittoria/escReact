@@ -1,22 +1,19 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { FormCorso } from '../pages/creazioneCorso/components/FormCreazioneCorso';
 /* eslint-disable array-callback-return */
-import { FormPrenotaLezione } from '../pages/nuovaPrenotazioneUtenteSingolo/prenotazioneLezione/components/FormPrenotazioneLezione';
-import { FormPrenotaImpianto } from '../pages/nuovaPrenotazioneUtenteSingolo/prenotazioneImpianto/components/FormPrenotazioneImpiantoRicorrente';
 import { ArrayLisetImpiantoItem } from '../components/formComponents/DataOraImpiantoRicorrente';
 import axios from 'axios';
 import { AppThunk } from './store';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Appuntamento } from '../model/Appuntamento';
 import { Prenotazione } from '../model/Prenotazone';
-import { addListaImpiantiDisponibili, resetListaImpiantiDisponibili } from './impiantoSlice';
 import { addListaImpiantiDisponibiliAdArray } from './formPrenotaImpiantoSlice';
 import { addListaSportPraticabili } from './SportSlice';
 import { addListaInvitabili } from './utentePolisportivaSlice';
 import { ArrayListeIstruttoreItem } from '../components/formComponents/DataOraImpiantoIstruttoreSelezione';
 import { addListaIstruttori } from './IstruttoreSlice';
 import { addListaSquadreInvitabili } from './squadraSlice';
-import { FormPrenotaImpiantoSquadra } from '../pages/nuovaPrenotazioneSquadra/nuovaPrenotazioneImpiantoSquadra/components/FormPrenotazioneImpiantoSquadraRicorrente';
+import {FormPrenotazione} from "../model/FormPrenotazione";
+import {DatiPerAggiornamentoOpzioni} from "../pages/nuovaPrenotazioneUtenteSingolo/prenotazioneImpianto/components/FormPrenotazioneImpiantoRicorrente";
 
 export type PrenotazioneState = {
     prenotazioni: Prenotazione[]
@@ -55,7 +52,7 @@ export const PrenotazioneSlice = createSlice({
             appuntamenti: [],
             infoGeneraliEvento: {
                 numeroMassimoPartecipanti: -1,
-                numeroMinimoParteciapanti: -1,
+                numeroMinimoPartecipanti: -1,
                 costoPerPartecipante: -1,
                 invitatiCorso: []
             },
@@ -88,7 +85,7 @@ export const PrenotazioneSlice = createSlice({
                 appuntamenti: [],
                 infoGeneraliEvento: {
                     numeroMassimoPartecipanti: -1,
-                    numeroMinimoParteciapanti: -1,
+                    numeroMinimoPartecipanti: -1,
                     costoPerPartecipante: -1,
                     invitatiCorso: []
                 },
@@ -146,7 +143,6 @@ export const {
     addPrenotazioneDaConfermare,
     resetPrenotazioneDaConfermare,
     addPrenotazione,
-    addListaPrenotazioni,
     addListaPartecipazioni,
     addListaPrenotazioniCorso,
     addListaCorsiDiponibili,
@@ -206,7 +202,7 @@ export const avviaNuovaPrenotazioneEventoDirettore = (emailSportivo: string, tip
 }
 
 
-export const riepilogoPrenotazione = (prenotazione: FormPrenotaImpianto | FormPrenotaLezione | FormCorso | FormPrenotaImpiantoSquadra, jwt: string): AppThunk => async dispatch => {
+export const riepilogoPrenotazione = (prenotazione: FormPrenotazione, jwt: string): AppThunk => async dispatch => {
     try {
         dispatch(setLoading(true));
         const res = await axios.post("http://localhost:8080/effettuaPrenotazione/riepilogoPrenotazione", prenotazione, { headers: { "Authorization": "Bearer " + jwt } })
@@ -227,7 +223,13 @@ export const riepilogoPrenotazione = (prenotazione: FormPrenotaImpianto | FormPr
 export const confermaPrenotazione = (jwt: string): AppThunk => async dispatch => {
     try {
         dispatch(setLoading(true));
-        await axios.post("http://localhost:8080/effettuaPrenotazione/confermaPrenotazione", null, { headers: { "Authorization": "Bearer " + jwt } })
+        const res = await axios.post("http://localhost:8080/effettuaPrenotazione/confermaPrenotazione", null, { headers: { "Authorization": "Bearer " + jwt } })
+        if(res.status === 201){
+            alert("Prenotazione Confermata!!!")
+        }else {
+            alert("Prenotazione NON Riuscita!!!")
+        }
+
     } catch (error) {
         dispatch(setErrors(error))
     }
@@ -245,23 +247,19 @@ export const creaCorso = (jwt: string): AppThunk => async dispatch => {
 }
 
 
-export const aggiornaImpianti = (object: any): AppThunk => async dispatch => {
+export const aggiornaOpzioniPrenotazione = (object: DatiPerAggiornamentoOpzioni): AppThunk => async dispatch => {
     try {
-        const res = await axios.post("http://localhost:8080/effettuaPrenotazione/aggiornaImpianti", object)
-        dispatch(resetListaImpiantiDisponibili())
-        dispatch(addListaImpiantiDisponibili(res.data))
-    } catch (error) {
-        dispatch(setErrors(error))
-    }
-
-}
-
-export const aggiornaImpiantiEInvitabili = (object: any, id: number, jwt: string): AppThunk => async dispatch => {
-    try {
-        const res = await axios.post("http://localhost:8080/effettuaPrenotazione/aggiornaDatiOpzioni", object, { headers: { "Authorization": "Bearer " + jwt } })
+        const res = await axios.post("http://localhost:8080/effettuaPrenotazione/aggiornaDatiOpzioni", object, { headers: { "Authorization": "Bearer " + object.jwt } })
         let item: ArrayLisetImpiantoItem = {
-            id: id,
+            id: object.orario?.id,
             impiantiDisponibili: res.data.impiantiDisponibili
+        }
+        if(res.data.istruttoriDisponibili !== undefined){
+            let item: ArrayListeIstruttoreItem = {
+                id: object.orario?.id,
+                istruttoriDisponibili: res.data.istruttoriDisponibili
+            }
+            dispatch(addListaIstruttori(item.istruttoriDisponibili))
         }
         dispatch(addListaImpiantiDisponibiliAdArray(item))
         dispatch(addListaInvitabili(res.data.sportiviInvitabili))
@@ -272,19 +270,15 @@ export const aggiornaImpiantiEInvitabili = (object: any, id: number, jwt: string
 
 }
 
-export const aggiornaIstruttori = (object: any, id: number, jwt: string): AppThunk => async dispatch => {
+/*export const aggiornaIstruttori = (object: any, id: number, jwt: string): AppThunk => async dispatch => {
     try {
         const res = await axios.post("http://localhost:8080/effettuaPrenotazione/aggiornaDatiOpzioni", object, { headers: { "Authorization": "Bearer " + jwt } })
-        let item: ArrayListeIstruttoreItem = {
-            id: id,
-            istruttoriDisponibili: res.data.istruttoriDisponibili
-        }
-        dispatch(addListaIstruttori(item.istruttoriDisponibili))
+
     } catch (error) {
         dispatch(setErrors(error));
     }
 
-}
+}*/
 
 export const partecipazioneEventoEsistente = (idEvento: number | null, identificativoPartecipante: string | number, tipoPrenotazione: string, modalitaPrenotazione: string, jwt: string): AppThunk => async dispatch => {
     try {

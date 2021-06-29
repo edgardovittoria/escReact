@@ -4,22 +4,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { Button, Col, Form, FormGroup, Label, Row } from 'reactstrap';
 import { formPrenotaImpiantoSelector } from '../../../../store/formPrenotaImpiantoSlice';
-import { aggiornaImpiantiEInvitabili, riepilogoPrenotazione } from '../../../../store/prenotazioneSlice';
+import { riepilogoPrenotazione } from '../../../../store/prenotazioneSlice';
 import { sportivoAutenticatoSelector } from '../../../../store/sportivoAutenticatoSlice';
 import { squadraSelector } from '../../../../store/squadraSlice';
 import { CheckBoxPendingSelezionatoItem, DataOraImpiantoRicorrente, ImpiantiSelezionatiItem } from '../../../../components/formComponents/DataOraImpiantoRicorrente';
 import { OrarioPrenotazione } from '../../../../components/formComponents/DataOraSelezione';
 import { SquadreInvitabiliSelezione } from '../../../../components/formComponents/SquadreInvitabiliSelezione';
+import {FormPrenotazione} from "../../../../model/FormPrenotazione";
+import {useAggiornaOpzioniSuSelezioneSport} from "../../../nuovaPrenotazioneUtenteSingolo/prenotazioneImpianto/hooks/useAggiornaOpzioniSuSelezioneSport";
+import {useAggironaOpzioniSuSelezioneOrario} from "../../../nuovaPrenotazioneUtenteSingolo/prenotazioneImpianto/hooks/useAggironaOpzioniSuSelezioneOrario";
+import {DatiPerAggiornamentoOpzioni} from "../../../nuovaPrenotazioneUtenteSingolo/prenotazioneImpianto/components/FormPrenotazioneImpiantoRicorrente";
 
-export type FormPrenotaImpiantoSquadra = {
-    sportSelezionato: string,
-    orariSelezionati: OrarioPrenotazione[]
-    impianti: ImpiantiSelezionatiItem[],
-    squadreInvitate: number[],
-    tipoPrenotazione: string,
-    checkboxesPending: CheckBoxPendingSelezionatoItem[]
-    modalitaPrenotazione: string
-}
 
 let orari: OrarioPrenotazione[] = [];
 let impiantiSelezionati: ImpiantiSelezionatiItem[] = [];
@@ -31,7 +26,7 @@ export interface FormPrenotazioneImpiantoSquadraRicorrenteProps {
 
 export const FormPrenotazioneImpiantoSquadraRicorrente: React.FC<FormPrenotazioneImpiantoSquadraRicorrenteProps> = ({sport}) => {
 
-    const { register, getValues, setValue, handleSubmit, formState: { errors } } = useForm<FormPrenotaImpiantoSquadra>();
+    const { register, setValue, handleSubmit, formState: { errors } } = useForm<FormPrenotazione>();
 
     const dispatch = useDispatch();
     const [numeroDate, setNumeroDate] = useState(0);
@@ -39,44 +34,26 @@ export const FormPrenotazioneImpiantoSquadraRicorrente: React.FC<FormPrenotazion
     const squadreInvitabili = useSelector(squadraSelector).squadreInvitabili
     const opzioni = useSelector(formPrenotaImpiantoSelector);
     const history = useHistory()
+    const aggiornaOpzioniSuSelezioneSport = useAggiornaOpzioniSuSelezioneSport();
+    const aggiornaOpzioniSuSelezioneOrario = useAggironaOpzioniSuSelezioneOrario();
+    let datiPerAggiornamentoOpzioni: DatiPerAggiornamentoOpzioni = {
+        jwt: sportivoAutenticato.jwt
+    };
 
     useEffect(() => {
+        datiPerAggiornamentoOpzioni.sport = sport
         setValue("sportSelezionato", sport)
-        setValue("tipoPrenotazione", "IMPIANTO_SQUADRA")
-        setValue("modalitaPrenotazione", "SQUADRA")
+        aggiornaOpzioniSuSelezioneSport(datiPerAggiornamentoOpzioni)
     }, [setValue, sport]);
 
 
 
-    const onSubmit = handleSubmit((form: FormPrenotaImpiantoSquadra) => {
+    const onSubmit = handleSubmit((form: FormPrenotazione) => {
         dispatch(riepilogoPrenotazione(form, sportivoAutenticato.jwt))
         history.push("/riepilogoPrenotazione");
-        //  console.log(form)
     })
 
-    const aggiornaListeImpianti = (id: number, sport: string, orarioSelezionato: OrarioPrenotazione, modalitaPrenotazione: string) => {
-        if (sport !== undefined && orarioSelezionato !== undefined) {
-            let object = {
-                sport: sport,
-                orario: orarioSelezionato,
-                modalitaPrenotazione: modalitaPrenotazione
-            }
-            dispatch(aggiornaImpiantiEInvitabili(object, id, sportivoAutenticato.jwt));
-        }else if (sport === undefined && orarioSelezionato !== undefined){
-            let object = {
-                orario : orarioSelezionato,
-                modalitaPrenotazione: modalitaPrenotazione
-            }
-            dispatch(aggiornaImpiantiEInvitabili(object, id, sportivoAutenticato.jwt));
-        }else if(sport !== undefined && orarioSelezionato === undefined){
-            let object = {
-                sport: sport,
-                modalitaPrenotazione: modalitaPrenotazione
-            }
-            dispatch(aggiornaImpiantiEInvitabili(object, id, sportivoAutenticato.jwt))
-        }
 
-    }
     const onOrarioSelezione = (orarioSelezionato: OrarioPrenotazione) => {
         if(orari.filter(orario => orario.id === orarioSelezionato.id).length === 0){
             orari.push(orarioSelezionato)
@@ -85,9 +62,10 @@ export const FormPrenotazioneImpiantoSquadraRicorrente: React.FC<FormPrenotazion
             orari.filter(orario => orario.id === orarioSelezionato.id)[0].oraInizio = orarioSelezionato.oraInizio
             orari.filter(orario => orario.id === orarioSelezionato.id)[0].oraFine = orarioSelezionato.oraFine
         }
+        datiPerAggiornamentoOpzioni.orariSelezionati = orari
+        datiPerAggiornamentoOpzioni.orario = orarioSelezionato
         setValue("orariSelezionati", orari);
-        aggiornaListeImpianti(orarioSelezionato.id, getValues("sportSelezionato"), orarioSelezionato, getValues("modalitaPrenotazione"))
-    }
+        aggiornaOpzioniSuSelezioneOrario(datiPerAggiornamentoOpzioni)    }
 
     const onImpiantoSelezioneRicorrente = (impiantoItem: ImpiantiSelezionatiItem) => {
         if (impiantiSelezionati.filter(item => item.idSelezione === impiantoItem.idSelezione).length === 0) {
@@ -121,6 +99,7 @@ export const FormPrenotazioneImpiantoSquadraRicorrente: React.FC<FormPrenotazion
                     name="numeroDate"
                     id="numeroDate"
                     onClick={(value) => {
+                        datiPerAggiornamentoOpzioni.numeroDate = Number.parseInt(value.currentTarget.value)
                         setNumeroDate(Number.parseInt(value.currentTarget.value))
                     }}
                 >

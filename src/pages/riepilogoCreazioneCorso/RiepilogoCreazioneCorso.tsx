@@ -61,7 +61,7 @@ export const RiepilogoCreazioneCorso: React.FC = () => {
                                 </ListGroup>
                                 <ListGroup>
                                     <ListGroupItem key="numeroMinimoPartecipanti">
-                                        Numero Minimo Partecipanti : {prenotazioneDaConfermare.infoGeneraliEvento.numeroMinimoParteciapanti}
+                                        Numero Minimo Partecipanti : {prenotazioneDaConfermare.infoGeneraliEvento.numeroMinimoPartecipanti}
                                     </ListGroupItem>
                                 </ListGroup>
                                 <ListGroup>
@@ -76,9 +76,9 @@ export const RiepilogoCreazioneCorso: React.FC = () => {
                                 </ListGroup>
                                 <ListGroup>
                                     <ListGroupItem>
-                                        Sportivi Invitati : <ul>{(prenotazioneDaConfermare.infoGeneraliEvento.invitatiCorso).map((invitato) => {
+                                        Sportivi Invitati : <ul>{(prenotazioneDaConfermare.appuntamenti[0].invitati).map((invitato) => {
                                         return (
-                                            <li key={invitato.email}>{invitato.nome} {invitato.cognome}</li>
+                                            <li key={invitato}>{invitato}</li>
                                         )
                                     })}
                                         </ul>

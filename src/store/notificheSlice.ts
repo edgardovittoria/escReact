@@ -45,7 +45,7 @@ export const NotificheSlice = createSlice({
             appuntamenti: [],
             infoGeneraliEvento: {
                 numeroMassimoPartecipanti: -1,
-                numeroMinimoParteciapanti: -1,
+                numeroMinimoPartecipanti: -1,
                 costoPerPartecipante: -1,
                 invitatiCorso: []
             },

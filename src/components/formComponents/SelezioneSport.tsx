@@ -4,7 +4,7 @@ import { Sport } from '../../model/Sport';
 
 export type SelezioneSportProps = {
     sports: Sport[],
-    handleSelezioneSport: Function
+    handleSelezioneSport: Function,
 }
 
 export const SelezioneSport: React.FC<SelezioneSportProps> = ({ sports, handleSelezioneSport }) => {

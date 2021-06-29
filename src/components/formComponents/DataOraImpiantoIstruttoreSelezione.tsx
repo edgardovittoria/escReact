@@ -1,6 +1,7 @@
 import React from 'react';
 import { Impianto } from '../../model/Impianto';
 import { UtentePolisportiva } from '../../model/UtentePolisportiva';
+import { ArrayLisetImpiantoItem, ImpiantiSelezionatiItem } from './DataOraImpiantoRicorrente';
 import { DataOraSelezione, OrarioPrenotazione } from './DataOraSelezione';
 import { ImpiantoSelezione } from './ImpiantoSelezione';
 import { IstruttoreSelezione } from './IstruttoreSelezione';
@@ -14,21 +15,12 @@ export type DataOraImpiantoRicorrenteProps = {
     handleSelezioneIstruttore: Function
 }
 
-export type ArrayLisetImpiantoItem = {
-    id: number,
-    impiantiDisponibili: Impianto[]
-}
 
 export type ArrayListeIstruttoreItem = {
-    id: number,
+    id: number | undefined,
     istruttoriDisponibili: UtentePolisportiva[]
 }
 
-
-export type ImpiantiSelezionatiItem = {
-    idSelezione: number
-    idImpianto: string
-}
 
 export type IstruttoriSelezionatiItem = {
     idSelezione: number

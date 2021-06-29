@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { Button, Col, Form, FormGroup, Label, Row } from 'reactstrap';
 import { formPrenotaImpiantoSelector } from '../../../../store/formPrenotaImpiantoSlice';
-import { aggiornaImpiantiEInvitabili, riepilogoPrenotazione } from '../../../../store/prenotazioneSlice';
+import { aggiornaOpzioniPrenotazione, riepilogoPrenotazione } from '../../../../store/prenotazioneSlice';
 import { sportivoAutenticatoSelector } from '../../../../store/sportivoAutenticatoSlice';
 import { utentePolisportivaSelector } from '../../../../store/utentePolisportivaSlice';
 import { sportSelector } from '../../../../store/SportSlice';
@@ -14,26 +14,27 @@ import { GiocatoriNonIscritti } from '../../../../components/formComponents/Gioc
 import { PostiLiberi } from '../../../../components/formComponents/PostiLiberi';
 import { SelezioneSport } from '../../../../components/formComponents/SelezioneSport';
 import { SportiviInvitabiliSelezione } from '../../../../components/formComponents/SportiviInvitabiliSelezione';
-
-export type FormPrenotaImpianto = {
-    sportSelezionato: string,
-    orariSelezionati: OrarioPrenotazione[]
-    impianti: ImpiantiSelezionatiItem[],
-    sportiviInvitati: string[],
-    postiLiberi: number,
-    numeroGiocatoriNonIscritti: number,
-    tipoPrenotazione: string,
-    checkboxesPending: CheckBoxPendingSelezionatoItem[]
-    modalitaPrenotazione: string
-}
+import {FormPrenotazione} from "../../../../model/FormPrenotazione";
+import {useAggiornaOpzioniSuSelezioneSport} from "../hooks/useAggiornaOpzioniSuSelezioneSport";
+import {useAggironaOpzioniSuSelezioneOrario} from "../hooks/useAggironaOpzioniSuSelezioneOrario";
 
 let orari: OrarioPrenotazione[] = [];
 let impiantiSelezionati: ImpiantiSelezionatiItem[] = [];
 let checkboxes: CheckBoxPendingSelezionatoItem[] = [];
+let datiPerAggiornamentoOpzioni: DatiPerAggiornamentoOpzioni = {};
+
+export interface DatiPerAggiornamentoOpzioni {
+    sport?: string,
+    orario?: OrarioPrenotazione,
+    orariSelezionati?: OrarioPrenotazione[],
+    jwt?: string,
+    numeroDate?: number,
+}
 
 export const FormPrenotazioneImpiantoRicorrente: React.FC = () => {
 
-    const { register, getValues, setValue, handleSubmit, formState: { errors } } = useForm<FormPrenotaImpianto>();
+    console.log("render")
+    const { register, getValues, setValue, handleSubmit, formState: { errors } } = useForm<FormPrenotazione>();
 
     const dispatch = useDispatch();
     const history = useHistory();
@@ -44,47 +45,46 @@ export const FormPrenotazioneImpiantoRicorrente: React.FC = () => {
     const sportiviInvitabili = useSelector(utentePolisportivaSelector);
     const sportivoAutenticato = useSelector(sportivoAutenticatoSelector);
     const opzioni = useSelector(formPrenotaImpiantoSelector);
+    const aggiornaOpzioniSuSelezioneSport = useAggiornaOpzioniSuSelezioneSport();
+    const aggiornaOpzioniSuSelezioneOrario = useAggironaOpzioniSuSelezioneOrario();
+
+
+    useEffect(() => {
+        datiPerAggiornamentoOpzioni.numeroDate = numeroDate
+        datiPerAggiornamentoOpzioni.jwt = sportivoAutenticato.jwt
+    }, [numeroDate]);
+
+
 
     const onSportSelezionato = (sportSelezionato: string) => {
+        datiPerAggiornamentoOpzioni.sport = sportSelezionato
         setValue("sportSelezionato", sportSelezionato)
-        setValue("tipoPrenotazione", "IMPIANTO")
-        setValue("modalitaPrenotazione", "SINGOLO_UTENTE")
-        for(let i=1; i<numeroDate+1; i++){
-            aggiornaListeImpianti(i, sportSelezionato, getValues("orariSelezionati")[i], getValues("modalitaPrenotazione"))
-        }
+        aggiornaOpzioniSuSelezioneSport(datiPerAggiornamentoOpzioni)
         setPostiliberiAggiornati(sportPraticabili.sports.filter((sport) => sport.nome === sportSelezionato)[0].postiLiberi)
         setPostiliberi(sportPraticabili.sports.filter((sport) => sport.nome === sportSelezionato)[0].postiLiberi)
-
     }
 
-    const onSubmit = handleSubmit((form: FormPrenotaImpianto) => {
+    const onSubmit = handleSubmit((form: FormPrenotazione) => {
         dispatch(riepilogoPrenotazione(form, sportivoAutenticato.jwt))
         history.push("/riepilogoPrenotazione");
     })
 
-    const aggiornaListeImpianti = (id: number, sport: string, orarioSelezionato: OrarioPrenotazione, modalitaPrenotazione: string) => {
-        if (sport !== undefined && orarioSelezionato !== undefined) {
-            let object = {
-                sport: sport,
-                orario: orarioSelezionato,
-                modalitaPrenotazione: modalitaPrenotazione
-            }
-            dispatch(aggiornaImpiantiEInvitabili(object, id, sportivoAutenticato.jwt));
-        }else if (sport === undefined && orarioSelezionato !== undefined){
-            let object = {
-                orario : orarioSelezionato,
-                modalitaPrenotazione: modalitaPrenotazione
-            }
-            dispatch(aggiornaImpiantiEInvitabili(object, id, sportivoAutenticato.jwt));
-        }else if(sport !== undefined && orarioSelezionato === undefined){
-            let object = {
-                sport: sport,
-                modalitaPrenotazione: modalitaPrenotazione
-            }
-            dispatch(aggiornaImpiantiEInvitabili(object, id, sportivoAutenticato.jwt))
-        }
 
+    /*const aggiornaOpzioniSuSelezioneSport = () => {
+        for(let i=1; i<numeroDate+1; i++){
+            dispatch(aggiornaOpzioniPrenotazione(
+                creaOggettoDatiPerAggiornamentoOpzioni(getValues("sportSelezionato"), getValues("orariSelezionati")[i]),
+                i,
+                sportivoAutenticato.jwt))
+        }
     }
+
+    const aggiornaOpzioniSuSelezioneOrario = (orarioSelezionato: OrarioPrenotazione) => {
+        dispatch(aggiornaOpzioniPrenotazione(
+            creaOggettoDatiPerAggiornamentoOpzioni(getValues("sportSelezionato"), orarioSelezionato),
+            orarioSelezionato.id,
+            sportivoAutenticato.jwt))
+    }*/
 
     const onOrarioSelezione = (orarioSelezionato: OrarioPrenotazione) => {
         if(orari.filter(orario => orario.id === orarioSelezionato.id).length === 0){
@@ -94,17 +94,27 @@ export const FormPrenotazioneImpiantoRicorrente: React.FC = () => {
             orari.filter(orario => orario.id === orarioSelezionato.id)[0].oraInizio = orarioSelezionato.oraInizio
             orari.filter(orario => orario.id === orarioSelezionato.id)[0].oraFine = orarioSelezionato.oraFine
         }
+        datiPerAggiornamentoOpzioni.orario = orarioSelezionato
+        datiPerAggiornamentoOpzioni.orariSelezionati = orari
         setValue("orariSelezionati", orari);
-        aggiornaListeImpianti(orarioSelezionato.id, getValues("sportSelezionato"), orarioSelezionato, getValues("modalitaPrenotazione"))
+        aggiornaOpzioniSuSelezioneOrario(datiPerAggiornamentoOpzioni)
     }
 
     const onImpiantoSelezioneRicorrente = (impiantoItem: ImpiantiSelezionatiItem) => {
-        if (impiantiSelezionati.filter(item => item.idSelezione === impiantoItem.idSelezione).length === 0) {
+        if (listaImpiantiItemNonContiene(impiantoItem)) {
             impiantiSelezionati.push(impiantoItem)
         } else {
-            impiantiSelezionati.filter(item => item.idSelezione === impiantoItem.idSelezione)[0].idImpianto = impiantoItem.idImpianto
+            sostituisciImpiantoItemConStessoIdDi(impiantoItem)
         }
         setValue("impianti", impiantiSelezionati)
+    }
+
+    const listaImpiantiItemNonContiene = (impiantoItem: ImpiantiSelezionatiItem): boolean => {
+        return impiantiSelezionati.filter(item => item.idSelezione === impiantoItem.idSelezione).length === 0
+    }
+
+    const sostituisciImpiantoItemConStessoIdDi = (impiantoItem: ImpiantiSelezionatiItem): void => {
+        impiantiSelezionati.filter(item => item.idSelezione === impiantoItem.idSelezione)[0].idImpianto = impiantoItem.idImpianto
     }
 
     const onCheckBoxPendingSelezioneRicorrente = (checkBoxPendingItem: CheckBoxPendingSelezionatoItem) => {

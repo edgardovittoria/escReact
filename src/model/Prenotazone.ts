@@ -11,7 +11,7 @@ export type Prenotazione = {
 }&Notificabile
 
 export type InfoGeneraliEvento = {
-    numeroMinimoParteciapanti: number
+    numeroMinimoPartecipanti: number
     numeroMassimoPartecipanti: number
     costoPerPartecipante: number
     invitatiCorso: UtentePolisportiva[]
