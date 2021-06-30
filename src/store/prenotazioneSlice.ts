@@ -13,7 +13,7 @@ import { ArrayListeIstruttoreItem } from '../components/formComponents/DataOraIm
 import { addListaIstruttori } from './IstruttoreSlice';
 import { addListaSquadreInvitabili } from './squadraSlice';
 import {FormPrenotazione} from "../model/FormPrenotazione";
-import {DatiPerAggiornamentoOpzioni} from "../pages/nuovaPrenotazioneUtenteSingolo/prenotazioneImpianto/components/FormPrenotazioneImpiantoRicorrente";
+import {DatiPerAggiornamentoOpzioni} from "../pages/nuovaPrenotazione/nuovaPrenotazioneUtenteSingolo/prenotazioneImpianto/components/FormPrenotazioneImpiantoRicorrente";
 
 export type PrenotazioneState = {
     prenotazioni: Prenotazione[]

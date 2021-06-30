@@ -5,19 +5,19 @@ import { persistor } from './store/store';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react'
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
-import { ProfiloSportivo } from './pages/profiloSportivo/ProfiloSportivo';
+import { ProfiloSportivo } from './pages/profili/profiloSportivo/ProfiloSportivo';
 import { Login } from './pages/login/Login';
-import { NuovaPrenotazioneImpianto } from './pages/nuovaPrenotazioneUtenteSingolo/prenotazioneImpianto/NuovaPrenotazioneImpianto';
-import { RiepilogoPrenotazione } from './pages/riepilogoPrenotazioneImpianto/RiepilogoPrenotazione';
-import { NuovaPrenotazioneLezione } from './pages/nuovaPrenotazioneUtenteSingolo/prenotazioneLezione/NuovaPrenotazioneLezione';
-import { RiepilogoPrenotazioneLezione } from './pages/riepilogoPrenotazioneLezione/RiepilogoPrenotazioneLezione';
-import { CreazioneCorso } from './pages/creazioneCorso/CreazioneCorso';
-import { RiepilogoCreazioneCorso } from './pages/riepilogoCreazioneCorso/RiepilogoCreazioneCorso';
-import { PrenotazioneCorso } from './pages/nuovaPrenotazioneUtenteSingolo/prenotazioneCorso/prenotazioneCorso';
+import { NuovaPrenotazioneImpianto } from './pages/nuovaPrenotazione/nuovaPrenotazioneUtenteSingolo/prenotazioneImpianto/NuovaPrenotazioneImpianto';
+import { RiepilogoPrenotazione } from './pages/nuovaPrenotazione/riepilogoPrenotazioneImpianto/RiepilogoPrenotazione';
+import { NuovaPrenotazioneLezione } from './pages/nuovaPrenotazione/nuovaPrenotazioneUtenteSingolo/prenotazioneLezione/NuovaPrenotazioneLezione';
+import { RiepilogoPrenotazioneLezione } from './pages/nuovaPrenotazione/riepilogoPrenotazioneLezione/RiepilogoPrenotazioneLezione';
+import { CreazioneCorso } from './pages/nuovaPrenotazione/creazioneCorso/CreazioneCorso';
+import { RiepilogoCreazioneCorso } from './pages/nuovaPrenotazione/riepilogoCreazioneCorso/RiepilogoCreazioneCorso';
+import { PrenotazioneCorso } from './pages/nuovaPrenotazione/nuovaPrenotazioneUtenteSingolo/prenotazioneCorso/prenotazioneCorso';
 import { NavBar } from './components/navBar/NavBar';
 import { DettagliNotifica } from './pages/dettagliNotifica/DettagliNotifica';
-import { ProfiloSquadra } from './pages/profiloSquadra/ProfiloSquadra';
-import { NuovaPrenotazioneImpiantoSquadra } from './pages/nuovaPrenotazioneSquadra/nuovaPrenotazioneImpiantoSquadra/NuovaPrenotazioneImpiantoSquadra';
+import { ProfiloSquadra } from './pages/profili/profiloSquadra/ProfiloSquadra';
+import { NuovaPrenotazioneImpiantoSquadra } from './pages/nuovaPrenotazione/nuovaPrenotazioneSquadra/nuovaPrenotazioneImpiantoSquadra/NuovaPrenotazioneImpiantoSquadra';
 
 
 
