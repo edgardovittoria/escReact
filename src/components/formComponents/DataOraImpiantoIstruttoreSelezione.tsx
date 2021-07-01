@@ -1,5 +1,4 @@
 import React from 'react';
-import { Impianto } from '../../model/Impianto';
 import { UtentePolisportiva } from '../../model/UtentePolisportiva';
 import { ArrayLisetImpiantoItem, ImpiantiSelezionatiItem } from './DataOraImpiantoRicorrente';
 import { DataOraSelezione, OrarioPrenotazione } from './DataOraSelezione';

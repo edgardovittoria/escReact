@@ -1,10 +1,9 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { Button, Col, Form, FormGroup, Label, Row } from "reactstrap";
 import { formPrenotaImpiantoSelector } from "../../../../store/formPrenotaImpiantoSlice";
 import { istruttoreSelector } from "../../../../store/IstruttoreSlice";
-import { sportivoAutenticatoSelector } from "../../../../store/sportivoAutenticatoSlice";
 import { utentePolisportivaSelector } from "../../../../store/utentePolisportivaSlice";
 import { sportSelector } from "../../../../store/SportSlice";
 import { DataOraImpiantoIstruttoreSelezione, IstruttoriSelezionatiItem } from "../../../../components/formComponents/DataOraImpiantoIstruttoreSelezione";
@@ -30,13 +29,6 @@ let datiPerAggiornamentoOpzioni: DatiPerAggiornamentoOpzioni = {};
 export const FormCreazioneCorso: React.FC = () => {
 
     const { handleSubmit, setValue } = useForm<FormPrenotazione>();
-
-    const sportivoAutenticato = useSelector(sportivoAutenticatoSelector);
-
-    useEffect(() => {
-        datiPerAggiornamentoOpzioni.jwt = sportivoAutenticato.jwt
-    }, [sportivoAutenticato.jwt]);
-
 
     const [numeroDate, setNumeroDate] = useState(0);
     const sportPraticabili = useSelector(sportSelector);

@@ -3,9 +3,10 @@ import React, {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Card, Col, ListGroup, ListGroupItem, Row, Spinner } from 'reactstrap';
 import { useHistory } from 'react-router-dom';
-import { partecipazioneCorso } from '../../store/prenotazioneSlice';
+import { partecipazioneEventoEsistente} from '../../store/prenotazioneSlice';
 import { sportivoAutenticatoSelector } from '../../store/sportivoAutenticatoSlice';
 import { Prenotazione } from '../../model/Prenotazone';
+import {datiIscrizioneEventoEsistenteDefault} from "../appuntamentiSottoscrivibili/RiepilogoAppuntamento";
 
 export type DettagliCorsoProps = {
     corso: Prenotazione
@@ -29,11 +30,11 @@ export const DettagliCorso: React.FC<DettagliCorsoProps> = ({ corso}) => {
     }, [corso.appuntamenti[0].partecipanti])
 
     const onClick = () => {
-        dispatch(partecipazioneCorso(corso.idPrenotazione,
-            sportivoAutenticato.sportivo.email,
-            corso.appuntamenti[0].tipoPrenotazione,
-            corso.appuntamenti[0].modalitaPrenotazione,
-            sportivoAutenticato.jwt));
+        datiIscrizioneEventoEsistenteDefault.idEvento = corso.idPrenotazione
+        datiIscrizioneEventoEsistenteDefault.tipoPrenotazione = corso.appuntamenti[0].tipoPrenotazione
+        datiIscrizioneEventoEsistenteDefault.modalitaPrenotazione = corso.appuntamenti[0].modalitaPrenotazione
+        datiIscrizioneEventoEsistenteDefault.identificativoPartecipante = sportivoAutenticato.sportivo.email
+        dispatch(partecipazioneEventoEsistente(datiIscrizioneEventoEsistenteDefault));
         setTimeout(() => {
             history.push("profiloSportivo")
         },500);

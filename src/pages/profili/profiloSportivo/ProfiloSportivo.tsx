@@ -8,13 +8,7 @@ import { faTableTennis } from '@fortawesome/free-solid-svg-icons/faTableTennis';
 import { faFutbol, faVolleyballBall } from '@fortawesome/free-solid-svg-icons';
 import { useHistory } from 'react-router';
 import './css/profiloSportivo.css';
-import {
-    corsiPrenotatiSelector,
-    partecipazioniSelector,
-    prenotazioniSelector,
-    resetPrenotazioneDaConfermare
-} from '../../../store/prenotazioneSlice';
-import { TabRiepilogoPrenotazioni } from './components/TabRiepilogoPrenotazioniProfilo';
+import { resetPrenotazioneDaConfermare } from '../../../store/prenotazioneSlice';
 import { RiepilogoUtente } from '../../../components/riepilogoProfilo/RiepilogoUtente';
 import {CalendarioSportivo} from "./components/CalendarioSportivo";
 import {fetchNotifiche} from "../../../store/notificheSlice";
@@ -27,9 +21,9 @@ export const ProfiloSportivo: React.FC = () => {
 
 
     useEffect(() => {
-        dispatch(fetchNotifiche(sportivoAutenticato.sportivo.email, sportivoAutenticato.jwt))
-        dispatch(fetchSquadre(sportivoAutenticato.sportivo.email, sportivoAutenticato.jwt))
-        dispatch(fetchSportivo(sportivoAutenticato.sportivo.email, sportivoAutenticato.jwt))
+        dispatch(fetchNotifiche(sportivoAutenticato.sportivo.email))
+        dispatch(fetchSquadre(sportivoAutenticato.sportivo.email))
+        dispatch(fetchSportivo(sportivoAutenticato.sportivo.email))
     }, [])
 
 
@@ -43,14 +37,6 @@ export const ProfiloSportivo: React.FC = () => {
     };
 
     const history = useHistory()
-
-
-    const prenotazioniEffettuate = useSelector(prenotazioniSelector);
-    const partecipazioniEffettuate = useSelector(partecipazioniSelector);
-    const corsiPrenotati = useSelector(corsiPrenotatiSelector);
-
-
-
 
     return (
         <>
@@ -83,11 +69,6 @@ export const ProfiloSportivo: React.FC = () => {
                                 </button>
                             </div>
                             <div id="riepilogoPrenotazioni" style={{ margin: "auto", width: "100%" }}>
-                                {/*<TabRiepilogoPrenotazioni prenotazioniEffettuate={prenotazioniEffettuate}
-                                    partecipazioni={partecipazioniEffettuate}
-                                    corsiPrenotati={corsiPrenotati}
-                                    sportivoAutenticato={sportivoAutenticato}
-                                />*/}
                                 <CalendarioSportivo sportivo={sportivoAutenticato.sportivo} />
                             </div>
                         </div>

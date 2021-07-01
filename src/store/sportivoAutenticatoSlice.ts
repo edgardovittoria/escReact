@@ -101,10 +101,10 @@ export const {
     aggiornaSportivo
 } = SportivoAutenticatoSlice.actions
 
-export const fetchSportivo = (emailSportivo: string, jwt: string): AppThunk => async dispatch => {
+export const fetchSportivo = (emailSportivo: string): AppThunk => async dispatch => {
     try {
         dispatch(setLoading(true));
-        const res = await axios.get("http://localhost:8080/aggiornaOpzioni/sportivo/", { params: { email: emailSportivo }, headers: { "Authorization": "Bearer " + jwt } })
+        const res = await axios.get("http://localhost:8080/aggiornaOpzioni/sportivo/", { params: { email: emailSportivo }})
         dispatch(aggiornaSportivo(res.data))
     } catch (error) {
         dispatch(setErrors(error))

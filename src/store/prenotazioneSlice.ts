@@ -14,6 +14,7 @@ import { addListaIstruttori } from './IstruttoreSlice';
 import { addListaSquadreInvitabili } from './squadraSlice';
 import {FormPrenotazione} from "../model/FormPrenotazione";
 import {DatiPerAggiornamentoOpzioni} from "../pages/nuovaPrenotazione/nuovaPrenotazioneUtenteSingolo/prenotazioneImpianto/components/FormPrenotazioneImpiantoRicorrente";
+import {DatiIscrizioneEventoEsistente} from "../components/appuntamentiSottoscrivibili/RiepilogoAppuntamento";
 
 export type PrenotazioneState = {
     prenotazioni: Prenotazione[]
@@ -157,10 +158,10 @@ export const corsiDisponibiliSelector = (state: { prenotazioni: PrenotazioneStat
 export const partecipazioniSelector = (state: { prenotazioni: PrenotazioneState }) => state.prenotazioni.partecipazioni
 export const corsiPrenotatiSelector = (state: { prenotazioni: PrenotazioneState }) => state.prenotazioni.prenotazioniCorso
 
-export const avviaNuovaPrenotazione = (emailSportivo: string, idSquadra: number, tipoPren: string, modalitaPrenotazione: string, jwt: string): AppThunk => async dispatch => {
+export const avviaNuovaPrenotazione = (emailSportivo: string, idSquadra: number, tipoPren: string, modalitaPrenotazione: string): AppThunk => async dispatch => {
     try {
         dispatch(setLoading(true));
-        const res = await axios.get("http://localhost:8080/effettuaPrenotazione/avviaNuovaPrenotazione", { params: { email: emailSportivo, idSquadra: idSquadra, tipoPrenotazione: tipoPren, modalitaPrenotazione: modalitaPrenotazione }, headers: { "Authorization": "Bearer " + jwt } })
+        const res = await axios.get("http://localhost:8080/effettuaPrenotazione/avviaNuovaPrenotazione", { params: { email: emailSportivo, idSquadra: idSquadra, tipoPrenotazione: tipoPren, modalitaPrenotazione: modalitaPrenotazione }})
         if (tipoPren === "LEZIONE") {
             dispatch(addListaSportPraticabili(res.data.sportPraticabili))
         } else if (tipoPren === "IMPIANTO") {
@@ -185,10 +186,10 @@ export const avviaNuovaPrenotazione = (emailSportivo: string, idSquadra: number,
 
 }
 
-export const avviaNuovaPrenotazioneEventoDirettore = (emailSportivo: string, tipoPren: string, modalitaPrenotazione: string, jwt: string): AppThunk => async dispatch => {
+export const avviaNuovaPrenotazioneEventoDirettore = (emailSportivo: string, tipoPren: string, modalitaPrenotazione: string): AppThunk => async dispatch => {
     try {
         dispatch(setLoading(true));
-        const res = await axios.get("http://localhost:8080/effettuaPrenotazione/avviaNuovaPrenotazioneEventoDirettore", { params: { email: emailSportivo, tipoPrenotazione: tipoPren, modalitaPrenotazione: modalitaPrenotazione }, headers: { "Authorization": "Bearer " + jwt } })
+        const res = await axios.get("http://localhost:8080/effettuaPrenotazione/avviaNuovaPrenotazioneEventoDirettore", { params: { email: emailSportivo, tipoPrenotazione: tipoPren, modalitaPrenotazione: modalitaPrenotazione } })
         dispatch(addListaSportPraticabili(res.data.sportPraticabili))
         dispatch(addListaInvitabili(res.data.sportiviInvitabili))
     } catch (error) {
@@ -202,10 +203,10 @@ export const avviaNuovaPrenotazioneEventoDirettore = (emailSportivo: string, tip
 }
 
 
-export const riepilogoPrenotazione = (prenotazione: FormPrenotazione, jwt: string): AppThunk => async dispatch => {
+export const riepilogoPrenotazione = (prenotazione: FormPrenotazione): AppThunk => async dispatch => {
     try {
         dispatch(setLoading(true));
-        const res = await axios.post("http://localhost:8080/effettuaPrenotazione/riepilogoPrenotazione", prenotazione, { headers: { "Authorization": "Bearer " + jwt } })
+        const res = await axios.post("http://localhost:8080/effettuaPrenotazione/riepilogoPrenotazione", prenotazione )
         let prenotazioneDaConfermare: Prenotazione = {
             idPrenotazione: res.data.idPrenotazione,
             sportivoPrenotante: res.data.sportivoPrenotante,
@@ -220,10 +221,10 @@ export const riepilogoPrenotazione = (prenotazione: FormPrenotazione, jwt: strin
 
 }
 
-export const confermaPrenotazione = (jwt: string): AppThunk => async dispatch => {
+export const confermaPrenotazione = (): AppThunk => async dispatch => {
     try {
         dispatch(setLoading(true));
-        const res = await axios.post("http://localhost:8080/effettuaPrenotazione/confermaPrenotazione", null, { headers: { "Authorization": "Bearer " + jwt } })
+        const res = await axios.post("http://localhost:8080/effettuaPrenotazione/confermaPrenotazione", null )
         if(res.status === 201){
             alert("Prenotazione Confermata!!!")
         }else {
@@ -236,20 +237,10 @@ export const confermaPrenotazione = (jwt: string): AppThunk => async dispatch =>
 
 }
 
-export const creaCorso = (jwt: string): AppThunk => async dispatch => {
-    try {
-        dispatch(setLoading(true));
-        await axios.post("http://localhost:8080/effettuaPrenotazione/confermaPrenotazione", null, { headers: { "Authorization": "Bearer " + jwt } })
-    } catch (error) {
-        dispatch(setErrors(error))
-    }
-
-}
-
 
 export const aggiornaOpzioniPrenotazione = (object: DatiPerAggiornamentoOpzioni): AppThunk => async dispatch => {
     try {
-        const res = await axios.post("http://localhost:8080/effettuaPrenotazione/aggiornaDatiOpzioni", object, { headers: { "Authorization": "Bearer " + object.jwt } })
+        const res = await axios.post("http://localhost:8080/effettuaPrenotazione/aggiornaDatiOpzioni", object)
         let item: ArrayLisetImpiantoItem = {
             id: object.orario?.id,
             impiantiDisponibili: res.data.impiantiDisponibili
@@ -270,26 +261,11 @@ export const aggiornaOpzioniPrenotazione = (object: DatiPerAggiornamentoOpzioni)
 
 }
 
-/*export const aggiornaIstruttori = (object: any, id: number, jwt: string): AppThunk => async dispatch => {
-    try {
-        const res = await axios.post("http://localhost:8080/effettuaPrenotazione/aggiornaDatiOpzioni", object, { headers: { "Authorization": "Bearer " + jwt } })
 
-    } catch (error) {
-        dispatch(setErrors(error));
-    }
-
-}*/
-
-export const partecipazioneEventoEsistente = (idEvento: number | null, identificativoPartecipante: string | number, tipoPrenotazione: string, modalitaPrenotazione: string, jwt: string): AppThunk => async dispatch => {
+export const partecipazioneEventoEsistente = (datiIscrizioneEventoEsistente: DatiIscrizioneEventoEsistente): AppThunk => async dispatch => {
     try {
         dispatch(setLoading(true));
-        let object = {
-            idEvento: idEvento,
-            identificativoPartecipante: identificativoPartecipante,
-            tipoPrenotazione: tipoPrenotazione,
-            modalitaPrenotazione: modalitaPrenotazione
-        }
-        const res = await axios.patch("http://localhost:8080/effettuaPrenotazione/partecipazioneEventoEsistente", object, { headers: { "Authorization": "Bearer " + jwt } })
+        const res = await axios.patch("http://localhost:8080/effettuaPrenotazione/partecipazioneEventoEsistente", datiIscrizioneEventoEsistente)
         alert("Partecipazione Effettuata!")
         if (res.status === 204) {
             alert("Partecipazione confermata")
@@ -300,25 +276,6 @@ export const partecipazioneEventoEsistente = (idEvento: number | null, identific
 
 }
 
-export const partecipazioneCorso = (idEvento: number | null, emailPartecipante: string, tipoPrenotazione: string, modalitaPrenotazione: string, jwt: string): AppThunk => async dispatch => {
-    try {
-        dispatch(setLoading(true));
-        let object = {
-            idEvento: idEvento,
-            identificativoPartecipante: emailPartecipante,
-            tipoPrenotazione: tipoPrenotazione,
-            modalitaPrenotazione: modalitaPrenotazione
-        }
-        const res = await axios.patch("http://localhost:8080/effettuaPrenotazione/partecipazioneEventoEsistente", object, { headers: { "Authorization": "Bearer " + jwt } })
-        let partecipazione: Prenotazione[] = [];
-        partecipazione.push(res.data)
-        dispatch(addListaPrenotazioniCorso(partecipazione))
-        alert("Corso Prenotato!")
-    } catch (error) {
-        dispatch(setErrors(error))
-    }
-
-}
 
 
 

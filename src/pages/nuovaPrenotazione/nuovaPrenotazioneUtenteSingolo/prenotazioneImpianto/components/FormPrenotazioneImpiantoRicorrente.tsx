@@ -3,7 +3,6 @@ import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { Button, Col, Form, FormGroup, Label, Row } from 'reactstrap';
 import { formPrenotaImpiantoSelector } from '../../../../../store/formPrenotaImpiantoSlice';
-import { sportivoAutenticatoSelector } from '../../../../../store/sportivoAutenticatoSlice';
 import { utentePolisportivaSelector } from '../../../../../store/utentePolisportivaSlice';
 import { sportSelector } from '../../../../../store/SportSlice';
 import { CheckBoxPendingSelezionatoItem, DataOraImpiantoRicorrente, ImpiantiSelezionatiItem } from '../../../../../components/formComponents/DataOraImpiantoRicorrente';
@@ -29,7 +28,6 @@ export interface DatiPerAggiornamentoOpzioni {
     sport?: string,
     orario?: OrarioPrenotazione,
     orariSelezionati?: OrarioPrenotazione[],
-    jwt?: string,
     numeroDate?: number,
 }
 
@@ -43,7 +41,6 @@ export const FormPrenotazioneImpiantoRicorrente: React.FC = () => {
     const [postiLiberiAggiornato, setPostiliberiAggiornati] = useState(postiLiberi);
     const sportPraticabili = useSelector(sportSelector);
     const sportiviInvitabili = useSelector(utentePolisportivaSelector);
-    const sportivoAutenticato = useSelector(sportivoAutenticatoSelector);
     const opzioni = useSelector(formPrenotaImpiantoSelector);
     const aggiornaOpzioniSuSelezioneSport = useAggiornaOpzioniSuSelezioneSport();
     const aggiornaOpzioniSuSelezioneOrario = useAggironaOpzioniSuSelezioneOrario();
@@ -54,8 +51,7 @@ export const FormPrenotazioneImpiantoRicorrente: React.FC = () => {
 
     useEffect(() => {
         datiPerAggiornamentoOpzioni.numeroDate = numeroDate
-        datiPerAggiornamentoOpzioni.jwt = sportivoAutenticato.jwt
-    }, [numeroDate, sportivoAutenticato.jwt]);
+    }, [numeroDate]);
 
 
 

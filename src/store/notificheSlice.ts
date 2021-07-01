@@ -88,10 +88,10 @@ export const {
     setErrors
 } = NotificheSlice.actions
 
-export const fetchNotifiche = (emailSportivo: string, jwt: string): AppThunk => async dispatch => {
+export const fetchNotifiche = (emailSportivo: string): AppThunk => async dispatch => {
     try {
         dispatch(setLoading(true));
-        const res = await axios.get("http://localhost:8080/notifiche/notificheUtente", { params: { email: emailSportivo }, headers: { "Authorization": "Bearer " + jwt } })
+        const res = await axios.get("http://localhost:8080/notifiche/notificheUtente", { params: { email: emailSportivo } })
         dispatch(addListaNotificheUtente(res.data));
     } catch (error) {
         dispatch(setErrors(error))
@@ -99,10 +99,10 @@ export const fetchNotifiche = (emailSportivo: string, jwt: string): AppThunk => 
 
 }
 
-export const fetchDettagliNotificha = (idEvento: number, tipoEventoNotificabile: string, jwt: string): AppThunk => async dispatch => {
+export const fetchDettagliNotificha = (idEvento: number, tipoEventoNotificabile: string): AppThunk => async dispatch => {
     try {
         dispatch(setLoading(true));
-        const res = await axios.get("http://localhost:8080/notifiche/dettagliNotifica", { params: { idEvento: idEvento, tipoEventoNotificabile: tipoEventoNotificabile }, headers: { "Authorization": "Bearer " + jwt } })
+        const res = await axios.get("http://localhost:8080/notifiche/dettagliNotifica", { params: { idEvento: idEvento, tipoEventoNotificabile: tipoEventoNotificabile }})
         dispatch(addDettagliNotifica(res.data));
     } catch (error) {
         dispatch(setErrors(error))
@@ -110,13 +110,13 @@ export const fetchDettagliNotificha = (idEvento: number, tipoEventoNotificabile:
 
 }
 
-export const setNotificaLetta = (idNotifica: number, jwt: string): AppThunk => async dispatch => {
+export const setNotificaLetta = (idNotifica: number): AppThunk => async dispatch => {
     try {
         dispatch(setLoading(true));
         let object = {
             idNotifica: idNotifica
         }
-        const res = await axios.patch("http://localhost:8080/notifiche/impostaNotificaLetta", object , {headers: { "Authorization": "Bearer " + jwt } })
+        const res = await axios.patch("http://localhost:8080/notifiche/impostaNotificaLetta", object )
         dispatch(impostaNotificaLetta(res.data));
     } catch (error) {
         dispatch(setErrors(error))

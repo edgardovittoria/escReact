@@ -2,8 +2,6 @@ import { UtentePolisportiva } from '../model/UtentePolisportiva';
 /* eslint-disable array-callback-return */
 import { ArrayListeIstruttoreItem } from '../components/formComponents/DataOraImpiantoIstruttoreSelezione';
 
-import axios from 'axios';
-import { AppThunk } from './store';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export type IstruttoreState = {
@@ -56,17 +54,6 @@ export const {
     setErrors
 } = IstruttoreSlice.actions
 
-
-export const fetchIstruttori = (sport: string): AppThunk => async dispatch => {
-    try {
-        dispatch(setLoading(true));
-        const res = await axios.get("http://localhost:8080/effettuaPrenotazione/istruttoriDisponibili", {params: {sport: sport}})
-        dispatch(addListaIstruttori(res.data))
-    } catch (error) {
-        dispatch(setErrors(error))
-    }
-
-}
 
 export const istruttoreSelector = (state: { istruttoriDisponibili: IstruttoreState }) => state.istruttoriDisponibili
 

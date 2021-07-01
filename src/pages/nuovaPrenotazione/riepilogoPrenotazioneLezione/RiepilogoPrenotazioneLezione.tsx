@@ -1,11 +1,12 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Spinner } from 'reactstrap';
 import { useHistory } from 'react-router-dom';
-import { confermaPrenotazione, prenotazioneSelector } from '../../../store/prenotazioneSlice';
+import { prenotazioneSelector } from '../../../store/prenotazioneSlice';
 import { sportivoAutenticatoSelector } from '../../../store/sportivoAutenticatoSlice';
 import { RiepilogoUtente } from '../../../components/riepilogoProfilo/RiepilogoUtente';
 import {CardRiepilogoPrenotazioneLezione} from "../../../components/cardRiepilogoPrenotazione/CardRiepilogoPrenotazioneLezione";
+import {useConfermaPrenotazione} from "../hooks/useConfermaPrenotazione";
 
 
 
@@ -14,12 +15,8 @@ export const RiepilogoPrenotazioneLezione: React.FC = () => {
     const prenotazioneDaConfermare = useSelector(prenotazioneSelector).prenotazioneDaConfermare
     const sportivoAutenticato = useSelector(sportivoAutenticatoSelector)
     const history = useHistory();
-    const dispatch = useDispatch();
+    const confermaPrenotazione = useConfermaPrenotazione();
 
-    const onClick = () => {
-        dispatch(confermaPrenotazione(sportivoAutenticato.jwt));
-        history.push("profiloSportivo")
-    }
 
     if (prenotazioneDaConfermare.appuntamenti[0] !== undefined) {
 
@@ -38,62 +35,9 @@ export const RiepilogoPrenotazioneLezione: React.FC = () => {
                             <CardRiepilogoPrenotazioneLezione
                                 prenotazione={prenotazioneDaConfermare}
                                 history={history}
-                                onClick={onClick}
+                                onClick={confermaPrenotazione}
                                 testoBottone="Conferma Prenotazione"
                                 displayButtons="block" />
-
-                            {/*<Card className="col-6">
-                                <CardTitle style={{ marginTop: "3%", marginBottom: "4%" }}>
-                                    Riepilogo prenotazione
-                                </CardTitle>
-                                <ListGroup>
-                                    <ListGroupItem key="sportPrenotato">
-                                        Sport Prenotato : {appuntamenti[0].specificaPrenotazione.sportAssociato.nome}
-                                    </ListGroupItem>
-                                </ListGroup>
-                                {appuntamenti.map((appuntamento) => {
-                                    return (
-                                        <>
-                                            <ListGroupItem>
-                                                Impianto Prenotato : {appuntamento.specificaPrenotazione.pavimentazioneImpianto}
-                                            </ListGroupItem>
-                                            <ListGroupItem>
-                                                Istruttore Scelto : {appuntamento.specificaPrenotazione.istruttore.email}
-                                            </ListGroupItem>
-                                            <ListGroupItem>
-                                                Data Prenotata : {appuntamento.dataAppuntamento}
-                                            </ListGroupItem>
-                                            <ListGroupItem>
-                                                Ora Inizio : {appuntamento.oraInizioAppuntamento}
-                                            </ListGroupItem>
-                                            <ListGroupItem>
-                                                Ora Fine : {appuntamento.oraFineAppuntamento}
-                                            </ListGroupItem>
-                                            <ListGroupItem>
-                                                Costo Totale : {appuntamento.specificaPrenotazione.costo}€
-                                            </ListGroupItem>
-                                        </>
-                                    )
-                                })}
-                                <Row>
-                                    <Col>
-                                        <Button
-                                            type="submit"
-                                            outline color="danger"
-                                            style={{ marginTop: "20%", width: "100%" }}
-                                            onClick={() => {
-                                                history.go(-2)
-                                            }} >Annulla</Button>
-                                    </Col>
-                                    <Col>
-                                        <Button
-                                            outline color="success"
-                                            style={{ marginTop: "20%", width: "100%" }}
-                                            onClick={onClick}>Conferma Prenotazione</Button>
-                                    </Col>
-                                </Row>
-
-                            </Card>*/}
                         </div>
                     </div>
                 </section>

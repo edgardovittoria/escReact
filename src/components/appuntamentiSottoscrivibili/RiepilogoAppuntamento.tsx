@@ -13,6 +13,20 @@ export type RiepilogoAppuntamentoProps = {
     appuntamento: Appuntamento
 }
 
+export interface DatiIscrizioneEventoEsistente{
+    idEvento: number | null,
+    identificativoPartecipante: string | number,
+    tipoPrenotazione: string,
+    modalitaPrenotazione: string
+}
+
+export const datiIscrizioneEventoEsistenteDefault: DatiIscrizioneEventoEsistente = {
+    idEvento: -1,
+    identificativoPartecipante: "",
+    tipoPrenotazione: "",
+    modalitaPrenotazione: ""
+}
+
 export const RiepilogoAppuntamento: React.FC<RiepilogoAppuntamentoProps> = ({ appuntamento }) => {
 
 
@@ -21,20 +35,20 @@ export const RiepilogoAppuntamento: React.FC<RiepilogoAppuntamentoProps> = ({ ap
     const notificaSelezionata = useSelector(notificheSelector).notificaSelezionata;
     const history = useHistory();
 
+
     const onClick = () => {
+        datiIscrizioneEventoEsistenteDefault.idEvento = appuntamento.idAppuntamento
+        datiIscrizioneEventoEsistenteDefault.tipoPrenotazione = appuntamento.tipoPrenotazione
+        datiIscrizioneEventoEsistenteDefault.modalitaPrenotazione = appuntamento.modalitaPrenotazione
+
         if(appuntamento.modalitaPrenotazione === "SQUADRA" && notificaSelezionata.squadraDelDestinatario?.idSquadra){
-            dispatch(partecipazioneEventoEsistente(
-                appuntamento.idAppuntamento,
-                notificaSelezionata.squadraDelDestinatario?.idSquadra,
-                appuntamento.tipoPrenotazione,
-                appuntamento.modalitaPrenotazione, sportivoAutenticato.jwt))
+            datiIscrizioneEventoEsistenteDefault.identificativoPartecipante = notificaSelezionata.squadraDelDestinatario?.idSquadra
+
         }else if(appuntamento.modalitaPrenotazione === "SINGOLO_UTENTE"){
-            dispatch(partecipazioneEventoEsistente(
-                appuntamento.idAppuntamento,
-                sportivoAutenticato.sportivo.email,
-                appuntamento.tipoPrenotazione,
-                appuntamento.modalitaPrenotazione, sportivoAutenticato.jwt))
+            datiIscrizioneEventoEsistenteDefault.identificativoPartecipante = sportivoAutenticato.sportivo.email
         }
+
+        dispatch(partecipazioneEventoEsistente(datiIscrizioneEventoEsistenteDefault))
         setTimeout(() => {
             history.push("/profiloSportivo")
         },500);

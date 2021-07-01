@@ -85,7 +85,7 @@ export const NavBar: React.FC = () => {
                         </UncontrolledDropdown>
                     </Nav>
                     <Nav style={{display: displayItem}}>
-                        <Notifiche utenteAutenticato={utenteAutenticato} />
+                        <Notifiche />
                     </Nav>
                     <Nav>
                         <UncontrolledDropdown nav inNavbar

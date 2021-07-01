@@ -3,24 +3,20 @@ import React from 'react';
 import './notifiche.css';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { SportivoAutenticatoState } from '../../store/sportivoAutenticatoSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchDettagliNotificha, notificheSelector, setNotificaLetta } from '../../store/notificheSlice';
 import { useHistory } from 'react-router';
 
-type NotificheProps = {
-    utenteAutenticato: SportivoAutenticatoState
-}
 
-export const Notifiche: React.FC<NotificheProps> = ({ utenteAutenticato }) => {
+export const Notifiche: React.FC = () => {
 
     const notifiche = useSelector(notificheSelector);
     const history = useHistory()
     const dispatch = useDispatch();
     
     const onLinkClick = (idEvento: number, tipoEventoNotificabile: string, idNotifica: number) => {
-        dispatch(fetchDettagliNotificha(idEvento, tipoEventoNotificabile, utenteAutenticato.jwt))
-        dispatch(setNotificaLetta(idNotifica, utenteAutenticato.jwt))
+        dispatch(fetchDettagliNotificha(idEvento, tipoEventoNotificabile))
+        dispatch(setNotificaLetta(idNotifica))
         history.push("/dettagliNotifica")
     }
 

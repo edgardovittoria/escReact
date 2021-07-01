@@ -18,12 +18,24 @@ import { NavBar } from './components/navBar/NavBar';
 import { DettagliNotifica } from './pages/dettagliNotifica/DettagliNotifica';
 import { ProfiloSquadra } from './pages/profili/profiloSquadra/ProfiloSquadra';
 import { NuovaPrenotazioneImpiantoSquadra } from './pages/nuovaPrenotazione/nuovaPrenotazioneSquadra/nuovaPrenotazioneImpiantoSquadra/NuovaPrenotazioneImpiantoSquadra';
+import axios from "axios";
 
+axios.interceptors.request.use((config) => {
+  const jwt = store.getState().sportivo.jwt
+  if(jwt !== ""){
+    config.headers['Authorization'] = "Bearer "+jwt;
+  }
+  console.log(jwt);
+  return config;
 
+}, (error) => {
+  if (error.response && error.response.data) {
+    return Promise.reject(error.response.data);
+  }
+  return Promise.reject(error.message);
+});
 
 export const App: React.FC = () => {
-
-
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>

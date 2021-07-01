@@ -3,7 +3,6 @@ import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { Button, Col, Form, FormGroup, Label, Row } from 'reactstrap';
 import { formPrenotaImpiantoSelector } from '../../../../../store/formPrenotaImpiantoSlice';
-import { sportivoAutenticatoSelector } from '../../../../../store/sportivoAutenticatoSlice';
 import { squadraSelector } from '../../../../../store/squadraSlice';
 import { CheckBoxPendingSelezionatoItem, DataOraImpiantoRicorrente, ImpiantiSelezionatiItem } from '../../../../../components/formComponents/DataOraImpiantoRicorrente';
 import { OrarioPrenotazione } from '../../../../../components/formComponents/DataOraSelezione';
@@ -32,7 +31,6 @@ export const FormPrenotazioneImpiantoSquadraRicorrente: React.FC<FormPrenotazion
     const { register, setValue, handleSubmit, formState: { errors } } = useForm<FormPrenotazione>();
 
     const [numeroDate, setNumeroDate] = useState(0);
-    const sportivoAutenticato = useSelector(sportivoAutenticatoSelector);
     const squadreInvitabili = useSelector(squadraSelector).squadreInvitabili
     const opzioni = useSelector(formPrenotaImpiantoSelector);
     const aggiornaOpzioniSuSelezioneSport = useAggiornaOpzioniSuSelezioneSport();
@@ -44,11 +42,10 @@ export const FormPrenotazioneImpiantoSquadraRicorrente: React.FC<FormPrenotazion
 
 
     useEffect(() => {
-        datiPerAggiornamentoOpzioni.jwt = sportivoAutenticato.jwt
         datiPerAggiornamentoOpzioni.sport = sport
         setValue("sportSelezionato", sport)
         aggiornaOpzioniSuSelezioneSport(datiPerAggiornamentoOpzioni)
-    }, [aggiornaOpzioniSuSelezioneSport, setValue, sport, sportivoAutenticato.jwt]);
+    }, [aggiornaOpzioniSuSelezioneSport, setValue, sport]);
 
 
     const onOrarioSelezione = (orarioSelezionato: OrarioPrenotazione) => {

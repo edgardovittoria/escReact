@@ -1,10 +1,11 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Spinner } from 'reactstrap';
 import { useHistory } from 'react-router-dom';
-import { confermaPrenotazione,  prenotazioneSelector } from '../../../store/prenotazioneSlice';
+import { prenotazioneSelector } from '../../../store/prenotazioneSlice';
 import { sportivoAutenticatoSelector } from '../../../store/sportivoAutenticatoSlice';
 import { DettagliPrenotazione } from './components/DettagliPrenotazione';
+import {useConfermaPrenotazione} from "../hooks/useConfermaPrenotazione";
 
 
 
@@ -13,14 +14,7 @@ export const RiepilogoPrenotazione: React.FC = () => {
     const prenotazioneDaConfermare = useSelector(prenotazioneSelector).prenotazioneDaConfermare
     const sportivoAutenticato = useSelector(sportivoAutenticatoSelector)
     const history = useHistory();
-    const dispatch = useDispatch();
-
-    const onClick = () => {
-        dispatch(confermaPrenotazione(sportivoAutenticato.jwt));
-        setTimeout(()=>{
-            history.push("/profiloSportivo")
-        },500);
-    }
+    const confermaPrenotazione = useConfermaPrenotazione();
 
     if (prenotazioneDaConfermare.appuntamenti[0] !== undefined) {
 
@@ -28,7 +22,7 @@ export const RiepilogoPrenotazione: React.FC = () => {
             <DettagliPrenotazione prenotazione={prenotazioneDaConfermare}
                 sportivoAutenticato={sportivoAutenticato}
                 history={history}
-                onClick={onClick}
+                onClick={confermaPrenotazione}
                 testoBottone="Conferma Prenotazione"
                 displayButtons="block"/>
 

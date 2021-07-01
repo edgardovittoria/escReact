@@ -59,10 +59,10 @@ export const {
    addListaSquadreInvitabili
 } = SquadraSlice.actions
 
-export const fetchSquadre = (emailSportivo: string, jwt: string): AppThunk => async dispatch => {
+export const fetchSquadre = (emailSportivo: string): AppThunk => async dispatch => {
     try {
         dispatch(setLoading(true));
-        const res = await axios.get("http://localhost:8080/aggiornaOpzioni/squadreSportivo", { params: { email: emailSportivo }, headers: { "Authorization": "Bearer " + jwt } })
+        const res = await axios.get("http://localhost:8080/aggiornaOpzioni/squadreSportivo", { params: { email: emailSportivo }})
         dispatch(addListaSquadre(res.data));
     } catch (error) {
         dispatch(setErrors(error))

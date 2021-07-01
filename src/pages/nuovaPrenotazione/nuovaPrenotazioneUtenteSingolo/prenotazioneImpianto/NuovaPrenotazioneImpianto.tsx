@@ -20,7 +20,7 @@ export const NuovaPrenotazioneImpianto: React.FC = () => {
     useEffect(() => {
         dispatch(resetListaInvitabili())
         dispatch(resetListaSportPraticabili())
-        dispatch(avviaNuovaPrenotazione(sportivoAutenticato.sportivo.email, -1, "IMPIANTO", "SINGOLO_UTENTE", sportivoAutenticato.jwt))
+        dispatch(avviaNuovaPrenotazione(sportivoAutenticato.sportivo.email, -1, "IMPIANTO", "SINGOLO_UTENTE"))
     }, [])
 
     

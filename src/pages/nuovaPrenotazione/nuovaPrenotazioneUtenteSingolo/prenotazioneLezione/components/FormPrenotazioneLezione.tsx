@@ -1,10 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { Button, Col, Form, FormGroup, Label, Row } from 'reactstrap';
 import { formPrenotaImpiantoSelector } from '../../../../../store/formPrenotaImpiantoSlice';
 import { istruttoreSelector } from '../../../../../store/IstruttoreSlice';
-import { sportivoAutenticatoSelector } from '../../../../../store/sportivoAutenticatoSlice';
 import { sportSelector } from '../../../../../store/SportSlice';
 import { DataOraImpiantoIstruttoreSelezione, IstruttoriSelezionatiItem } from '../../../../../components/formComponents/DataOraImpiantoIstruttoreSelezione';
 import { OrarioPrenotazione } from '../../../../../components/formComponents/DataOraSelezione';
@@ -32,17 +31,12 @@ export const FormPrenotazioneLezione: React.FC = () => {
     const sportPraticabili = useSelector(sportSelector);
     const formPrenotaLezione = useSelector(formPrenotaImpiantoSelector);
     const istruttoriDisponibili = useSelector(istruttoreSelector);
-    const sportivoAutenticato = useSelector(sportivoAutenticatoSelector);
     const aggiornaOpzioniSuSelezioneSport = useAggiornaOpzioniSuSelezioneSport()
     const aggiornaOpzioniSuSelezioneOrario = useAggironaOpzioniSuSelezioneOrario()
     const impostaOrarioSelezionatoNellaListaOrari = useImpostaOrarioSelezionatoNellaListaOrari();
     const impostaImpiantoSelezionatoNellaListaImpianti = useImpostaImpiantoSelezionatoNellaListaImpianti();
     const submitFormPrenotazione = useSubmitFormPrenotazione();
     const impostaIstruttoreSelezionatoNellaListaIstruttori = useImpostaIstruttoreSelezionatoNellaListaIstruttori();
-
-    useEffect(()=>{
-        datiPerAggiornamentoOpzioni.jwt = sportivoAutenticato.jwt
-    },[sportivoAutenticato.jwt])
 
     function onSportSelezionato(sportSelezionato: string) {
         datiPerAggiornamentoOpzioni.sport = sportSelezionato

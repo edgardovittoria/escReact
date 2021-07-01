@@ -9,14 +9,31 @@ interface CalendarioSportivoProps {
 }
 
 export const CalendarioSportivo: React.FC<CalendarioSportivoProps> = ({sportivo}) => {
-    let appuntamenti: Appuntamento[] = sportivo.attributiExtra.appuntamentiSportivo
-    if(sportivo.attributiExtra.appuntamentiLezioni !== undefined){
-        appuntamenti.push(...sportivo.attributiExtra.appuntamentiLezioni)
-    }
-    if(sportivo.attributiExtra.appuntamentiManutentore !== undefined){
-        appuntamenti.push(...sportivo.attributiExtra.appuntamentiManutentore)
+    let appuntamenti: Appuntamento[] = [];
+
+    const popolaCalendarioUtente = () => {
+        inserisciAppuntamentiUtenteComeSportivo()
+        inserisciAppuntamentiUtenteComeIstruttore()
+        inserisciAppuntamentiUtenteComeManutentore()
+        return appuntamenti
     }
 
+    const inserisciAppuntamentiUtenteComeSportivo = () => {
+        if(sportivo.ruoli.includes("SPORTIVO")){
+            appuntamenti.push(...sportivo.attributiExtra.appuntamentiSportivo)
+        }
+    }
+    const inserisciAppuntamentiUtenteComeIstruttore = () => {
+        if(sportivo.ruoli.includes("ISTRUTTORE")){
+            appuntamenti.push(...sportivo.attributiExtra.appuntamentiLezioni)
+        }
+    }
+    const inserisciAppuntamentiUtenteComeManutentore = () => {
+        if(sportivo.ruoli.includes("MANUTENTORE")){
+            appuntamenti.push(...sportivo.attributiExtra.appuntamentiManutentore)
+        }
+    }
+    appuntamenti = popolaCalendarioUtente()
 
     if(appuntamenti.length !== 0){
         return (
