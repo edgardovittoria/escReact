@@ -12,8 +12,6 @@ import { TabNuovaPrenotazioneSquadra } from './components/TabNuovaPrenotazioneSq
 export const NuovaPrenotazioneImpiantoSquadra: React.FC = () => {
 
     const dispatch = useDispatch()
-    
-    
 
     const squadra = useSelector(squadraSelector).squadraSelezionata
     const sportivoAutenticato = useSelector(sportivoAutenticatoSelector)
@@ -23,8 +21,6 @@ export const NuovaPrenotazioneImpiantoSquadra: React.FC = () => {
         dispatch(resetListaSportPraticabili())
         dispatch(avviaNuovaPrenotazione(sportivoAutenticato.sportivo.email, squadra.idSquadra, "IMPIANTO", "SQUADRA"))
     }, [])
-
-    
 
 
     return (

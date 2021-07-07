@@ -1,9 +1,9 @@
-import {OrarioPrenotazione} from "../components/formComponents/DataOraSelezione";
 import {
     CheckBoxPendingSelezionatoItem,
-    ImpiantiSelezionatiItem
-} from "../components/formComponents/DataOraImpiantoRicorrente";
-import {IstruttoriSelezionatiItem} from "../components/formComponents/DataOraImpiantoIstruttoreSelezione";
+    ImpiantiSelezionatiItem,
+    IstruttoriSelezionatiItem,
+    OrarioPrenotazione
+} from "./TipiAusiliari";
 
 export type FormPrenotazione = {
     sportSelezionato: string,

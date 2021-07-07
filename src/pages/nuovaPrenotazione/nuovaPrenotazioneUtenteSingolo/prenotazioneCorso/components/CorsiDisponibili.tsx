@@ -10,8 +10,6 @@ export type CorsiDisponibiliProps = {
 
 export const CorsiDisponibili: React.FC<CorsiDisponibiliProps> = ({ corsiDisponibili }) => {
 
-
-
     if (corsiDisponibili.length === 0) {
         return (
             <h4 style={{ marginTop: "200px", fontWeight: "normal" }}>Al momento non sono presenti corsi a cui potersi iscrivere</h4>

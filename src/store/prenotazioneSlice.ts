@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable array-callback-return */
-import { ArrayLisetImpiantoItem } from '../components/formComponents/DataOraImpiantoRicorrente';
 import axios from 'axios';
 import { AppThunk } from './store';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
@@ -9,12 +8,15 @@ import { Prenotazione } from '../model/Prenotazone';
 import { addListaImpiantiDisponibiliAdArray } from './formPrenotaImpiantoSlice';
 import { addListaSportPraticabili } from './SportSlice';
 import { addListaInvitabili } from './utentePolisportivaSlice';
-import { ArrayListeIstruttoreItem } from '../components/formComponents/DataOraImpiantoIstruttoreSelezione';
 import { addListaIstruttori } from './IstruttoreSlice';
 import { addListaSquadreInvitabili } from './squadraSlice';
 import {FormPrenotazione} from "../model/FormPrenotazione";
-import {DatiPerAggiornamentoOpzioni} from "../pages/nuovaPrenotazione/nuovaPrenotazioneUtenteSingolo/prenotazioneImpianto/components/FormPrenotazioneImpiantoRicorrente";
-import {DatiIscrizioneEventoEsistente} from "../components/appuntamentiSottoscrivibili/RiepilogoAppuntamento";
+import {
+    ArrayLisetImpiantoItem,
+    ArrayListeIstruttoreItem,
+    DatiIscrizioneEventoEsistente,
+    DatiPerAggiornamentoOpzioni
+} from "../model/TipiAusiliari";
 
 export type PrenotazioneState = {
     prenotazioni: Prenotazione[]

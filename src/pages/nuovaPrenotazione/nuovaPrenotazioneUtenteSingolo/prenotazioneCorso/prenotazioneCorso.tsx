@@ -10,7 +10,6 @@ import { CorsiDisponibili } from './components/CorsiDisponibili';
 export const PrenotazioneCorso: React.FC = () => {
 
     const dispatch = useDispatch()
-    
 
     const sportivoAutenticato = useSelector(sportivoAutenticatoSelector);
     

@@ -1,4 +1,4 @@
-import {ImpiantiSelezionatiItem} from "../../../components/formComponents/DataOraImpiantoRicorrente";
+import {ImpiantiSelezionatiItem} from "../../../model/TipiAusiliari";
 
 export const useImpostaImpiantoSelezionatoNellaListaImpianti = () => {
     return (impiantoSelezionato: ImpiantiSelezionatiItem, listaImpianti: ImpiantiSelezionatiItem[]) => {

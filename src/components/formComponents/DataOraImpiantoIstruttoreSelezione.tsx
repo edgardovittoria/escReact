@@ -1,9 +1,13 @@
 import React from 'react';
-import { UtentePolisportiva } from '../../model/UtentePolisportiva';
-import { ArrayLisetImpiantoItem, ImpiantiSelezionatiItem } from './DataOraImpiantoRicorrente';
-import { DataOraSelezione, OrarioPrenotazione } from './DataOraSelezione';
+import { DataOraSelezione } from './DataOraSelezione';
 import { ImpiantoSelezione } from './ImpiantoSelezione';
 import { IstruttoreSelezione } from './IstruttoreSelezione';
+import {
+    ArrayLisetImpiantoItem,
+    ArrayListeIstruttoreItem, ImpiantiSelezionatiItem,
+    IstruttoriSelezionatiItem,
+    OrarioPrenotazione
+} from "../../model/TipiAusiliari";
 
 export type DataOraImpiantoRicorrenteProps = {
     numeroDate: number,
@@ -15,16 +19,7 @@ export type DataOraImpiantoRicorrenteProps = {
 }
 
 
-export type ArrayListeIstruttoreItem = {
-    id: number | undefined,
-    istruttoriDisponibili: UtentePolisportiva[]
-}
 
-
-export type IstruttoriSelezionatiItem = {
-    idSelezione: number
-    istruttore: string
-}
 
 
 

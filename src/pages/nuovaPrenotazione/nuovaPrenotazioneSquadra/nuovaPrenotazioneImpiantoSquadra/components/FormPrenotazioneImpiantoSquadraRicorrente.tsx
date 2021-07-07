@@ -4,17 +4,20 @@ import { useSelector } from 'react-redux';
 import { Button, Col, Form, FormGroup, Label, Row } from 'reactstrap';
 import { formPrenotaImpiantoSelector } from '../../../../../store/formPrenotaImpiantoSlice';
 import { squadraSelector } from '../../../../../store/squadraSlice';
-import { CheckBoxPendingSelezionatoItem, DataOraImpiantoRicorrente, ImpiantiSelezionatiItem } from '../../../../../components/formComponents/DataOraImpiantoRicorrente';
-import { OrarioPrenotazione } from '../../../../../components/formComponents/DataOraSelezione';
+import { DataOraImpiantoRicorrente } from '../../../../../components/formComponents/DataOraImpiantoRicorrente';
 import { SquadreInvitabiliSelezione } from '../../../../../components/formComponents/SquadreInvitabiliSelezione';
 import {FormPrenotazione} from "../../../../../model/FormPrenotazione";
 import {useAggiornaOpzioniSuSelezioneSport} from "../../../hooks/useAggiornaOpzioniSuSelezioneSport";
 import {useAggironaOpzioniSuSelezioneOrario} from "../../../hooks/useAggironaOpzioniSuSelezioneOrario";
-import {DatiPerAggiornamentoOpzioni} from "../../../nuovaPrenotazioneUtenteSingolo/prenotazioneImpianto/components/FormPrenotazioneImpiantoRicorrente";
 import {useImpostaOrarioSelezionatoNellaListaOrari} from "../../../hooks/useImpostaOrarioSelezionatoNellaListaOrari";
 import {useImpostaImpiantoSelezionatoNellaListaImpianti} from "../../../hooks/useImpostaImpiantoSelezionatoNellaListaImpianti";
 import {useSubmitFormPrenotazione} from "../../../hooks/useSubmitFormPrenotazione";
 import {useImpostaCheckboxPendingSelezionatoNellaListaCheckboxPending} from "../../../hooks/useImpostaCheckboxPendingSelezionatoNellaListaCheckboxPending";
+import {
+    CheckBoxPendingSelezionatoItem, DatiPerAggiornamentoOpzioni,
+    ImpiantiSelezionatiItem,
+    OrarioPrenotazione
+} from "../../../../../model/TipiAusiliari";
 
 
 let orari: OrarioPrenotazione[] = [];

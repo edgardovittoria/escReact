@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { partecipazioneEventoEsistente} from '../../store/prenotazioneSlice';
 import { sportivoAutenticatoSelector } from '../../store/sportivoAutenticatoSlice';
 import { Prenotazione } from '../../model/Prenotazone';
-import {datiIscrizioneEventoEsistenteDefault} from "../appuntamentiSottoscrivibili/RiepilogoAppuntamento";
+import {datiIscrizioneEventoEsistenteDefault} from "../../model/TipiAusiliari";
 
 export type DettagliCorsoProps = {
     corso: Prenotazione

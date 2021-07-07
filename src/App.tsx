@@ -25,7 +25,6 @@ axios.interceptors.request.use((config) => {
   if(jwt !== ""){
     config.headers['Authorization'] = "Bearer "+jwt;
   }
-  console.log(jwt);
   return config;
 
 }, (error) => {

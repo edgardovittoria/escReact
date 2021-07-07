@@ -4,14 +4,7 @@ import { Col, Label, Row } from 'reactstrap';
 import TimePicker from 'rc-time-picker';
 import 'rc-time-picker/assets/index.css';
 import moment, { Moment } from 'moment';
-
-export type OrarioPrenotazione = {
-    id: number
-    dataPrenotazione: Date
-    oraInizio: Date
-    oraFine: Date
-
-}
+import {OrarioPrenotazione} from "../../model/TipiAusiliari";
 
 export type OrarioProps = {
     handleSelezioneOrario: Function,

@@ -1,4 +1,4 @@
-import {OrarioPrenotazione} from "../../../components/formComponents/DataOraSelezione";
+import {OrarioPrenotazione} from "../../../model/TipiAusiliari";
 
 export const useImpostaOrarioSelezionatoNellaListaOrari = () => {
     return (orarioSelezionato: OrarioPrenotazione, listaOrari: OrarioPrenotazione[]) => {

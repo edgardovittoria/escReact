@@ -5,18 +5,21 @@ import { Button, Col, Form, FormGroup, Label, Row } from 'reactstrap';
 import { formPrenotaImpiantoSelector } from '../../../../../store/formPrenotaImpiantoSlice';
 import { istruttoreSelector } from '../../../../../store/IstruttoreSlice';
 import { sportSelector } from '../../../../../store/SportSlice';
-import { DataOraImpiantoIstruttoreSelezione, IstruttoriSelezionatiItem } from '../../../../../components/formComponents/DataOraImpiantoIstruttoreSelezione';
-import { OrarioPrenotazione } from '../../../../../components/formComponents/DataOraSelezione';
+import { DataOraImpiantoIstruttoreSelezione } from '../../../../../components/formComponents/DataOraImpiantoIstruttoreSelezione';
 import { SelezioneSport } from '../../../../../components/formComponents/SelezioneSport';
 import {FormPrenotazione} from "../../../../../model/FormPrenotazione";
-import {DatiPerAggiornamentoOpzioni} from "../../prenotazioneImpianto/components/FormPrenotazioneImpiantoRicorrente";
 import {useAggiornaOpzioniSuSelezioneSport} from "../../../hooks/useAggiornaOpzioniSuSelezioneSport";
 import {useAggironaOpzioniSuSelezioneOrario} from "../../../hooks/useAggironaOpzioniSuSelezioneOrario";
-import { ImpiantiSelezionatiItem } from '../../../../../components/formComponents/DataOraImpiantoRicorrente';
 import {useImpostaOrarioSelezionatoNellaListaOrari} from "../../../hooks/useImpostaOrarioSelezionatoNellaListaOrari";
 import {useImpostaImpiantoSelezionatoNellaListaImpianti} from "../../../hooks/useImpostaImpiantoSelezionatoNellaListaImpianti";
 import {useSubmitFormPrenotazione} from "../../../hooks/useSubmitFormPrenotazione";
 import {useImpostaIstruttoreSelezionatoNellaListaIstruttori} from "../../../hooks/useImpostaIstruttoreSelezionatoNellaListaIstruttori";
+import {
+    DatiPerAggiornamentoOpzioni,
+    ImpiantiSelezionatiItem,
+    IstruttoriSelezionatiItem,
+    OrarioPrenotazione
+} from "../../../../../model/TipiAusiliari";
 
 let orari: OrarioPrenotazione[] = [];
 let impiantiSelezionati: ImpiantiSelezionatiItem[] = [];

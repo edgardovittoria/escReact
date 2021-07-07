@@ -1,6 +1,6 @@
 import {aggiornaOpzioniPrenotazione} from "../../../store/prenotazioneSlice";
 import {useDispatch} from "react-redux";
-import {DatiPerAggiornamentoOpzioni} from "../nuovaPrenotazioneUtenteSingolo/prenotazioneImpianto/components/FormPrenotazioneImpiantoRicorrente";
+import {DatiPerAggiornamentoOpzioni} from "../../../model/TipiAusiliari";
 
 export const useAggiornaOpzioniSuSelezioneSport = () => {
     const dispatch = useDispatch();

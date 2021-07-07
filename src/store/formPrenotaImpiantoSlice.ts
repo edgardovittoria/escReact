@@ -1,7 +1,6 @@
 /* eslint-disable array-callback-return */
-import { ArrayCheckBoxPendingItem } from '../components/formComponents/DataOraImpiantoRicorrente';
-import { ArrayLisetImpiantoItem } from '../components/formComponents/DataOraImpiantoRicorrente';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {ArrayCheckBoxPendingItem, ArrayLisetImpiantoItem} from "../model/TipiAusiliari";
 
 
 export type FormPrenotaImpiantoState = {

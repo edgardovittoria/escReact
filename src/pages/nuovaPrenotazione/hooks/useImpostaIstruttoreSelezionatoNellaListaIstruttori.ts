@@ -1,4 +1,4 @@
-import {IstruttoriSelezionatiItem} from "../../../components/formComponents/DataOraImpiantoIstruttoreSelezione";
+import {IstruttoriSelezionatiItem} from "../../../model/TipiAusiliari";
 
 export const useImpostaIstruttoreSelezionatoNellaListaIstruttori = () => {
     return (istruttoreSelezionato: IstruttoriSelezionatiItem, listaIstruttori: IstruttoriSelezionatiItem[]) => {

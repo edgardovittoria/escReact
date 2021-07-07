@@ -1,8 +1,13 @@
 import React from 'react';
 import { Impianto } from '../../model/Impianto';
 import { CheckBoxPending } from './CheckBoxPending';
-import { DataOraSelezione, OrarioPrenotazione } from './DataOraSelezione';
+import { DataOraSelezione } from './DataOraSelezione';
 import { ImpiantoSelezione } from './ImpiantoSelezione';
+import {
+    ArrayLisetImpiantoItem,
+    CheckBoxPendingSelezionatoItem,
+    ImpiantiSelezionatiItem, OrarioPrenotazione
+} from "../../model/TipiAusiliari";
 
 export type DataOraImpiantoRicorrenteProps = {
     numeroDate: number,
@@ -12,26 +17,7 @@ export type DataOraImpiantoRicorrenteProps = {
     handleSelezioneCheckBoxPending: Function
 }
 
-export type ArrayLisetImpiantoItem = {
-    id: number | undefined,
-    impiantiDisponibili: Impianto[]
-}
 
-export type ArrayCheckBoxPendingItem = {
-    id: number,
-    checkboxPending: boolean
-}
-
-
-export type ImpiantiSelezionatiItem = {
-    idSelezione: number
-    idImpianto: string
-}
-
-export type CheckBoxPendingSelezionatoItem = {
-    idSelezione: number
-    pending: boolean
-}
 
 
 

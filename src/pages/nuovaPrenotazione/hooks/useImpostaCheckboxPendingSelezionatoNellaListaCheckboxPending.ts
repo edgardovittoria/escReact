@@ -1,4 +1,4 @@
-import {CheckBoxPendingSelezionatoItem} from "../../../components/formComponents/DataOraImpiantoRicorrente";
+import {CheckBoxPendingSelezionatoItem} from "../../../model/TipiAusiliari";
 
 export const useImpostaCheckboxPendingSelezionatoNellaListaCheckboxPending = () => {
     return (checkBoxPendingItem: CheckBoxPendingSelezionatoItem, listaCheckbox: CheckBoxPendingSelezionatoItem[]) => {

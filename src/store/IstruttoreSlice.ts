@@ -1,8 +1,8 @@
 import { UtentePolisportiva } from '../model/UtentePolisportiva';
 /* eslint-disable array-callback-return */
-import { ArrayListeIstruttoreItem } from '../components/formComponents/DataOraImpiantoIstruttoreSelezione';
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {ArrayListeIstruttoreItem} from "../model/TipiAusiliari";
 
 export type IstruttoreState = {
     istruttori: UtentePolisportiva[]

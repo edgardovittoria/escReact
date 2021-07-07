@@ -8,24 +8,13 @@ import { partecipazioneEventoEsistente } from '../../store/prenotazioneSlice';
 import { Appuntamento } from '../../model/Appuntamento';
 import { sportivoAutenticatoSelector } from '../../store/sportivoAutenticatoSlice';
 import {notificheSelector} from "../../store/notificheSlice";
+import {datiIscrizioneEventoEsistenteDefault} from "../../model/TipiAusiliari";
 
 export type RiepilogoAppuntamentoProps = {
     appuntamento: Appuntamento
 }
 
-export interface DatiIscrizioneEventoEsistente{
-    idEvento: number | null,
-    identificativoPartecipante: string | number,
-    tipoPrenotazione: string,
-    modalitaPrenotazione: string
-}
 
-export const datiIscrizioneEventoEsistenteDefault: DatiIscrizioneEventoEsistente = {
-    idEvento: -1,
-    identificativoPartecipante: "",
-    tipoPrenotazione: "",
-    modalitaPrenotazione: ""
-}
 
 export const RiepilogoAppuntamento: React.FC<RiepilogoAppuntamentoProps> = ({ appuntamento }) => {
 

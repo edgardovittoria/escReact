@@ -6,19 +6,22 @@ import { formPrenotaImpiantoSelector } from "../../../../store/formPrenotaImpian
 import { istruttoreSelector } from "../../../../store/IstruttoreSlice";
 import { utentePolisportivaSelector } from "../../../../store/utentePolisportivaSlice";
 import { sportSelector } from "../../../../store/SportSlice";
-import { DataOraImpiantoIstruttoreSelezione, IstruttoriSelezionatiItem } from "../../../../components/formComponents/DataOraImpiantoIstruttoreSelezione";
-import { ImpiantiSelezionatiItem } from "../../../../components/formComponents/DataOraImpiantoRicorrente";
-import { OrarioPrenotazione } from "../../../../components/formComponents/DataOraSelezione";
+import { DataOraImpiantoIstruttoreSelezione } from "../../../../components/formComponents/DataOraImpiantoIstruttoreSelezione";
 import { SelezioneSport } from "../../../../components/formComponents/SelezioneSport";
 import { SportiviInvitabiliSelezione } from "../../../../components/formComponents/SportiviInvitabiliSelezione";
 import {FormPrenotazione} from "../../../../model/FormPrenotazione";
 import {useAggiornaOpzioniSuSelezioneSport} from "../../hooks/useAggiornaOpzioniSuSelezioneSport";
 import {useAggironaOpzioniSuSelezioneOrario} from "../../hooks/useAggironaOpzioniSuSelezioneOrario";
-import {DatiPerAggiornamentoOpzioni} from "../../nuovaPrenotazioneUtenteSingolo/prenotazioneImpianto/components/FormPrenotazioneImpiantoRicorrente";
 import {useImpostaOrarioSelezionatoNellaListaOrari} from "../../hooks/useImpostaOrarioSelezionatoNellaListaOrari";
 import {useImpostaImpiantoSelezionatoNellaListaImpianti} from "../../hooks/useImpostaImpiantoSelezionatoNellaListaImpianti";
 import {useSubmitFormPrenotazione} from "../../hooks/useSubmitFormPrenotazione";
 import {useImpostaIstruttoreSelezionatoNellaListaIstruttori} from "../../hooks/useImpostaIstruttoreSelezionatoNellaListaIstruttori";
+import {
+    DatiPerAggiornamentoOpzioni,
+    ImpiantiSelezionatiItem,
+    IstruttoriSelezionatiItem,
+    OrarioPrenotazione
+} from "../../../../model/TipiAusiliari";
 
 
 let orari: OrarioPrenotazione[] = [];

@@ -5,8 +5,7 @@ import { Button, Col, Form, FormGroup, Label, Row } from 'reactstrap';
 import { formPrenotaImpiantoSelector } from '../../../../../store/formPrenotaImpiantoSlice';
 import { utentePolisportivaSelector } from '../../../../../store/utentePolisportivaSlice';
 import { sportSelector } from '../../../../../store/SportSlice';
-import { CheckBoxPendingSelezionatoItem, DataOraImpiantoRicorrente, ImpiantiSelezionatiItem } from '../../../../../components/formComponents/DataOraImpiantoRicorrente';
-import { OrarioPrenotazione } from '../../../../../components/formComponents/DataOraSelezione';
+import { DataOraImpiantoRicorrente } from '../../../../../components/formComponents/DataOraImpiantoRicorrente';
 import { GiocatoriNonIscritti } from '../../../../../components/formComponents/GiocatoriNonIscrittiSelezione';
 import { PostiLiberi } from '../../../../../components/formComponents/PostiLiberi';
 import { SelezioneSport } from '../../../../../components/formComponents/SelezioneSport';
@@ -18,18 +17,19 @@ import {useImpostaOrarioSelezionatoNellaListaOrari} from "../../../hooks/useImpo
 import {useImpostaImpiantoSelezionatoNellaListaImpianti} from "../../../hooks/useImpostaImpiantoSelezionatoNellaListaImpianti";
 import {useSubmitFormPrenotazione} from "../../../hooks/useSubmitFormPrenotazione";
 import {useImpostaCheckboxPendingSelezionatoNellaListaCheckboxPending} from "../../../hooks/useImpostaCheckboxPendingSelezionatoNellaListaCheckboxPending";
+import {
+    CheckBoxPendingSelezionatoItem,
+    DatiPerAggiornamentoOpzioni,
+    ImpiantiSelezionatiItem,
+    OrarioPrenotazione
+} from "../../../../../model/TipiAusiliari";
 
 let orari: OrarioPrenotazione[] = [];
 let impiantiSelezionati: ImpiantiSelezionatiItem[] = [];
 let checkboxes: CheckBoxPendingSelezionatoItem[] = [];
 let datiPerAggiornamentoOpzioni: DatiPerAggiornamentoOpzioni = {};
 
-export interface DatiPerAggiornamentoOpzioni {
-    sport?: string,
-    orario?: OrarioPrenotazione,
-    orariSelezionati?: OrarioPrenotazione[],
-    numeroDate?: number,
-}
+
 
 export const FormPrenotazioneImpiantoRicorrente: React.FC = () => {
 

@@ -6,8 +6,6 @@ import { notificheSelector } from '../../store/notificheSlice';
 import { AppuntamentiSottoscrivibili } from '../../components/appuntamentiSottoscrivibili/AppuntamentiSottoscrivibili';
 import {DettagliCorso} from "../../components/dettagliCorso/DettagliCorso";
 
-
-
 export const DettagliNotifica: React.FC = () => {
     
     const dettagliNotifica = useSelector(notificheSelector).dettagliNotifica    
