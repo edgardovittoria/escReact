@@ -1,8 +1,8 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import { Button, Card, CardTitle, Col, ListGroup, ListGroupItem, Row, Spinner } from 'reactstrap';
 import { useHistory } from 'react-router-dom';
-import { prenotazioneSelector} from '../../../store/prenotazioneSlice';
+import {annullaCreazioneCorso, prenotazioneSelector} from '../../../store/prenotazioneSlice';
 import { sportivoAutenticatoSelector } from '../../../store/sportivoAutenticatoSlice';
 import {useConfermaPrenotazione} from "../hooks/useConfermaPrenotazione";
 import {RiepilogoUtente} from "../../../components/riepilogoProfilo/RiepilogoUtente";
@@ -14,7 +14,9 @@ export const RiepilogoCreazioneCorso: React.FC = () => {
     const prenotazioneDaConfermare = useSelector(prenotazioneSelector).prenotazioneDaConfermare
     const sportivoAutenticato = useSelector(sportivoAutenticatoSelector)
     const history = useHistory();
+    const dispatch = useDispatch();
     const confermaPrenotazione = useConfermaPrenotazione();
+
 
     if (prenotazioneDaConfermare.appuntamenti[0] !== undefined) {
 
@@ -85,7 +87,7 @@ export const RiepilogoCreazioneCorso: React.FC = () => {
                                                 Ora Fine : {appuntamento.oraFineAppuntamento}
                                             </ListGroupItem>
                                             <ListGroupItem>
-                                                Costo Totale : {appuntamento.costo}€
+                                                Costo Totale : {appuntamento.costo}
                                             </ListGroupItem>
                                         </>
                                     )
@@ -97,7 +99,8 @@ export const RiepilogoCreazioneCorso: React.FC = () => {
                                             outline color="danger"
                                             style={{ marginTop: "20%", width: "100%" }}
                                             onClick={() => {
-                                                history.go(-2)
+                                                dispatch(annullaCreazioneCorso())
+                                                history.push("/profiloSportivo")
                                             }} >Annulla</Button>
                                     </Col>
                                     <Col>

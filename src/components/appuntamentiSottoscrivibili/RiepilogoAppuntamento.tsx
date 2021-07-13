@@ -11,12 +11,13 @@ import {notificheSelector} from "../../store/notificheSlice";
 import {datiIscrizioneEventoEsistenteDefault} from "../../model/TipiAusiliari";
 
 export type RiepilogoAppuntamentoProps = {
-    appuntamento: Appuntamento
+    appuntamento: Appuntamento,
+    displayButtonPartecipa: string
 }
 
 
 
-export const RiepilogoAppuntamento: React.FC<RiepilogoAppuntamentoProps> = ({ appuntamento }) => {
+export const RiepilogoAppuntamento: React.FC<RiepilogoAppuntamentoProps> = ({ appuntamento, displayButtonPartecipa }) => {
 
 
     const dispatch = useDispatch();
@@ -44,7 +45,7 @@ export const RiepilogoAppuntamento: React.FC<RiepilogoAppuntamentoProps> = ({ ap
 
     }
 
-    const [displayPartecipa, setDisplayPartecipa] = useState("block");
+    const [displayPartecipa, setDisplayPartecipa] = useState(displayButtonPartecipa);
 
     useEffect(() => {
         appuntamento.partecipanti.map(utente => {
@@ -88,7 +89,7 @@ export const RiepilogoAppuntamento: React.FC<RiepilogoAppuntamentoProps> = ({ ap
                                     Ora Fine : {appuntamento.oraFineAppuntamento}
                                 </ListGroupItem>
                                 <ListGroupItem>
-                                    Costo Totale : {appuntamento.costo}€
+                                    Costo Totale : {appuntamento.costo}
                                 </ListGroupItem>
                             </ListGroup>
                             <ListGroup>

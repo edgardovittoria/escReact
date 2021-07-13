@@ -19,6 +19,9 @@ import { DettagliNotifica } from './pages/dettagliNotifica/DettagliNotifica';
 import { ProfiloSquadra } from './pages/profili/profiloSquadra/ProfiloSquadra';
 import { NuovaPrenotazioneImpiantoSquadra } from './pages/nuovaPrenotazione/nuovaPrenotazioneSquadra/nuovaPrenotazioneImpiantoSquadra/NuovaPrenotazioneImpiantoSquadra';
 import axios from "axios";
+import {ProfiloIstruttore} from "./pages/profili/profiloIstruttore/ProfiloIstruttore";
+import {ProfiloManutentore} from "./pages/profili/profiloManutentore/ProfiloManutentore";
+import {Home} from "./pages/home/Home";
 
 axios.interceptors.request.use((config) => {
   const jwt = store.getState().sportivo.jwt
@@ -41,8 +44,11 @@ export const App: React.FC = () => {
         <BrowserRouter>
           <NavBar />
           <Switch>
+            <Route path="/home"><Home/></Route>
             <Route path="/login"><Login /></Route>
             <Route path="/profiloSportivo"><ProfiloSportivo /></Route>
+            <Route path="/profiloIstruttore"><ProfiloIstruttore/></Route>
+            <Route path="/profiloManutentore"><ProfiloManutentore/></Route>
             <Route path="/nuovaPrenotazioneImpianto"><NuovaPrenotazioneImpianto /></Route>
             <Route path="/nuovaPrenotazioneLezione"><NuovaPrenotazioneLezione /></Route>
             <Route path="/PrenotazioneCorso"><PrenotazioneCorso /></Route>
@@ -53,7 +59,7 @@ export const App: React.FC = () => {
             <Route path="/dettagliNotifica"><DettagliNotifica /></Route>
             <Route path="/profiloSquadra"><ProfiloSquadra/></Route>
             <Route path="/nuovaPrenotazioneImpiantoSquadra"><NuovaPrenotazioneImpiantoSquadra /></Route>
-            <Redirect to="/login" />
+            <Redirect to="/home" />
           </Switch>
         </BrowserRouter>
       </PersistGate>

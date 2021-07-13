@@ -8,11 +8,11 @@ export type Prenotazione = {
     appuntamenti: Appuntamento[]
     infoGeneraliEvento: InfoGeneraliEvento
     
-}&Notificabile
+}
 
 export type InfoGeneraliEvento = {
     numeroMinimoPartecipanti: number
     numeroMassimoPartecipanti: number
     costoPerPartecipante: number
-    invitatiCorso: UtentePolisportiva[]
+    nomeEvento: string
 }

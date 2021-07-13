@@ -46,7 +46,7 @@ export const CardRiepilogoPrenotazioneImpianto: React.FC<CardRiepilogoPrenotazio
                         Ora Fine : {appuntamento.oraFineAppuntamento}
                     </ListGroupItem>
                     <ListGroupItem>
-                        Costo Totale : {appuntamento.costo}€
+                        Costo Totale : {appuntamento.costo}
                     </ListGroupItem>
                 </div>
             )

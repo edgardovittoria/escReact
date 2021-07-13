@@ -1,5 +1,4 @@
 import React, {useState} from "react";
-import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { Button, Col, Form, FormGroup, Label, Row } from "reactstrap";
 import { formPrenotaImpiantoSelector } from "../../../../store/formPrenotaImpiantoSlice";
@@ -9,74 +8,45 @@ import { sportSelector } from "../../../../store/SportSlice";
 import { DataOraImpiantoIstruttoreSelezione } from "../../../../components/formComponents/DataOraImpiantoIstruttoreSelezione";
 import { SelezioneSport } from "../../../../components/formComponents/SelezioneSport";
 import { SportiviInvitabiliSelezione } from "../../../../components/formComponents/SportiviInvitabiliSelezione";
-import {FormPrenotazione} from "../../../../model/FormPrenotazione";
-import {useAggiornaOpzioniSuSelezioneSport} from "../../hooks/useAggiornaOpzioniSuSelezioneSport";
-import {useAggironaOpzioniSuSelezioneOrario} from "../../hooks/useAggironaOpzioniSuSelezioneOrario";
-import {useImpostaOrarioSelezionatoNellaListaOrari} from "../../hooks/useImpostaOrarioSelezionatoNellaListaOrari";
-import {useImpostaImpiantoSelezionatoNellaListaImpianti} from "../../hooks/useImpostaImpiantoSelezionatoNellaListaImpianti";
+import {formPrenotazioneDefault} from "../../../../model/FormPrenotazione";
 import {useSubmitFormPrenotazione} from "../../hooks/useSubmitFormPrenotazione";
-import {useImpostaIstruttoreSelezionatoNellaListaIstruttori} from "../../hooks/useImpostaIstruttoreSelezionatoNellaListaIstruttori";
-import {
-    DatiPerAggiornamentoOpzioni,
-    ImpiantiSelezionatiItem,
-    IstruttoriSelezionatiItem,
-    OrarioPrenotazione
-} from "../../../../model/TipiAusiliari";
+import {DatiPerAggiornamentoOpzioni} from "../../../../model/TipiAusiliari";
+import {useOnOrarioselezione} from "../../hooks/useOnOrarioselezione";
+import {useOnImpiantoSelezione} from "../../hooks/useOnImpiantoSelezione";
+import {useOnIstruttoreSelezione} from "../../hooks/useOnIstruttoreSelezione";
+import {useOnSportiviInvitabiliSelezione} from "../../hooks/useOnSportiviInvitabiliSelezione";
+import {useOnSportSelezione} from "../../hooks/useOnSportSelezione";
 
 
-let orari: OrarioPrenotazione[] = [];
-let impiantiSelezionati: ImpiantiSelezionatiItem[] = [];
-let istruttoriSelezionati: IstruttoriSelezionatiItem[] = [];
 let datiPerAggiornamentoOpzioni: DatiPerAggiornamentoOpzioni = {};
 
 export const FormCreazioneCorso: React.FC = () => {
-
-    const { handleSubmit, setValue } = useForm<FormPrenotazione>();
 
     const [numeroDate, setNumeroDate] = useState(0);
     const sportPraticabili = useSelector(sportSelector);
     const formPrenotaLezione = useSelector(formPrenotaImpiantoSelector);
     const istruttoriDisponibili = useSelector(istruttoreSelector);
-    const aggiornaOpzioniSuSelezioneSport = useAggiornaOpzioniSuSelezioneSport();
-    const aggiornaOpzioniSuSelezioneOrario = useAggironaOpzioniSuSelezioneOrario();
-    const impostaOrarioSelezionatoNellaListaOrari = useImpostaOrarioSelezionatoNellaListaOrari();
-    const impostaImpiantoSelezionatoNellaListaImpianti = useImpostaImpiantoSelezionatoNellaListaImpianti();
-    const submitFormPrenotazione = useSubmitFormPrenotazione();
-    const impostaIstruttoreSelezionatoNellaListaIstruttori = useImpostaIstruttoreSelezionatoNellaListaIstruttori();
-
-
-    function onSportSelezionato(sportSelezionato: string) {
-        datiPerAggiornamentoOpzioni.sport = sportSelezionato
-        setValue("sportSelezionato", sportSelezionato)
-        aggiornaOpzioniSuSelezioneSport(datiPerAggiornamentoOpzioni)
-    }
-
-
-    const onOrarioSelezione = (orarioSelezionato: OrarioPrenotazione) => {
-        impostaOrarioSelezionatoNellaListaOrari(orarioSelezionato, orari)
-        datiPerAggiornamentoOpzioni.orariSelezionati = orari
-        datiPerAggiornamentoOpzioni.orario = orarioSelezionato
-        setValue("orariSelezionati", orari);
-        aggiornaOpzioniSuSelezioneOrario(datiPerAggiornamentoOpzioni)
-    }
-
-    const onImpiantoSelezioneRicorrente = (impiantoItem: ImpiantiSelezionatiItem) => {
-        impostaImpiantoSelezionatoNellaListaImpianti(impiantoItem, impiantiSelezionati)
-        setValue("impianti", impiantiSelezionati)
-    }
-    const onIstruttoreSelezioneRicorrente = (istruttoreItem: IstruttoriSelezionatiItem) => {
-        impostaIstruttoreSelezionatoNellaListaIstruttori(istruttoreItem, istruttoriSelezionati)
-        setValue("istruttori", istruttoriSelezionati)
-    }
-
     const sportiviInvitabili = useSelector(utentePolisportivaSelector);
-    const onSportiviInvitabiliSelezione = (emailSportivi: string[]) => {
-        setValue("sportiviInvitati", emailSportivi)
-    }
+    const submitFormPrenotazione = useSubmitFormPrenotazione("CORSO");
+    const onSportSelezione = useOnSportSelezione(datiPerAggiornamentoOpzioni);
+    const onOrarioSelezione = useOnOrarioselezione(datiPerAggiornamentoOpzioni);
+    const onImpiantoSelezione = useOnImpiantoSelezione();
+    const onIstruttoreSelezione = useOnIstruttoreSelezione();
+    const onSportiviInvitabiliSelezione = useOnSportiviInvitabiliSelezione();
+
 
 
     return (
-        <Form onSubmit={handleSubmit(submitFormPrenotazione)}>
+        <Form onSubmit={() => submitFormPrenotazione(formPrenotazioneDefault)}>
+            <FormGroup>
+                <Label style={{ marginLeft: '5px' }}>Inserire il nome del corso</Label>
+                <input type="text" id="nomeCorso" name="nomeCorso"
+                       style={{width:"100%"}}
+                       onChange={(target) => {
+                           //setValue("nomeEvento", target.currentTarget.value)
+                           formPrenotazioneDefault.nomeEvento = target.currentTarget.value
+                       }}/>
+            </FormGroup>
             <FormGroup>
                 <Label style={{ marginLeft: '5px' }}>Seleziona il numero minimo di partecipanti</Label>
                 <select
@@ -84,7 +54,8 @@ export const FormCreazioneCorso: React.FC = () => {
                     name="numeroMinimoPartecipanti"
                     id="numeroMinimoPartecipanti"
                     onClick={(value) => {
-                        setValue("numeroMinimoPartecipanti", Number.parseInt(value.currentTarget.value))
+                        //setValue("numeroMinimoPartecipanti", Number.parseInt(value.currentTarget.value))
+                        formPrenotazioneDefault.numeroMinimoPartecipanti = Number.parseInt(value.currentTarget.value)
                     }}
                 >
                     <option key={1} value={1}>1</option>
@@ -101,7 +72,8 @@ export const FormCreazioneCorso: React.FC = () => {
                     name="numeroMassimoPartecipanti"
                     id="numeroMassimoPartecipanti"
                     onClick={(value) => {
-                        setValue("numeroMassimoPartecipanti", Number.parseInt(value.currentTarget.value))
+                        //setValue("numeroMassimoPartecipanti", Number.parseInt(value.currentTarget.value))
+                        formPrenotazioneDefault.numeroMassimoPartecipanti = Number.parseInt(value.currentTarget.value)
                     }}
                 >
                     <option key={5} value={5}>5</option>
@@ -116,7 +88,8 @@ export const FormCreazioneCorso: React.FC = () => {
                 <input type="number" id="costoPerPartecipante" name="costoPerPartecipante"
                     style={{width:"100%"}}
                     onInput={(target) => {
-                        setValue("costoPerPartecipante", Number.parseInt(target.currentTarget.value))
+                        //setValue("costoPerPartecipante", Number.parseInt(target.currentTarget.value))
+                        formPrenotazioneDefault.costoPerPartecipante = Number.parseInt(target.currentTarget.value)
                     }}/>
             </FormGroup>
             <FormGroup>
@@ -142,17 +115,17 @@ export const FormCreazioneCorso: React.FC = () => {
                 <Row style={{ marginLeft: '1px' }}>
                     <Col>
                         <SelezioneSport sports={sportPraticabili.sports}
-                            handleSelezioneSport={onSportSelezionato} />
+                            handleSelezioneSport={onSportSelezione} />
                     </Col>
                 </Row>
             </FormGroup>
             <FormGroup className="border border-dark rounded" style={{ textAlign: 'left' }}>
                 <DataOraImpiantoIstruttoreSelezione impianti={formPrenotaLezione.arrayListeImpianti}
                     handleSelezioneDataOra={onOrarioSelezione}
-                    handleSelezioneImpianto={onImpiantoSelezioneRicorrente}
+                    handleSelezioneImpianto={onImpiantoSelezione}
                     numeroDate={numeroDate}
                     istruttori={istruttoriDisponibili.arrayListeIstruttori}
-                    handleSelezioneIstruttore={onIstruttoreSelezioneRicorrente} />
+                    handleSelezioneIstruttore={onIstruttoreSelezione} />
             </FormGroup>
             <FormGroup>
                 <Label>Invita sportivi al corso</Label>

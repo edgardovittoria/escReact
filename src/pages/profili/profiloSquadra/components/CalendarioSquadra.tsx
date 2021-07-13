@@ -47,7 +47,7 @@ const TableRows: React.FC<CalendarioSquadraProps> = ({ appuntamenti, squadraSele
                 <th>{appuntamento.dataAppuntamento}</th>
                 <th>{appuntamento.oraInizioAppuntamento}</th>
                 <th>{appuntamento.oraFineAppuntamento}</th>
-                <th>{appuntamento.costo} €</th>
+                <th>{appuntamento.costo}</th>
                 <th>{appuntamento.squadrePartecipanti.filter((idSquadra) =>
                     squadraSelezionata.idSquadra !== idSquadra)}
                 </th>

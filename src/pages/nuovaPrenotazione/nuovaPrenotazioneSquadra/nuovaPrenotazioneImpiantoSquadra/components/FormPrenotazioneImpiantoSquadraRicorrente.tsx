@@ -6,23 +6,14 @@ import { formPrenotaImpiantoSelector } from '../../../../../store/formPrenotaImp
 import { squadraSelector } from '../../../../../store/squadraSlice';
 import { DataOraImpiantoRicorrente } from '../../../../../components/formComponents/DataOraImpiantoRicorrente';
 import { SquadreInvitabiliSelezione } from '../../../../../components/formComponents/SquadreInvitabiliSelezione';
-import {FormPrenotazione} from "../../../../../model/FormPrenotazione";
+import {FormPrenotazione, formPrenotazioneDefault} from "../../../../../model/FormPrenotazione";
 import {useAggiornaOpzioniSuSelezioneSport} from "../../../hooks/useAggiornaOpzioniSuSelezioneSport";
-import {useAggironaOpzioniSuSelezioneOrario} from "../../../hooks/useAggironaOpzioniSuSelezioneOrario";
-import {useImpostaOrarioSelezionatoNellaListaOrari} from "../../../hooks/useImpostaOrarioSelezionatoNellaListaOrari";
-import {useImpostaImpiantoSelezionatoNellaListaImpianti} from "../../../hooks/useImpostaImpiantoSelezionatoNellaListaImpianti";
 import {useSubmitFormPrenotazione} from "../../../hooks/useSubmitFormPrenotazione";
-import {useImpostaCheckboxPendingSelezionatoNellaListaCheckboxPending} from "../../../hooks/useImpostaCheckboxPendingSelezionatoNellaListaCheckboxPending";
-import {
-    CheckBoxPendingSelezionatoItem, DatiPerAggiornamentoOpzioni,
-    ImpiantiSelezionatiItem,
-    OrarioPrenotazione
-} from "../../../../../model/TipiAusiliari";
+import {DatiPerAggiornamentoOpzioni} from "../../../../../model/TipiAusiliari";
+import {useOnOrarioselezione} from "../../../hooks/useOnOrarioselezione";
+import {useOnImpiantoSelezione} from "../../../hooks/useOnImpiantoSelezione";
+import {useOnCheckboxPendingSelezione} from "../../../hooks/useOnCheckboxPendingSelezione";
 
-
-let orari: OrarioPrenotazione[] = [];
-let impiantiSelezionati: ImpiantiSelezionatiItem[] = [];
-let checkboxes: CheckBoxPendingSelezionatoItem[] = [];
 let datiPerAggiornamentoOpzioni: DatiPerAggiornamentoOpzioni = {};
 
 export interface FormPrenotazioneImpiantoSquadraRicorrenteProps {
@@ -31,52 +22,32 @@ export interface FormPrenotazioneImpiantoSquadraRicorrenteProps {
 
 export const FormPrenotazioneImpiantoSquadraRicorrente: React.FC<FormPrenotazioneImpiantoSquadraRicorrenteProps> = ({sport}) => {
 
-    const { register, setValue, handleSubmit, formState: { errors } } = useForm<FormPrenotazione>();
+    const { register } = useForm<FormPrenotazione>();
 
     const [numeroDate, setNumeroDate] = useState(0);
     const squadreInvitabili = useSelector(squadraSelector).squadreInvitabili
     const opzioni = useSelector(formPrenotaImpiantoSelector);
     const aggiornaOpzioniSuSelezioneSport = useAggiornaOpzioniSuSelezioneSport();
-    const aggiornaOpzioniSuSelezioneOrario = useAggironaOpzioniSuSelezioneOrario();
-    const impostaOrarioSelezionatoNellaListaOrari = useImpostaOrarioSelezionatoNellaListaOrari();
-    const impostaImpiantoSelezionatoNellaListaImpianti = useImpostaImpiantoSelezionatoNellaListaImpianti();
-    const submitFormPrenotazione = useSubmitFormPrenotazione();
-    const impostaCheckboxPendingSelezionatoNellaListaCheckboxPending = useImpostaCheckboxPendingSelezionatoNellaListaCheckboxPending();
-
+    const submitFormPrenotazione = useSubmitFormPrenotazione("IMPIANTO");
+    const onOrarioSelezione = useOnOrarioselezione(datiPerAggiornamentoOpzioni);
+    const onImpiantoSelezione = useOnImpiantoSelezione();
+    const onCheckboxPendingSelezione = useOnCheckboxPendingSelezione();
 
     useEffect(() => {
         datiPerAggiornamentoOpzioni.sport = sport
-        setValue("sportSelezionato", sport)
+        formPrenotazioneDefault.sportSelezionato = sport
         aggiornaOpzioniSuSelezioneSport(datiPerAggiornamentoOpzioni)
-    }, [aggiornaOpzioniSuSelezioneSport, setValue, sport]);
+    }, [sport]);
 
-
-    const onOrarioSelezione = (orarioSelezionato: OrarioPrenotazione) => {
-        impostaOrarioSelezionatoNellaListaOrari(orarioSelezionato, orari)
-        datiPerAggiornamentoOpzioni.orariSelezionati = orari
-        datiPerAggiornamentoOpzioni.orario = orarioSelezionato
-        setValue("orariSelezionati", orari);
-        aggiornaOpzioniSuSelezioneOrario(datiPerAggiornamentoOpzioni)
-    }
-
-    const onImpiantoSelezioneRicorrente = (impiantoItem: ImpiantiSelezionatiItem) => {
-        impostaImpiantoSelezionatoNellaListaImpianti(impiantoItem, impiantiSelezionati)
-        setValue("impianti", impiantiSelezionati)
-    }
-
-    const onCheckBoxPendingSelezioneRicorrente = (checkBoxPendingItem: CheckBoxPendingSelezionatoItem) => {
-        impostaCheckboxPendingSelezionatoNellaListaCheckboxPending(checkBoxPendingItem, checkboxes)
-        setValue("checkboxesPending", checkboxes)
-    }
 
     const onSquadreInvitabiliSelezione = (listaSquadre: number[]) => {
-        setValue("squadreInvitate", listaSquadre)
+        formPrenotazioneDefault.squadreInvitate = listaSquadre
     }
 
 
 
     return (
-        <Form onSubmit={handleSubmit(submitFormPrenotazione)}>
+        <Form onSubmit={() => submitFormPrenotazione(formPrenotazioneDefault)}>
             <FormGroup>
                 <select
                     className="form-control"
@@ -97,8 +68,8 @@ export const FormPrenotazioneImpiantoSquadraRicorrente: React.FC<FormPrenotazion
             <FormGroup className="border border-dark rounded" style={{ textAlign: 'left' }}>
                 <DataOraImpiantoRicorrente impianti={opzioni.arrayListeImpianti}
                     handleSelezioneDataOra={onOrarioSelezione}
-                    handleSelezioneImpianto={onImpiantoSelezioneRicorrente}
-                    handleSelezioneCheckBoxPending={onCheckBoxPendingSelezioneRicorrente}
+                    handleSelezioneImpianto={onImpiantoSelezione}
+                    handleSelezioneCheckBoxPending={onCheckboxPendingSelezione}
                     numeroDate={numeroDate}
                     {...register("impianti",  {required: true})} 
                     {...register("orariSelezionati", {required: true})}/>

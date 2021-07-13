@@ -4,11 +4,12 @@ import { Notifica } from '../model/Notifica';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { AppThunk } from './store';
+import {Notificabile} from "../model/Notificabile";
 
 export type NotificheState = {
     notifiche: Notifica[]
     notificaSelezionata: Notifica
-    dettagliNotifica: Prenotazione
+    dettagliNotifica: Notificabile | null
     isLoading: boolean
     errors: string
 }
@@ -24,34 +25,11 @@ export const NotificheSlice = createSlice({
             messaggio: "",
             mittente: "",
             tipoEventoNotificabile: "",
+            tipoNotifica: "",
             squadraDelDestinatario: null,
             squadraDelMittente: null,
         },
-        dettagliNotifica: {
-            idPrenotazione: null,
-            sportivoPrenotante: {
-                nome: "",
-                cognome: "",
-                email: "",
-                ruoli: [],
-                attributiExtra: {
-                    moroso: false,
-                    sportPraticati: [],
-                    appuntamentiSportivo: [],
-                    appuntamentiManutentore: [],
-                    appuntamentiLezioni: []
-                }
-            },
-            appuntamenti: [],
-            infoGeneraliEvento: {
-                numeroMassimoPartecipanti: -1,
-                numeroMinimoPartecipanti: -1,
-                costoPerPartecipante: -1,
-                invitatiCorso: []
-            },
-            tipoEventoNotificabile: ""
-
-        },
+        dettagliNotifica: null,
         isLoading: false,
         errors: ""
     } as NotificheState,
@@ -67,7 +45,7 @@ export const NotificheSlice = createSlice({
             state.notifiche = notificheNonModificate
             state.notificaSelezionata = action.payload
         },
-        addDettagliNotifica(state: NotificheState, action: PayloadAction<Prenotazione>){
+        addDettagliNotifica(state: NotificheState, action: PayloadAction<Notificabile>){
             state.isLoading= false
             state.dettagliNotifica = action.payload
         },

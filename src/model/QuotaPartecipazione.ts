@@ -1,6 +1,6 @@
 
 export type QuotaPartecipazione = {
-    costo: number
+    costo: string
     pagata: boolean
     sportivo: string
 }

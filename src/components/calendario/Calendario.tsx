@@ -1,17 +1,16 @@
 import React from 'react';
-import {UtentePolisportiva} from "../../../../model/UtentePolisportiva";
-import {Appuntamento} from "../../../../model/Appuntamento";
+import {Appuntamento} from "../../model/Appuntamento";
 import {Button} from "reactstrap";
-import {RiepilogoAppuntamento} from "../../../../components/appuntamentiSottoscrivibili/RiepilogoAppuntamento";
+import {RiepilogoAppuntamento} from "../appuntamentiSottoscrivibili/RiepilogoAppuntamento";
 
 interface CalendarioSportivoProps {
-    sportivo: UtentePolisportiva
+    appuntamenti: Appuntamento[]
 }
 
-export const CalendarioSportivo: React.FC<CalendarioSportivoProps> = ({sportivo}) => {
-    let appuntamenti: Appuntamento[] = [];
+export const Calendario: React.FC<CalendarioSportivoProps> = ({appuntamenti}) => {
 
-    const popolaCalendarioUtente = () => {
+
+    /*const popolaCalendarioUtente = () => {
         inserisciAppuntamentiUtenteComeSportivo()
         inserisciAppuntamentiUtenteComeIstruttore()
         inserisciAppuntamentiUtenteComeManutentore()
@@ -33,7 +32,7 @@ export const CalendarioSportivo: React.FC<CalendarioSportivoProps> = ({sportivo}
             appuntamenti.push(...sportivo.attributiExtra.appuntamentiManutentore)
         }
     }
-    appuntamenti = popolaCalendarioUtente()
+    appuntamenti = popolaCalendarioUtente()*/
 
     if(appuntamenti.length !== 0){
         return (
@@ -59,7 +58,7 @@ export const CalendarioSportivo: React.FC<CalendarioSportivoProps> = ({sportivo}
                                 <hr />
                             </li>
                             <div id={"dettagliPrenotazione" + index} style={{ display: "none" }}>
-                                <RiepilogoAppuntamento appuntamento={appuntamento}/>
+                                <RiepilogoAppuntamento appuntamento={appuntamento} displayButtonPartecipa="none"/>
                             </div>
                         </>
                     )

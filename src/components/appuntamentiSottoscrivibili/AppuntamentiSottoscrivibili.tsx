@@ -4,21 +4,21 @@ import { Appuntamento } from '../../model/Appuntamento';
 import { RiepilogoAppuntamento } from './RiepilogoAppuntamento'
 
 export type AppuntamentiSottoscrivibiliProps = {
-    appuntamenti: Appuntamento[]
+    appuntamenti: Appuntamento[] | undefined
 }
 
 export const AppuntamentiSottoscrivibili: React.FC<AppuntamentiSottoscrivibiliProps> = ({ appuntamenti }) => {
 
 
 
-    if (appuntamenti.length === 0) {
+    if (appuntamenti?.length === 0) {
         return (
             <h4 style={{ marginTop: "200px", fontWeight: "normal" }}>Al momento non sono presenti appuntamenti a cui potersi iscrivere</h4>
         )
     } else {
         return (
             <ul style={{ textAlign: "left", marginTop: "20px" }}>
-                {appuntamenti.map((appuntamento, index) => {
+                {appuntamenti?.map((appuntamento, index) => {
                     return (
                         <>
                             <li key={index} style={{ marginTop: "20px" }}>
@@ -39,7 +39,7 @@ export const AppuntamentiSottoscrivibili: React.FC<AppuntamentiSottoscrivibiliPr
                                 <hr />
                             </li>
                             <div id={"riepilogoAppuntamento"+index} style={{display: "none"}}>
-                                <RiepilogoAppuntamento appuntamento={appuntamento} />
+                                <RiepilogoAppuntamento appuntamento={appuntamento} displayButtonPartecipa="block"/>
                             </div>
 
                         </>

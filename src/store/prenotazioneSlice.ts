@@ -57,7 +57,7 @@ export const PrenotazioneSlice = createSlice({
                 numeroMassimoPartecipanti: -1,
                 numeroMinimoPartecipanti: -1,
                 costoPerPartecipante: -1,
-                invitatiCorso: []
+                nomeEvento: ""
             },
             tipoEventoNotificabile: "PRENOTAZIONE"
         },
@@ -90,9 +90,8 @@ export const PrenotazioneSlice = createSlice({
                     numeroMassimoPartecipanti: -1,
                     numeroMinimoPartecipanti: -1,
                     costoPerPartecipante: -1,
-                    invitatiCorso: []
+                    nomeEvento: ""
                 },
-                tipoEventoNotificabile: "PRENOTAZIONE"
             }
         },
         addPrenotazione(state: PrenotazioneState, action: PayloadAction<Prenotazione>) {
@@ -214,7 +213,6 @@ export const riepilogoPrenotazione = (prenotazione: FormPrenotazione): AppThunk 
             sportivoPrenotante: res.data.sportivoPrenotante,
             appuntamenti: res.data.appuntamenti,
             infoGeneraliEvento: res.data.infoGeneraliEvento,
-            tipoEventoNotificabile: "PRENOTAZIONE"
         }
         dispatch(addPrenotazioneDaConfermare(prenotazioneDaConfermare))
     } catch (error) {
@@ -272,6 +270,16 @@ export const partecipazioneEventoEsistente = (datiIscrizioneEventoEsistente: Dat
         if (res.status === 204) {
             alert("Partecipazione confermata")
         }
+    } catch (error) {
+        dispatch(setErrors(error))
+    }
+
+}
+
+export const annullaCreazioneCorso = (): AppThunk => async dispatch => {
+    try {
+        dispatch(setLoading(true));
+        await axios.delete("http://localhost:8080/effettuaPrenotazione/annullaCreazioneCorso")
     } catch (error) {
         dispatch(setErrors(error))
     }

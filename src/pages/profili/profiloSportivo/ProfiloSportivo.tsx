@@ -1,40 +1,26 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable array-callback-return */
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchSportivo, sportivoAutenticatoSelector } from '../../../store/sportivoAutenticatoSlice';
+import { useSelector } from 'react-redux';
+import { sportivoAutenticatoSelector } from '../../../store/sportivoAutenticatoSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTableTennis } from '@fortawesome/free-solid-svg-icons/faTableTennis';
 import { faFutbol, faVolleyballBall } from '@fortawesome/free-solid-svg-icons';
 import { useHistory } from 'react-router';
-import './css/profiloSportivo.css';
-import { resetPrenotazioneDaConfermare } from '../../../store/prenotazioneSlice';
+import '../css/profiloSportivo.css';
 import { RiepilogoUtente } from '../../../components/riepilogoProfilo/RiepilogoUtente';
-import {CalendarioSportivo} from "./components/CalendarioSportivo";
-import {fetchNotifiche} from "../../../store/notificheSlice";
-import {fetchSquadre} from "../../../store/squadraSlice";
+import {Calendario} from "../../../components/calendario/Calendario";
+import {useFetchDatiUtente} from "../hooks/useFetchDatiUtente";
 
 
 export const ProfiloSportivo: React.FC = () => {
 
     const sportivoAutenticato = useSelector(sportivoAutenticatoSelector);
-
+    const fetchDatiUtente = useFetchDatiUtente();
 
     useEffect(() => {
-        dispatch(fetchNotifiche(sportivoAutenticato.sportivo.email))
-        dispatch(fetchSquadre(sportivoAutenticato.sportivo.email))
-        dispatch(fetchSportivo(sportivoAutenticato.sportivo.email))
+        fetchDatiUtente()
     }, [])
-
-
-
-    const dispatch = useDispatch()
-    dispatch(resetPrenotazioneDaConfermare())
-
-    const style = {
-        display: "block",
-        margin: "auto"
-    };
 
     const history = useHistory()
 
@@ -55,21 +41,21 @@ export const ProfiloSportivo: React.FC = () => {
                             <h4>Prenota un impianto una lezione o un corso</h4>
                             <div className="btn-container" style={{ marginBottom: "80px" }}>
                                 <button className="btnProfilo" id="prenotazioneLezione" onClick={() => history.push("/nuovaPrenotazioneLezione")}>
-                                    <FontAwesomeIcon icon={faTableTennis} style={style} />
+                                    <FontAwesomeIcon icon={faTableTennis} style={{display: "block", margin: "auto"}} />
                                     LEZIONE
                                 </button>
                                 <button className="btnProfilo" id="prenotazioneImpianto" onClick={() => history.push("/nuovaPrenotazioneImpianto")}>
-                                    <FontAwesomeIcon icon={faFutbol} style={style} />
+                                    <FontAwesomeIcon icon={faFutbol} style={{display: "block", margin: "auto"}} />
                                     IMPIANTO
                                 </button>
 
                                 <button className="btnProfilo" id="prenotazioneCorso" onClick={() => history.push("/prenotazioneCorso")}>
-                                    <FontAwesomeIcon icon={faVolleyballBall} style={style} />
+                                    <FontAwesomeIcon icon={faVolleyballBall} style={{display: "block", margin: "auto"}} />
                                     CORSO
                                 </button>
                             </div>
                             <div id="riepilogoPrenotazioni" style={{ margin: "auto", width: "100%" }}>
-                                <CalendarioSportivo sportivo={sportivoAutenticato.sportivo} />
+                                <Calendario appuntamenti={sportivoAutenticato.sportivo.attributiExtra.appuntamentiSportivo} />
                             </div>
                         </div>
                     </div>

@@ -7,6 +7,7 @@ export type Notifica = {
     letta: boolean
     idEvento: number
     tipoEventoNotificabile: string
+    tipoNotifica: string
     squadraDelMittente: Squadra | null
     squadraDelDestinatario: Squadra | null
 }

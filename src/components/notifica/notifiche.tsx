@@ -40,12 +40,14 @@ export const Notifiche: React.FC = () => {
                     <li className="divider"/>
                     <div className="notifications-wrapper">
                         {notifiche.notifiche.map(notifica => {
+                            let opacity = 1;
+                            if(notifica.letta) opacity = 0.7
                             return (
                                 <a className="content"
                                    key={notifica.idNotifica}
                                    onClick={() => onLinkClick(notifica.idEvento, notifica.tipoEventoNotificabile, notifica.idNotifica)}>
 
-                                    <div className="notification-item">
+                                    <div className="notification-item" style={{opacity : opacity}}>
                                         <h4 className="item-title" style={{color: "black"}}>{notifica.mittente}</h4>
                                         <p className="item-info" style={{color: "black"}}>{notifica.messaggio}</p>
                                     </div>

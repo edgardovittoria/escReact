@@ -14,6 +14,10 @@ export const NavBar: React.FC = () => {
     const toggle = () => setIsOpen(!isOpen);
     const utenteAutenticato = useSelector(sportivoAutenticatoSelector);
     const [displayFunzioniDirettore, setDisplayFunzioniDirettore] = useState("none");
+    const [displayProfiloSportivo, setDisplayProfiloSportivo] = useState("none");
+    const [displayProfiloIstruttore, setDisplayProfiloIstruttore] = useState("none");
+    const [displayProfiloManutentore, setDisplayProfiloManutentore] = useState("none");
+    const [displayProfili, setDisplayProfili] = useState("none");
     const squadre = useSelector(squadraSelector).squadre
     //in questo caso lo stato iniziale deve essere "none"
     const [displayFunzioniSquadra, setDisplayFunzioniSquadra] = useState("none");
@@ -32,12 +36,28 @@ export const NavBar: React.FC = () => {
             setDisplayFunzioniDirettore("none")
             setDisplayFunzioniSquadra("none")
             setDisplayItem("none")
+            setDisplayProfili("none")
         } else {
             setDisplayItem("block")
+            setDisplayProfili("block")
         }
         utenteAutenticato.sportivo.ruoli.map(ruolo => {
-            if (ruolo === "DIRETTORE") {
-                setDisplayFunzioniDirettore("flex")
+            switch (ruolo) {
+                case "DIRETTORE":
+                    setDisplayFunzioniDirettore("flex")
+                    break
+                case "SPORTIVO":
+                    console.log("pippo")
+                    setDisplayProfiloSportivo("flex")
+                    break
+                case "ISTRUTTORE":
+                    setDisplayProfiloIstruttore("flex")
+                    break
+                case "MANUTENTORE":
+                    setDisplayProfiloManutentore("flex")
+                    break
+                default:
+                    break
             }
         })
     }, [utenteAutenticato])
@@ -50,7 +70,33 @@ export const NavBar: React.FC = () => {
                 <NavbarBrand href="/" style={{ color: "white" }}>esc</NavbarBrand>
                 <NavbarToggler onClick={toggle} />
                 <Collapse isOpen={isOpen} navbar style={{borderLeft: "2px solid white"}}>
-                    <Nav className="mr-auto" navbar>    
+                    <Nav className="mr-auto" navbar>
+                        <UncontrolledDropdown nav inNavbar
+                                              style={{ marginLeft: "10px", padding: "5px" }}>
+                            <DropdownToggle nav caret style={{
+                                display: displayProfili,
+                                color: "white" }}>
+                                Profili
+                            </DropdownToggle>
+                            <DropdownMenu right
+                                          style={{backgroundColor: "#343A40", color: "white"}}>
+                                <DropdownItem href="/profiloSportivo" style={{
+                                    display: displayProfiloSportivo,
+                                    color: "white"}}>
+                                    Sportivo
+                                </DropdownItem>
+                                <DropdownItem href="/profiloIstruttore" style={{
+                                    display: displayProfiloIstruttore,
+                                    color: "white"}}>
+                                    Istruttore
+                                </DropdownItem>
+                                <DropdownItem href="/profiloManutentore" style={{
+                                    display: displayProfiloManutentore,
+                                    color: "white"}}>
+                                    Manutentore
+                                </DropdownItem>
+                            </DropdownMenu>
+                        </UncontrolledDropdown>
                         <UncontrolledDropdown nav inNavbar
                             style={{ display: displayFunzioniSquadra, marginLeft: "10px", padding: "5px" }}>
                             <DropdownToggle nav caret style={{ color: "white" }}>
@@ -96,10 +142,6 @@ export const NavBar: React.FC = () => {
                             </DropdownToggle>
                             <DropdownMenu right
                                 style={{backgroundColor: "#343A40"}}>
-                                <DropdownItem href="/profiloSportivo"
-                                    style={{color: "white"}}>
-                                    Profilo
-                                </DropdownItem>
                                 <DropdownItem href="/"
                                     style={{color: "white"}}>
                                     Logout

@@ -15,7 +15,7 @@ export type Appuntamento = {
     tipoPrenotazione: string
     confermata: boolean
     pending: boolean
-    costo: Number
+    costo: string
     sportAssociato: Sport
     invitati: string[]
     idImpiantoPrenotato: number

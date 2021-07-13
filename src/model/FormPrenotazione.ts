@@ -17,5 +17,22 @@ export type FormPrenotazione = {
     istruttori: IstruttoriSelezionatiItem[],
     numeroMinimoPartecipanti: number,
     numeroMassimoPartecipanti: number,
-    costoPerPartecipante: number
+    costoPerPartecipante: number,
+    nomeEvento: string
+}
+
+export const formPrenotazioneDefault: FormPrenotazione = {
+    sportSelezionato: "",
+    orariSelezionati: [],
+    impianti: [],
+    squadreInvitate: [],
+    checkboxesPending: [],
+    sportiviInvitati: [],
+    postiLiberi: -1,
+    numeroGiocatoriNonIscritti: -1,
+    istruttori: [],
+    numeroMinimoPartecipanti: -1,
+    numeroMassimoPartecipanti: -1,
+    costoPerPartecipante: -1,
+    nomeEvento:""
 }

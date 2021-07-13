@@ -10,7 +10,7 @@ export interface ListItemCorsoProps {
 export const ListItemCorso: React.FC<ListItemCorsoProps> = ({corso, index}) => {
     return(
         <ListGroupItem key={index} style={{ marginTop: "20px" }}>
-            {corso.appuntamenti[0].sportAssociato.nome.toUpperCase()} {corso.infoGeneraliEvento.costoPerPartecipante} €
+            {corso.appuntamenti[0].sportAssociato.nome.toUpperCase()} {corso.infoGeneraliEvento.costoPerPartecipante}
             <Button outline color="success"
                     style={{ marginLeft: "66%", width: "20%" }}
                     onClick={() => {
