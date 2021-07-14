@@ -125,7 +125,10 @@ export const NavBar: React.FC = () => {
                             <DropdownMenu right 
                                 style={{backgroundColor: "#343A40", color: "white"}}>
                                 <DropdownItem href="/creazioneCorso" style={{color: "white"}}>
-                                    Creazione Corsi
+                                    Crea Corso
+                                </DropdownItem>
+                                <DropdownItem href="/aggiungiNuovoImpianto" style={{color: "white"}}>
+                                    Aggiungi Nuovo Impianto
                                 </DropdownItem>
                             </DropdownMenu>
                         </UncontrolledDropdown>

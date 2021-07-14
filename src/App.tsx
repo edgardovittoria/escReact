@@ -22,6 +22,7 @@ import axios from "axios";
 import {ProfiloIstruttore} from "./pages/profili/profiloIstruttore/ProfiloIstruttore";
 import {ProfiloManutentore} from "./pages/profili/profiloManutentore/ProfiloManutentore";
 import {Home} from "./pages/home/Home";
+import {AggiungiNuovoImpianto} from "./pages/aggiungiNuovoImpianto/AggiungiNuovoImpianto";
 
 axios.interceptors.request.use((config) => {
   const jwt = store.getState().sportivo.jwt
@@ -59,6 +60,7 @@ export const App: React.FC = () => {
             <Route path="/dettagliNotifica"><DettagliNotifica /></Route>
             <Route path="/profiloSquadra"><ProfiloSquadra/></Route>
             <Route path="/nuovaPrenotazioneImpiantoSquadra"><NuovaPrenotazioneImpiantoSquadra /></Route>
+            <Route path="/aggiungiNuovoImpianto"><AggiungiNuovoImpianto/></Route>
             <Redirect to="/home" />
           </Switch>
         </BrowserRouter>

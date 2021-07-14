@@ -8,3 +8,11 @@ export type Impianto = {
     sportPraticabili: Sport[]
     appuntamenti: Appuntamento[]
 }
+
+export let impiantoDefault: Impianto = {
+    idImpianto : -1,
+    indoor : false,
+    pavimentazione: "",
+    sportPraticabili: [],
+    appuntamenti: []
+}
