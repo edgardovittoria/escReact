@@ -20,7 +20,7 @@ export const ImpiantoSlice = createSlice({
         impianti: [],
         pavimentazioniDisponibili: [],
         impiantoDaCreare: {
-            idImpianto: -1,
+            idStruttura: -1,
             indoor: false,
             pavimentazione: "",
             sportPraticabili: [],

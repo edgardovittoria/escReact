@@ -30,7 +30,9 @@ export const NuovaPrenotazioneImpiantoSquadra: React.FC = () => {
                     <div className="row">
                     <RiepilogoSquadra nome={squadra.nome}
                         sport={squadra.sport.nome} />
-                        <div className="col-8">
+                        <div className="col-8"
+                             style={{backgroundColor:"whitesmoke", padding:"20px"}}
+                        >
                             <Label>PRENOTAZIONE IMPIANTO</Label>
                             <TabNuovaPrenotazioneSquadra sport={squadra.sport.nome}/>
                         </div>

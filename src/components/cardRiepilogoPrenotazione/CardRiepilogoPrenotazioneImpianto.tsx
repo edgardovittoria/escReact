@@ -17,7 +17,7 @@ export const CardRiepilogoPrenotazioneImpianto: React.FC<CardRiepilogoPrenotazio
     let appuntamenti = prenotazione.appuntamenti
 
     return (
-        <Card className="col-6">
+        <Card className="col-6" style={{backgroundColor:"whitesmoke", padding:"20px"}}>
 
         <CardTitle style={{ marginTop: "3%", marginBottom: "4%" }}>
             Riepilogo prenotazione

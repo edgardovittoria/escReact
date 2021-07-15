@@ -24,7 +24,7 @@ export const ImpiantoSelezione: React.FC<ImpiantoSelezioneProps> = ({ chiave, im
         >
             {impianti.map((impianto) => {
                 return (
-                    <option key={impianto.idImpianto} value={impianto.idImpianto}>{impianto.idImpianto} {impianto.pavimentazione}</option>
+                    <option key={impianto.idStruttura} value={impianto.idStruttura}>{impianto.idStruttura} {impianto.pavimentazione}</option>
                 )
             })}
         </select>

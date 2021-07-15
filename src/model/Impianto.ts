@@ -2,7 +2,7 @@ import { Appuntamento } from './Appuntamento';
 import { Sport } from './Sport';
 
 export type Impianto = {
-    idImpianto : number
+    idStruttura : number
     indoor : boolean
     pavimentazione: string
     sportPraticabili: Sport[]
@@ -10,7 +10,7 @@ export type Impianto = {
 }
 
 export let impiantoDefault: Impianto = {
-    idImpianto : -1,
+    idStruttura : -1,
     indoor : false,
     pavimentazione: "",
     sportPraticabili: [],

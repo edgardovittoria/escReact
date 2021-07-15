@@ -65,7 +65,7 @@ export const NavBar: React.FC = () => {
     return (
         <>
             <Navbar color="dark" light expand="md">
-                <NavbarBrand href="/" style={{ color: "white" }}>esc</NavbarBrand>
+                <NavbarBrand href="/" style={{ color: "white" }}>ESC</NavbarBrand>
                 <NavbarToggler onClick={toggle} />
                 <Collapse isOpen={isOpen} navbar style={{borderLeft: "2px solid white"}}>
                     <Nav className="mr-auto" navbar>

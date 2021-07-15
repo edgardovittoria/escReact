@@ -37,9 +37,13 @@ export const ProfiloSportivo: React.FC = () => {
                             ruoli={sportivoAutenticato.sportivo.ruoli}
                             attributiExtra={sportivoAutenticato.sportivo.attributiExtra} />
 
-                        <div className="col-8">
-                            <h4>Prenota un impianto una lezione o un corso</h4>
-                            <div className="btn-container" style={{ marginBottom: "80px" }}>
+                        <div className="col-8" style={{
+                            backgroundColor:"whitesmoke"
+                        }}>
+                            <h4 style={{marginTop:"20px"}}>Prenota un impianto una lezione o un corso</h4>
+                            <div className="btn-container" style={{
+                                marginBottom: "50px", borderBottom:"1px solid", paddingBottom:"20px"
+                            }}>
                                 <button className="btnProfilo" id="prenotazioneLezione" onClick={() => history.push("/nuovaPrenotazioneLezione")}>
                                     <FontAwesomeIcon icon={faTableTennis} style={{display: "block", margin: "auto"}} />
                                     LEZIONE
@@ -55,6 +59,7 @@ export const ProfiloSportivo: React.FC = () => {
                                 </button>
                             </div>
                             <div id="riepilogoPrenotazioni" style={{ margin: "auto", width: "100%" }}>
+                                <h4>Calendario Sportivo</h4>
                                 <Calendario appuntamenti={sportivoAutenticato.sportivo.attributiExtra.appuntamentiSportivo} />
                             </div>
                         </div>

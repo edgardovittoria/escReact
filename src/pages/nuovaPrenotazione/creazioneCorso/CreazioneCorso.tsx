@@ -29,7 +29,9 @@ export const CreazioneCorso: React.FC = () => {
                             email={sportivoAutenticato.sportivo.email}
                             ruoli={sportivoAutenticato.sportivo.ruoli}
                             attributiExtra={sportivoAutenticato.sportivo.attributiExtra} />
-                        <div className="col-8">
+                        <div className="col-8"
+                             style={{backgroundColor:"whitesmoke", padding:"20px"}}
+                        >
                             <Label>CREAZIONE CORSO</Label>
                             <FormCreazioneCorso/>
                         </div>

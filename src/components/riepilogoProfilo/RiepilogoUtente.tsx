@@ -6,7 +6,7 @@ import { UtentePolisportiva } from '../../model/UtentePolisportiva';
 export const RiepilogoUtente: React.FC<UtentePolisportiva> = ({ nome, cognome, email, attributiExtra }) => {
     
     return (
-        <Card className="col-4" style={{ height: "min-content" }}>
+        <Card className="col-4" style={{ height: "min-content", backgroundColor:"whitesmoke" }}>
             <CardImg
                 src="/assets/img/avatarProfilo.png"
                 alt="Avatar Sportivo"

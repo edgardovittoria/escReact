@@ -17,7 +17,7 @@ export const AppuntamentiSottoscrivibili: React.FC<AppuntamentiSottoscrivibiliPr
         )
     } else {
         return (
-            <ul style={{ textAlign: "left", marginTop: "20px" }}>
+            <ul style={{ textAlign: "left", padding: "20px", backgroundColor:"whitesmoke", width:"90%", margin:"auto", marginTop:"50px" }}>
                 {appuntamenti?.map((appuntamento, index) => {
                     return (
                         <>

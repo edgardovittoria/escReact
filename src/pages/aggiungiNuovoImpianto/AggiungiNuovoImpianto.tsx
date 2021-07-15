@@ -22,7 +22,11 @@ export const AggiungiNuovoImpianto: React.FC = () => {
 
     return(
         <>
-            <div style={{width: "60%", margin: "auto", marginTop:"60px", padding: "50px", border: "3px solid #343A40", borderRadius:"20px"}}>
+            <div
+                style={{
+                    width: "60%", margin: "auto", marginTop:"60px", padding: "50px",
+                    border: "3px solid #343A40", borderRadius:"20px", backgroundColor:"whitesmoke"
+                }}>
             <h5 style={{marginBottom:"30px", textAlign: "center"}}>Seleziona uno o più sport praticabili sul nuovo impianto e la sua pavimentazione</h5>
             <Form  onSubmit={() => {
                 dispatch(riepilogoCreazioneImpianto(impiantoDefault))

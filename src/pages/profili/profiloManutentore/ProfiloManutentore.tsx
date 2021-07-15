@@ -31,7 +31,10 @@ export const ProfiloManutentore: React.FC = () => {
                                          ruoli={sportivoAutenticato.sportivo.ruoli}
                                          attributiExtra={sportivoAutenticato.sportivo.attributiExtra} />
 
-                        <div className="col-8">
+                        <div className="col-8" style={{
+                            backgroundColor:"whitesmoke"
+                        }}>
+                            <h4 style={{marginTop:"30px", marginBottom:"20px"}}>Calendario Manutentore</h4>
                             <div id="riepilogoPrenotazioni" style={{ margin: "auto", width: "100%" }}>
                                 <Calendario appuntamenti={sportivoAutenticato.sportivo.attributiExtra.appuntamentiManutentore} />
                             </div>

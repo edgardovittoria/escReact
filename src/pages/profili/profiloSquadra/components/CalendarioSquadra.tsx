@@ -32,7 +32,7 @@ export const CalendarioSquadra: React.FC<CalendarioSquadraProps> = ({ appuntamen
             </table>
         )
     } else {
-        return <h3 style={{ textAlign: "center", marginTop: "80px" }}>Al momento non hai effettuato nessuna prenotazione!!!</h3>
+        return <h5 style={{ textAlign: "center", marginTop: "30px" }}>Al momento non hai effettuato nessuna prenotazione!!!</h5>
     }
 };
 

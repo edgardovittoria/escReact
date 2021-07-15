@@ -29,7 +29,9 @@ export const PrenotazioneCorso: React.FC = () => {
                             email={sportivoAutenticato.sportivo.email}
                             ruoli={sportivoAutenticato.sportivo.ruoli}
                             attributiExtra={sportivoAutenticato.sportivo.attributiExtra}/>
-                        <div className="col-8">
+                        <div className="col-8"
+                             style={{backgroundColor:"whitesmoke", padding:"20px"}}
+                        >
                             <Label>PRENOTAZIONE CORSO</Label>
                             <CorsiDisponibili corsiDisponibili={corsiDisponibili}/>
                         </div>

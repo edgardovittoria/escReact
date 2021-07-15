@@ -11,9 +11,11 @@ export const DettagliImpianto: React.FC= () => {
     const dispatch = useDispatch()
     return(
         <>
-            <div style={{width: "60%", margin: "auto", marginTop:"60px", padding: "50px", border: "3px solid #343A40", borderRadius:"20px"}}>
+            <div style={{width: "60%", margin: "auto", marginTop:"60px", padding: "50px",
+                border: "3px solid #343A40", borderRadius:"20px", backgroundColor:"whitesmoke"
+            }}>
                 <h5 style={{marginBottom:"30px", textAlign: "center"}}>Riepilogo creazione impianto</h5>
-                <Card className="col-12" style={{backgroundColor:"#ECECEC", border: "1px solid #343A40"}}>
+                <Card className="col-12" style={{backgroundColor:"whitesmoke", border: "1px solid #343A40"}}>
                 <ListGroup style={{marginTop: "10px", border:"0px"}}>
                     Pavimentazione
                     <ListGroupItem key="sportPrenotato">

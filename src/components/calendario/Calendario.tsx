@@ -41,7 +41,7 @@ export const Calendario: React.FC<CalendarioSportivoProps> = ({appuntamenti}) =>
             </ul>
         )
     }else{
-        return <p>Non hai ancora effettuato nessuna prenotazione</p>
+        return <h4 style={{marginTop:"40px"}}>Non hai ancora effettuato nessuna prenotazione</h4>
     }
 
 

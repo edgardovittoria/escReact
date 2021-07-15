@@ -23,7 +23,9 @@ export const MessaggioNotificaCreazioneImpianto: React.FC = () => {
 
     return(
         <>
-            <div style={{width: "60%", margin: "auto", marginTop:"60px", padding: "50px", border: "3px solid #343A40", borderRadius:"20px"}}>
+            <div style={{width: "60%", margin: "auto", marginTop:"60px", padding: "50px",
+                border: "3px solid #343A40", borderRadius:"20px", backgroundColor:"whitesmoke"
+            }}>
                 <h4 style={{marginBottom:"20px", textAlign: "center"}}>Invio notifiche agli utenti della polisportiva</h4>
                 <h6 style={{marginBottom:"30px", textAlign: "center"}}>E' possibile anche modificare il testo della notifica</h6>
                 <Form>

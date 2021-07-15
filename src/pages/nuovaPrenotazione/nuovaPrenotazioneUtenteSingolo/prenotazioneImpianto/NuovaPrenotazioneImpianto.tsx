@@ -32,7 +32,9 @@ export const NuovaPrenotazioneImpianto: React.FC = () => {
                             email={sportivoAutenticato.sportivo.email}
                             ruoli={sportivoAutenticato.sportivo.ruoli}
                             attributiExtra={sportivoAutenticato.sportivo.attributiExtra}/>
-                        <div className="col-8">
+                        <div className="col-8"
+                             style={{backgroundColor:"whitesmoke", padding:"20px"}}
+                        >
                             <Label>PRENOTAZIONE IMPIANTO</Label>
                             <TabNuovaPrenotazione/>
                         </div>
