@@ -19,7 +19,6 @@ export const NavBar: React.FC = () => {
     const [displayProfiloManutentore, setDisplayProfiloManutentore] = useState("none");
     const [displayProfili, setDisplayProfili] = useState("none");
     const squadre = useSelector(squadraSelector).squadre
-    //in questo caso lo stato iniziale deve essere "none"
     const [displayFunzioniSquadra, setDisplayFunzioniSquadra] = useState("none");
     const [displayItem, setDisplayItem] = useState("none");
     const dispatch = useDispatch();
@@ -47,7 +46,6 @@ export const NavBar: React.FC = () => {
                     setDisplayFunzioniDirettore("flex")
                     break
                 case "SPORTIVO":
-                    console.log("pippo")
                     setDisplayProfiloSportivo("flex")
                     break
                 case "ISTRUTTORE":

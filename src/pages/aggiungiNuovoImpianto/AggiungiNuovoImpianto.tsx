@@ -1,13 +1,14 @@
-import React, {useEffect} from 'react';
-import {impiantoDefault} from "../../model/Impianto";
-import {sportDefault} from "../../model/Sport";
+import React, {useEffect, useState} from 'react';
+import {Sport, sportDefault} from "../../model/Sport";
 import {Button, Form, FormGroup, Label} from "reactstrap";
 import {useDispatch, useSelector} from "react-redux";
 import {avviaCreazioneImpianto, impiantoSelector, riepilogoCreazioneImpianto} from "../../store/impiantoSlice";
 import {sportSelector} from "../../store/SportSlice";
 import {useHistory} from "react-router-dom";
+import {Impianto, impiantoDefault} from "../../model/Impianto";
 
 export const AggiungiNuovoImpianto: React.FC = () => {
+
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -21,7 +22,9 @@ export const AggiungiNuovoImpianto: React.FC = () => {
 
     return(
         <>
-            <Form onSubmit={() => {
+            <div style={{width: "60%", margin: "auto", marginTop:"60px", padding: "50px", border: "3px solid #343A40", borderRadius:"20px"}}>
+            <h5 style={{marginBottom:"30px", textAlign: "center"}}>Seleziona uno o più sport praticabili sul nuovo impianto e la sua pavimentazione</h5>
+            <Form  onSubmit={() => {
                 dispatch(riepilogoCreazioneImpianto(impiantoDefault))
                 history.push("/riepilogoCreazioneImpianto")
             }}>
@@ -34,10 +37,17 @@ export const AggiungiNuovoImpianto: React.FC = () => {
                         name="sportPraticabili"
                         onChange={(values) => {
                             let sports = Array.from(values.target.selectedOptions, option => option.value)
+                            let listaSport: Sport[] = []
                             sports.map(nomeSport => {
-                                sportDefault.nome = nomeSport
-                                impiantoDefault.sportPraticabili.push(sportDefault)
+                                let sport: Sport = {
+                                    nome: nomeSport,
+                                    numeroMinimoGiocatoriPerSquadra: -1,
+                                    postiLiberi: -1
+                                }
+                                listaSport.push(sport)
                             })
+                            impiantoDefault.sportPraticabili = listaSport
+                            console.log(impiantoDefault)
                         }}
                     >
                         {sportPraticabili.map((sport) => {
@@ -73,6 +83,7 @@ export const AggiungiNuovoImpianto: React.FC = () => {
                         color="success"
                         style={{marginBottom: "50px"}}>Procedi</Button>
             </Form>
+            </div>
         </>
     )
 

@@ -1,15 +1,15 @@
 /* eslint-disable array-callback-return */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import {Impianto, impiantoDefault} from '../model/Impianto'
+import {Impianto} from '../model/Impianto'
 import {AppThunk} from "./store";
 import axios from "axios";
 import {addListaSportPraticabili} from "./SportSlice";
-import {addListaInvitabili} from "./utentePolisportivaSlice";
 
 export type ImpiantoState = {
     impianti: Impianto[],
     pavimentazioniDisponibili: string[],
-    impiantoDaCreare: Impianto
+    impiantoDaCreare: Impianto,
+    messaggioNotificaDaConfermare: string,
     isLoading: boolean,
     errors: string
 }
@@ -19,7 +19,14 @@ export const ImpiantoSlice = createSlice({
     initialState: {
         impianti: [],
         pavimentazioniDisponibili: [],
-        impiantoDaCreare: impiantoDefault,
+        impiantoDaCreare: {
+            idImpianto: -1,
+            indoor: false,
+            pavimentazione: "",
+            sportPraticabili: [],
+            appuntamenti: []
+        },
+        messaggioNotificaDaConfermare: "",
         isLoading: false,
         errors: ""
     } as ImpiantoState,
@@ -41,6 +48,11 @@ export const ImpiantoSlice = createSlice({
             state.errors = ""
             state.impiantoDaCreare = action.payload
         },
+        addMessaggioNotificaDaConfermare(state: ImpiantoState, action: PayloadAction<string>){
+            state.isLoading = false
+            state.errors = ""
+            state.messaggioNotificaDaConfermare = action.payload
+        },
         resetListaImpiantiDisponibili(state: ImpiantoState){
             state.impianti = []
         },
@@ -58,6 +70,7 @@ export const {
     addListaPavimentazioniDisponibili,
     addImpiantoDaCreare,
     resetListaImpiantiDisponibili,
+    addMessaggioNotificaDaConfermare,
     setLoading,
     setErrors
 } = ImpiantoSlice.actions
@@ -65,14 +78,13 @@ export const {
 export const avviaCreazioneImpianto = (): AppThunk => async dispatch => {
     try {
         dispatch(setLoading(true));
-        const res = await axios.get("http://localhost:8080/promuoviPolisportiva/avviaCreazioneImpianto")
+        const res = await axios.get("http://localhost:8080/promuoviPolisportiva/avviaCreazioneStruttura", {params: {tipoNuovaStruttura: "IMPIANTO"}})
         dispatch(addListaSportPraticabili(res.data.sportPraticabili))
         dispatch(addListaPavimentazioniDisponibili(res.data.pavimentazioniDisponibili))
     } catch (error) {
         dispatch(setLoading(false))
         dispatch(setErrors(error))
-        console.log(error)
-        alert("Non sei autorizzato!")
+        alert("Internal server error!")
         window.location.href = "http://localhost:3000/profiloSportivo";
     }
 
@@ -81,17 +93,68 @@ export const avviaCreazioneImpianto = (): AppThunk => async dispatch => {
 export const riepilogoCreazioneImpianto = (impiantoDaCreare: Impianto): AppThunk => async dispatch => {
     try {
         dispatch(setLoading(true));
-        const res = await axios.post("http://localhost:8080/promuoviPolisportiva/riepilogoCreazioneImpianto", impiantoDaCreare)
+        const res = await axios.post("http://localhost:8080/promuoviPolisportiva/riepilogoCreazioneStruttura", impiantoDaCreare)
         dispatch(addImpiantoDaCreare(res.data))
     } catch (error) {
         dispatch(setLoading(false))
         dispatch(setErrors(error))
-        console.log(error)
-        alert("Non sei autorizzato!")
+        alert("Internal server error!")
         window.location.href = "http://localhost:3000/profiloSportivo";
     }
 
 }
 
+export const confermaCreazioneImpianto = (): AppThunk => async dispatch => {
+    try {
+        dispatch(setLoading(true));
+        const res = await axios.post("http://localhost:8080/promuoviPolisportiva/confermaCreazioneStruttura")
+        if(res.status === 201){
+            let confirm = window.confirm("Impianto aggiunto correttamente! Vuoi inviare una notifica agli utenti della polisportiva?")
+            if(confirm){
+                window.location.href = "http://localhost:3000/invioNotificaCreazioneImpianto";
+            }else {
+                window.location.href = "http://localhost:3000/profiloSportivo";
+            }
+
+        }
+    } catch (error) {
+        dispatch(setLoading(false))
+        dispatch(setErrors(error))
+        alert("Internal server error!")
+        window.location.href = "http://localhost:3000/profiloSportivo";
+    }
+
+}
+
+export const messaggioNotificaCreazioneImpianto = (): AppThunk => async dispatch => {
+    try {
+        dispatch(setLoading(true));
+        const res = await axios.get("http://localhost:8080/promuoviPolisportiva/messaggioNotificaCreazioneStruttura")
+        dispatch(addMessaggioNotificaDaConfermare(res.data))
+    } catch (error) {
+        dispatch(setLoading(false))
+        dispatch(setErrors(error))
+        alert("Internal server error!")
+        window.location.href = "http://localhost:3000/profiloSportivo";
+    }
+
+}
+
+export const inviaNotificheCreazioneImpianto = (object: any): AppThunk => async dispatch => {
+    try {
+        dispatch(setLoading(true));
+        const res = await axios.post("http://localhost:8080/promuoviPolisportiva/invioNotificheCreazioneNuovaStruttura", object)
+        if(res.status === 201){
+            alert("Notifiche Inviate!")
+            window.location.href = "http://localhost:3000/profiloSportivo";
+        }
+    } catch (error) {
+        dispatch(setLoading(false))
+        dispatch(setErrors(error))
+        alert("Internal server error!")
+        window.location.href = "http://localhost:3000/profiloSportivo";
+    }
+
+}
 
 export const impiantoSelector = (state: { impiantiDisponibili: ImpiantoState }) => state.impiantiDisponibili
