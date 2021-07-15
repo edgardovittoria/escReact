@@ -48,7 +48,6 @@ export const App: React.FC = () => {
           <NavBar />
           <Switch>
             <Route path="/home"><Home/></Route>
-            <Route path="/login"><Login /></Route>
             <Route path="/profiloSportivo"><ProfiloSportivo /></Route>
             <Route path="/profiloIstruttore"><ProfiloIstruttore/></Route>
             <Route path="/profiloManutentore"><ProfiloManutentore/></Route>
@@ -65,7 +64,7 @@ export const App: React.FC = () => {
             <Route path="/aggiungiNuovoImpianto"><AggiungiNuovoImpianto/></Route>
             <Route path="/riepilogoCreazioneImpianto"><DettagliImpianto/></Route>
             <Route path="/invioNotificaCreazioneImpianto"><MessaggioNotificaCreazioneImpianto/></Route>
-            <Redirect to="/login" />
+            <Redirect to="/home" />
           </Switch>
         </BrowserRouter>
       </PersistGate>

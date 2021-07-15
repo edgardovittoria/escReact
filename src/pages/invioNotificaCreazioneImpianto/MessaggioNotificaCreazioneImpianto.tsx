@@ -16,8 +16,11 @@ export const MessaggioNotificaCreazioneImpianto: React.FC = () => {
         dispatch(messaggioNotificaCreazioneImpianto())
     }, []);
     const messaggio = useSelector(impiantoSelector).messaggioNotificaDaConfermare
+    const [messaggioNotifica, setMessaggioNotifica] = useState<string>(messaggio)
+
+
     const sportivoAutenticato = useSelector(sportivoAutenticatoSelector).sportivo
-    const [messaggioNotifica, setMessaggioNotifica] = useState(messaggio)
+
     return(
         <>
             <div style={{width: "60%", margin: "auto", marginTop:"60px", padding: "50px", border: "3px solid #343A40", borderRadius:"20px"}}>

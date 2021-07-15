@@ -10,7 +10,8 @@ img{
 }
 
 body{
-    background-color: rgb(236, 236, 236);
+    background-image: linear-gradient(to bottom right, #343A40, #F5EFF5);
+    background-repeat: no-repeat;
 }
 
 .container {

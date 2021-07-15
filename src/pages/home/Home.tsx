@@ -1,16 +1,18 @@
-import React from 'react';
+import {Col, Row} from "reactstrap";
+import {Login} from "../login/Login";
 
-export const Home: React.FC = () => {
-    return(
-        <>
-            <div style={{backgroundImage: "url('/assets/img/sportBackground.jpeg')",
-                backgroundSize: "cover",
-                backgroundRepeat: "no-repeat",
-                backgroundPosition: "bottom",
-                height: "90vh"}}>
-                <h1>ESC</h1>
-            </div>
-        </>
+export const Home = () => {
+    return (
+        <Row>
+            <Col style={{backgroundColor:"#F5EFF5"}}>
+                <Login/>
+            </Col>
+            <Col style={{
+                backgroundImage: "url('/assets/img/sportBackground.jpeg')",
+                backgroundSize:"cover",
+                backgroundPosition:"center",
+                backgroundRepeat:"no-repeat"
+            }}></Col>
+        </Row>
     )
-
 }
