@@ -21,7 +21,7 @@ let listaCheckBox: ArrayCheckBoxPendingItem[] = [];
 for(let i=1; i<6; i++){
     let item: ArrayCheckBoxPendingItem = {
         id: i,
-        checkboxPending: false
+        checkboxPending: true
     }
     listaCheckBox.push(item);
 }

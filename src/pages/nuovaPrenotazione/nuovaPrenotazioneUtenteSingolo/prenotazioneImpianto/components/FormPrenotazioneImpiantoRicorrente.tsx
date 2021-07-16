@@ -80,7 +80,7 @@ export const FormPrenotazioneImpiantoRicorrente: React.FC = () => {
                         for(let i = 1; i<= Number.parseInt(value.currentTarget.value); i++){
                             let checkboxesPendingItem: CheckBoxPendingSelezionatoItem = {
                                 idSelezione: i,
-                                pending: false
+                                pending: true
                             }
                             checkboxesPendingDefault.push(checkboxesPendingItem)
                         }
