@@ -18,7 +18,8 @@ export type FormPrenotazione = {
     numeroMinimoPartecipanti: number,
     numeroMassimoPartecipanti: number,
     costoPerPartecipante: number,
-    nomeEvento: string
+    nomeEvento: string,
+    tipoPrenotazione: string
 }
 
 export const formPrenotazioneDefault: FormPrenotazione = {
@@ -34,5 +35,6 @@ export const formPrenotazioneDefault: FormPrenotazione = {
     numeroMinimoPartecipanti: -1,
     numeroMassimoPartecipanti: -1,
     costoPerPartecipante: -1,
-    nomeEvento:""
+    nomeEvento:"",
+    tipoPrenotazione: "CORSO"
 }

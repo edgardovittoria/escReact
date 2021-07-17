@@ -54,7 +54,7 @@ export const RiepilogoCreazioneCorso: React.FC = () => {
                                 </ListGroup>
                                 <ListGroup>
                                     <ListGroupItem key="costoPerPartecipante">
-                                        Costo per partecipante : {prenotazioneDaConfermare.infoGeneraliEvento.costoPerPartecipante}€
+                                        Costo per partecipante : {prenotazioneDaConfermare.infoGeneraliEvento.costoPerPartecipante}
                                     </ListGroupItem>
                                 </ListGroup>
                                 <ListGroup>
