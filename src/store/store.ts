@@ -26,13 +26,14 @@ const rootReducer = combineReducers({
   istruttoriDisponibili: IstruttoreSlice.reducer,
   sportiviInvitabili: UtentePolisportivaSlice.reducer,
   formPrenotazioneImpianto: FormPrenotaImpiantoSlice.reducer,
-  notificheUtente: NotificheSlice.reducer
+  notificheUtente: NotificheSlice.reducer,
+  prenotabile: PrenotazioneSlice.reducer
 });
 
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['sportivo'],
+  whitelist: ['sportivo', 'squadre'],
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

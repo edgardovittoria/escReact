@@ -61,3 +61,11 @@ export type OrarioPrenotazione = {
     oraFine: Date
 
 }
+
+
+export type DatiPerCreazionePacchettoLezioni = {
+    numeroDate: number,
+    scontoPercentuale: number
+}
+
+export type DatiPerCreazioneNuovoPrenotabile = {}&DatiPerCreazionePacchettoLezioni

@@ -5,7 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {avviaCreazioneImpianto, impiantoSelector, riepilogoCreazioneImpianto} from "../../store/impiantoSlice";
 import {sportSelector} from "../../store/SportSlice";
 import {useHistory} from "react-router-dom";
-import {Impianto, impiantoDefault} from "../../model/Impianto";
+import {impiantoDefault} from "../../model/Impianto";
 
 export const AggiungiNuovoImpianto: React.FC = () => {
 
@@ -51,7 +51,6 @@ export const AggiungiNuovoImpianto: React.FC = () => {
                                 listaSport.push(sport)
                             })
                             impiantoDefault.sportPraticabili = listaSport
-                            console.log(impiantoDefault)
                         }}
                     >
                         {sportPraticabili.map((sport) => {
