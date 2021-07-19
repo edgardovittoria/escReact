@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {Sport, sportDefault} from "../../model/Sport";
+import React, {useEffect} from 'react';
+import {Sport} from "../../model/Sport";
 import {Button, Form, FormGroup, Label} from "reactstrap";
 import {useDispatch, useSelector} from "react-redux";
 import {avviaCreazioneImpianto, impiantoSelector, riepilogoCreazioneImpianto} from "../../store/impiantoSlice";

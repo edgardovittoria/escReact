@@ -1,15 +1,18 @@
 import React from 'react';
-import {Button, Form, FormGroup} from "reactstrap";
+import {Button, Form, FormGroup, Label} from "reactstrap";
 import {DatiPerCreazioneNuovoPrenotabile} from "../../model/TipiAusiliari";
 import {useDispatch} from "react-redux";
 import {confermaCreazioneNuovoPrenotabile} from "../../store/prenotabileSlice";
+import {formPrenotazioneDefault} from "../../model/FormPrenotazione";
 
 
 export const CreaPacchettoLezioniScontato: React.FC = () => {
 
     const dispatch = useDispatch()
     const numeroDateArray = [2,3,4,5]
-    const datiPerCreazionePacchettoLezioni: DatiPerCreazioneNuovoPrenotabile = {
+    let datiPerCreazionePacchettoLezioni: DatiPerCreazioneNuovoPrenotabile = {
+        tipoPrenotazione: "PACCHETTO_LEZIONI",
+        nomeEvento: "",
         numeroDate: 2,
         scontoPercentuale: 0
     }
@@ -22,9 +25,18 @@ export const CreaPacchettoLezioniScontato: React.FC = () => {
                     border: "3px solid #343A40", borderRadius:"20px", backgroundColor:"whitesmoke"
                 }}>
                 <h5 style={{marginBottom:"30px", textAlign: "center"}}>Seleziona il numero di lezione presenti nel pacchetto</h5>
-                <Form  onSubmit={() => {
+                <Form  onSubmit={(event) => {
+                    event.preventDefault()
                     dispatch(confermaCreazioneNuovoPrenotabile(datiPerCreazionePacchettoLezioni))
                 }}>
+                    <FormGroup>
+                        <Label style={{ marginLeft: '5px' }}>Inserire il nome del pachetto di lezioni</Label>
+                        <input type="text" id="nomePacchetto" name="nomePacchetto"
+                               style={{width:"100%"}}
+                               onChange={(target) => {
+                                   datiPerCreazionePacchettoLezioni.nomeEvento = target.currentTarget.value
+                               }}/>
+                    </FormGroup>
                     <FormGroup>
                         <select
                             className="form-control selectpicker"
@@ -41,14 +53,14 @@ export const CreaPacchettoLezioniScontato: React.FC = () => {
                         </select>
                     </FormGroup>
                     <FormGroup>
+                        <Label style={{ marginLeft: '5px' }}>Inserisci la percentuale di sconto da applicare al pacchetto</Label>
                             <input
                                 type="number"
-                                className="form-check-input"
-                                name="sportSelezionato"
+                                name="scontoPercentuale"
+                                style={{width:"100%"}}
                                 onInput={(values) => {
                                     datiPerCreazionePacchettoLezioni.scontoPercentuale = Number.parseFloat(values.currentTarget.value)
                                 }} />
-                            <div>Inserisci la percentuale di sconto da applicare al pacchetto</div>
                     </FormGroup>
 
                     <Button type="submit"

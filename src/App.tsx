@@ -6,7 +6,6 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react'
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import { ProfiloSportivo } from './pages/profili/profiloSportivo/ProfiloSportivo';
-import { Login } from './pages/login/Login';
 import { NuovaPrenotazioneImpianto } from './pages/nuovaPrenotazione/nuovaPrenotazioneUtenteSingolo/prenotazioneImpianto/NuovaPrenotazioneImpianto';
 import { RiepilogoPrenotazione } from './pages/nuovaPrenotazione/riepilogoPrenotazioneImpianto/RiepilogoPrenotazione';
 import { NuovaPrenotazioneLezione } from './pages/nuovaPrenotazione/nuovaPrenotazioneUtenteSingolo/prenotazioneLezione/NuovaPrenotazioneLezione';

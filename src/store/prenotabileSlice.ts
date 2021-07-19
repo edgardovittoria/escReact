@@ -16,6 +16,8 @@ export const PrenotabileSlice = createSlice({
     name: 'prenotabile',
     initialState: {
         prenotabileDaConfermare: {
+            tipoPrenotazione: "",
+            nomeEvento: "",
             numeroDate: 2,
             scontoPercentuale: 0
         },
@@ -42,7 +44,7 @@ export const confermaCreazioneNuovoPrenotabile = (datiPerCreazioneNuovoPrenotabi
         dispatch(setLoading(true));
         const res = await axios.post("http://localhost:8080/promuoviPolisportiva/creazioneNuovoPrenotabile", datiPerCreazioneNuovoPrenotabile)
         if(res.status === 200){
-            alert("Il pacchetto scontato di "+res.data.numeroLezioni+" lezioni è stato creato!");
+            alert(res.data+" è stato creato!");
             window.location.href = "http://localhost:3000/profiloSportivo";
         }
     } catch (error) {

@@ -122,13 +122,22 @@ export const NavBar: React.FC = () => {
                             </DropdownToggle>
                             <DropdownMenu right 
                                 style={{backgroundColor: "#343A40", color: "white"}}>
-                                <DropdownItem href="/creazioneCorso" style={{color: "white"}}>
+                                <DropdownItem style={{color: "white"}}
+                                    onClick={() => {
+                                        history.push("/creazioneCorso")
+                                    }}>
                                     Crea Corso
                                 </DropdownItem>
-                                <DropdownItem href="/creaPacchettoLezioniScontato" style={{color: "white"}}>
+                                <DropdownItem style={{color: "white"}}
+                                          onClick={() => {
+                                              history.push("/creaPacchettoLezioniScontato")
+                                          }}>
                                     Crea Pacchetto Lezioni
                                 </DropdownItem>
-                                <DropdownItem href="/aggiungiNuovoImpianto" style={{color: "white"}}>
+                                <DropdownItem style={{color: "white"}}
+                                          onClick={() => {
+                                              history.push("/aggiungiNuovoImpianto")
+                                          }}>
                                     Aggiungi Nuovo Impianto
                                 </DropdownItem>
                             </DropdownMenu>

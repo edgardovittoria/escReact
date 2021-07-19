@@ -68,4 +68,7 @@ export type DatiPerCreazionePacchettoLezioni = {
     scontoPercentuale: number
 }
 
-export type DatiPerCreazioneNuovoPrenotabile = {}&DatiPerCreazionePacchettoLezioni
+export type DatiPerCreazioneNuovoPrenotabile = {
+    tipoPrenotazione: string,
+    nomeEvento: string
+}&DatiPerCreazionePacchettoLezioni
