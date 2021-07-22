@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { sportivoAutenticatoSelector } from '../../../store/sportivoAutenticatoSlice';
 import { avviaNuovaPrenotazioneEventoDirettore } from '../../../store/prenotazioneSlice';
@@ -7,17 +7,26 @@ import { resetListaSportPraticabili } from '../../../store/SportSlice';
 import { RiepilogoUtente } from '../../../components/riepilogoProfilo/RiepilogoUtente'
 import { Label } from 'reactstrap';
 import { FormCreazioneCorso } from './components/FormCreazioneCorso';
+import {datiAvviaPrenotazione} from "../../../model/TipiAusiliari";
 
 export const CreazioneCorso: React.FC = () => {
 
     const dispatch = useDispatch()
 
-    dispatch(resetListaInvitabili())
-    dispatch(resetListaSportPraticabili())
-
     const sportivoAutenticato = useSelector(sportivoAutenticatoSelector);
 
-    dispatch(avviaNuovaPrenotazioneEventoDirettore(sportivoAutenticato.sportivo.email, "CORSO", "SINGOLO_UTENTE"))
+    useEffect(() => {
+        dispatch(resetListaInvitabili())
+        dispatch(resetListaSportPraticabili())
+
+        datiAvviaPrenotazione.email = sportivoAutenticato.sportivo.email
+        datiAvviaPrenotazione.tipoPrenotazione = "CORSO"
+        datiAvviaPrenotazione.modalitaPrenotazione = "SINGOLO_UTENTE"
+
+        dispatch(avviaNuovaPrenotazioneEventoDirettore(datiAvviaPrenotazione ))
+    }, []);
+
+
 
     return (
         <>

@@ -46,6 +46,7 @@ export const FormPrenotazioneImpiantoRicorrente: React.FC = () => {
 
     useEffect(() => {
         datiPerAggiornamentoOpzioni.numeroDate = numeroDate
+        formPrenotazioneDefault.tipoPrenotazione = "IMPIANTO"
     }, [numeroDate]);
 
 

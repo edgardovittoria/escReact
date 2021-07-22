@@ -8,6 +8,7 @@ import { resetListaSportPraticabili } from '../../../../store/SportSlice';
 import { squadraSelector } from '../../../../store/squadraSlice';
 import { RiepilogoSquadra } from '../../../../components/riepilogoProfilo/RiepilogoSquadra';
 import { TabNuovaPrenotazioneSquadra } from './components/TabNuovaPrenotazioneSquadra';
+import {datiAvviaPrenotazione} from "../../../../model/TipiAusiliari";
 
 export const NuovaPrenotazioneImpiantoSquadra: React.FC = () => {
 
@@ -19,7 +20,12 @@ export const NuovaPrenotazioneImpiantoSquadra: React.FC = () => {
     useEffect(() => {
         //dispatch(resetListaInvitabili())
         dispatch(resetListaSportPraticabili())
-        dispatch(avviaNuovaPrenotazione(sportivoAutenticato.sportivo.email, squadra.idSquadra, "IMPIANTO", "SQUADRA"))
+        datiAvviaPrenotazione.email = sportivoAutenticato.sportivo.email
+        datiAvviaPrenotazione.idSquadra = squadra.idSquadra
+        datiAvviaPrenotazione.tipoPrenotazione = "IMPIANTO"
+        datiAvviaPrenotazione.modalitaPrenotazione = "SQUADRA"
+        dispatch(avviaNuovaPrenotazione(datiAvviaPrenotazione))
+        console.log("pippo")
     }, [])
 
 

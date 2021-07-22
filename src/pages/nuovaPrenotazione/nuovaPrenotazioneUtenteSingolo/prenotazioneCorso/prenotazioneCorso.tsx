@@ -6,15 +6,21 @@ import { avviaNuovaPrenotazione, corsiDisponibiliSelector } from '../../../../st
 import { RiepilogoUtente } from '../../../../components/riepilogoProfilo/RiepilogoUtente';
 import { Label } from 'reactstrap';
 import { CorsiDisponibili } from './components/CorsiDisponibili';
+import {resetListaInvitabili} from "../../../../store/utentePolisportivaSlice";
+import {resetListaSportPraticabili} from "../../../../store/SportSlice";
+import {datiAvviaPrenotazione} from "../../../../model/TipiAusiliari";
 
 export const PrenotazioneCorso: React.FC = () => {
 
     const dispatch = useDispatch()
 
     const sportivoAutenticato = useSelector(sportivoAutenticatoSelector);
-    
+
     useEffect(() => {
-        dispatch(avviaNuovaPrenotazione(sportivoAutenticato.sportivo.email, -1, "CORSO", "SINGOLO_UTENTE"))
+        datiAvviaPrenotazione.email = sportivoAutenticato.sportivo.email
+        datiAvviaPrenotazione.tipoPrenotazione = "CORSO"
+        datiAvviaPrenotazione.modalitaPrenotazione = "SINGOLO_UTENTE"
+        dispatch(avviaNuovaPrenotazione(datiAvviaPrenotazione))
     }, [])
 
 

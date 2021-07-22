@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { useSelector } from 'react-redux';
 import { Button, Col, Form, FormGroup, Label, Row } from 'reactstrap';
 import { formPrenotaImpiantoSelector } from '../../../../../store/formPrenotaImpiantoSlice';
@@ -28,6 +28,11 @@ export const FormPrenotazioneLezione: React.FC = () => {
     const onOrarioSelezione = useOnOrarioselezione(datiPerAggiornamentoOpzioni);
     const onImpiantoSelezione = useOnImpiantoSelezione();
     const onIstruttoreSelezione = useOnIstruttoreSelezione();
+
+    useEffect(() => {
+        formPrenotazioneDefault.tipoPrenotazione = "LEZIONE"
+    }, []);
+
 
     return (
         <Form onSubmit={() => submitFormPrenotazione(formPrenotazioneDefault)}>

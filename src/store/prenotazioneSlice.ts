@@ -13,7 +13,7 @@ import { addListaSquadreInvitabili } from './squadraSlice';
 import {FormPrenotazione} from "../model/FormPrenotazione";
 import {
     ArrayLisetImpiantoItem,
-    ArrayListeIstruttoreItem,
+    ArrayListeIstruttoreItem, DatiAvviaPrenotazione,
     DatiIscrizioneEventoEsistente,
     DatiPerAggiornamentoOpzioni
 } from "../model/TipiAusiliari";
@@ -159,15 +159,15 @@ export const corsiDisponibiliSelector = (state: { prenotazioni: PrenotazioneStat
 export const partecipazioniSelector = (state: { prenotazioni: PrenotazioneState }) => state.prenotazioni.partecipazioni
 export const corsiPrenotatiSelector = (state: { prenotazioni: PrenotazioneState }) => state.prenotazioni.prenotazioniCorso
 
-export const avviaNuovaPrenotazione = (emailSportivo: string, idSquadra: number, tipoPren: string, modalitaPrenotazione: string): AppThunk => async dispatch => {
+export const avviaNuovaPrenotazione = (datiAvviaPrenotazione: DatiAvviaPrenotazione): AppThunk => async dispatch => {
     try {
         dispatch(setLoading(true));
-        const res = await axios.get("http://localhost:8080/effettuaPrenotazione/avviaNuovaPrenotazione", { params: { email: emailSportivo, idSquadra: idSquadra, tipoPrenotazione: tipoPren, modalitaPrenotazione: modalitaPrenotazione }})
-        if (tipoPren === "LEZIONE") {
+        const res = await axios.post("http://localhost:8080/effettuaPrenotazione/avviaNuovaPrenotazione", datiAvviaPrenotazione)
+        if (datiAvviaPrenotazione.tipoPrenotazione === "LEZIONE") {
             dispatch(addListaSportPraticabili(res.data.sportPraticabili))
-        } else if (tipoPren === "IMPIANTO") {
+        } else if (datiAvviaPrenotazione.tipoPrenotazione === "IMPIANTO") {
             dispatch(addListaSportPraticabili(res.data.sportPraticabili))
-            if (modalitaPrenotazione === "SINGOLO_UTENTE") {
+            if (datiAvviaPrenotazione.modalitaPrenotazione === "SINGOLO_UTENTE") {
                 dispatch(addListaInvitabili(res.data.sportiviInvitabili))
                 dispatch(addAppuntamentiSottoscrivibili(res.data.appuntamentiSottoscrivibili))
             }else{
@@ -175,7 +175,7 @@ export const avviaNuovaPrenotazione = (emailSportivo: string, idSquadra: number,
                 dispatch(addAppuntamentiSottoscrivibili(res.data.appuntamentiSottoscrivibiliSquadra))
             }
 
-        } else if (tipoPren === "CORSO") {
+        } else if (datiAvviaPrenotazione.tipoPrenotazione === "CORSO") {
             dispatch(addListaCorsiDiponibili(res.data.corsiDisponibili))
         }
         
@@ -187,10 +187,10 @@ export const avviaNuovaPrenotazione = (emailSportivo: string, idSquadra: number,
 
 }
 
-export const avviaNuovaPrenotazioneEventoDirettore = (emailSportivo: string, tipoPren: string, modalitaPrenotazione: string): AppThunk => async dispatch => {
+export const avviaNuovaPrenotazioneEventoDirettore = (datiAvviaPrenotazione: DatiAvviaPrenotazione): AppThunk => async dispatch => {
     try {
         dispatch(setLoading(true));
-        const res = await axios.get("http://localhost:8080/effettuaPrenotazione/avviaNuovaPrenotazioneEventoDirettore", { params: { email: emailSportivo, tipoPrenotazione: tipoPren, modalitaPrenotazione: modalitaPrenotazione } })
+        const res = await axios.post("http://localhost:8080/effettuaPrenotazione/avviaNuovaPrenotazioneEventoDirettore", datiAvviaPrenotazione)
         dispatch(addListaSportPraticabili(res.data.sportPraticabili))
         dispatch(addListaInvitabili(res.data.sportiviInvitabili))
     } catch (error) {

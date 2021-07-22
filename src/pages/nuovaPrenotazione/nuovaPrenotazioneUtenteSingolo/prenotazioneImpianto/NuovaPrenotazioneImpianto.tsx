@@ -8,6 +8,7 @@ import { resetListaSportPraticabili } from '../../../../store/SportSlice';
 import { RiepilogoUtente } from '../../../../components/riepilogoProfilo/RiepilogoUtente';
 import { Label } from 'reactstrap';
 import { TabNuovaPrenotazione } from './components/TabNuovaPrenotazione';
+import {datiAvviaPrenotazione} from "../../../../model/TipiAusiliari";
 
 export const NuovaPrenotazioneImpianto: React.FC = () => {
 
@@ -18,7 +19,10 @@ export const NuovaPrenotazioneImpianto: React.FC = () => {
     useEffect(() => {
         dispatch(resetListaInvitabili())
         dispatch(resetListaSportPraticabili())
-        dispatch(avviaNuovaPrenotazione(sportivoAutenticato.sportivo.email, -1, "IMPIANTO", "SINGOLO_UTENTE"))
+        datiAvviaPrenotazione.email = sportivoAutenticato.sportivo.email
+        datiAvviaPrenotazione.tipoPrenotazione = "IMPIANTO"
+        datiAvviaPrenotazione.modalitaPrenotazione = "SINGOLO_UTENTE"
+        dispatch(avviaNuovaPrenotazione(datiAvviaPrenotazione))
     }, [])
 
 

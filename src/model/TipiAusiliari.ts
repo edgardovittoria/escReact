@@ -72,3 +72,19 @@ export type DatiPerCreazioneNuovoPrenotabile = {
     tipoPrenotazione: string,
     nomeEvento: string
 }&DatiPerCreazionePacchettoLezioni
+
+export type DatiAvviaPrenotazione = {
+    email: string,
+    tipoPrenotazione: string,
+    modalitaPrenotazione: string,
+    idSquadra: number,
+    nomePrenotabile: string
+}
+
+export let datiAvviaPrenotazione: DatiAvviaPrenotazione = {
+    email:"",
+    tipoPrenotazione:"",
+    modalitaPrenotazione:"",
+    idSquadra:-1,
+    nomePrenotabile:""
+}
